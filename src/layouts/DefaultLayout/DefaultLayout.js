@@ -1,16 +1,24 @@
+import classNames from 'classnames/bind';
+import styles from './DefaultLayout.module.scss';
+
 import Header from '../Header';
-import SideBar from '../SideBar';
+import BackGrpImgs from '~/components/BackGrpImgs';
+
+const cx = classNames.bind(styles);
 
 function DefaultLayout({ children }) {
     return (
         <div>
             <Header />
-            <div className="container">
-                <a href="#">
-                    <span>Link ảnh</span>
-                </a>
-                <div className="content">{children}</div>
+            <BackGrpImgs />
+            <div className={cx('wrapper')}>
+                <div className="grid wide">
+                    <div className={cx('container')}>
+                        <div className={cx('content')}>{children}</div>
+                    </div>
+                </div>
             </div>
+            <div id="popup-root" />
         </div>
     );
 }

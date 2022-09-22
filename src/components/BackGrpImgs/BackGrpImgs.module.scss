@@ -1,0 +1,14 @@
+.content {
+    display: block;
+
+}
+
+.img {
+    width: 100%;
+    left: 0;
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+    object-fit: cover;
+    overflow: hidden;
+}
