@@ -5,6 +5,7 @@ import classNames from 'classnames/bind';
 import Tippy from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css';
 import { Link, NavLink } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowAltCircleUp, faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
@@ -19,15 +20,33 @@ const cx = classNames.bind(styles);
 
 function Header() {
     const [category, setCategory] = useGetCategory();
+    let [searchParams, setSearchParams] = useSearchParams();
+    const id = searchParams.get('id');
+
+    const [formName, setFormName] = useState('');
+
+    const handleOpenSignIn = () => {
+        setFormName('SignIn');
+    };
+
+    const handleOpenRegis = () => {
+        setFormName('Regis');
+    };
+
+    const handleClose = () => {
+        setFormName('');
+    };
+
+    const styleDis = formName ? 'flex' : 'none';
 
     return (
         <div className={cx('wrapper')}>
             <header className={cx('header')}>
                 <div className="grid wide height-100">
                     <div className={cx('container')}>
-                        <Link to="/">
+                        <a href="/">
                             <img src={imgs.logo} alt={imgs.noImg} className={cx('logo')} />
-                        </Link>
+                        </a>
 
                         <div className={cx('nav-left')}>
                             <div>
@@ -46,11 +65,11 @@ function Header() {
                                                                 <NavLink
                                                                     className={(nav) => {
                                                                         return cx('category-item', {
-                                                                            active: nav.isActive,
+                                                                            active: index == id ? true : false,
                                                                         });
                                                                     }}
-                                                                    end={!item[1] ? true : false}
-                                                                    to={`/list-book/${item[1]}`}
+                                                                    end={!item[1]}
+                                                                    to={`/list-book/?id=${index}`}
                                                                 >
                                                                     <span>{item[0]}</span>
                                                                 </NavLink>
@@ -139,15 +158,39 @@ function Header() {
                                 <Popup
                                     closeOnDocumentClick={false}
                                     modal
-                                    overlayStyle={{ backgroundColor: 'rgba(0,0,0,0.4)', alignItems: 'center' }}
+                                    overlayStyle={{
+                                        backgroundColor: 'rgba(0,0,0,0.4)',
+                                        alignItems: 'center',
+                                        transition: 'opacity .15s linear',
+                                        overFlow: 'hidden',
+                                        disPlay: { styleDis },
+                                    }}
                                     contentStyle={{ backgroundColor: '#fff', borderRadius: '8px' }}
                                     trigger={<button className={cx('login')}>Đăng nhập</button>}
+                                    onOpen={handleOpenSignIn}
+                                    onClose={handleClose}
                                 >
-                                    {(close) => <ModalContainer close={close} />}
+                                    {(close) => <ModalContainer formName={formName} close={close} />}
                                 </Popup>
                             </div>
                             <div className={cx('nav-right-item')}>
-                                <button className={cx('regis')}>Đăng ký</button>
+                                <Popup
+                                    closeOnDocumentClick={false}
+                                    modal
+                                    overlayStyle={{
+                                        backgroundColor: 'rgba(0,0,0,0.4)',
+                                        alignItems: 'center',
+                                        transition: 'opacity .15s linear',
+                                        overFlow: 'hidden',
+                                        disPlay: { styleDis },
+                                    }}
+                                    contentStyle={{ backgroundColor: '#fff', borderRadius: '8px' }}
+                                    trigger={<button className={cx('regis')}>Đăng ký</button>}
+                                    onOpen={handleOpenRegis}
+                                    onClose={handleClose}
+                                >
+                                    {(close) => <ModalContainer formName={formName} close={close} />}
+                                </Popup>
                             </div>
                         </div>
                     </div>

@@ -14,7 +14,6 @@ const publishRoute = [
     { path: config.routes.profile, component: Profile },
     { path: config.routes.listBook, component: ListBook },
     { path: config.routes.book, component: Book },
-    { path: config.routes.genreBook, component: GenreBook },
     { path: config.routes.bxh, component: Bxh },
     { path: config.routes.bxhTime, component: BxhTime },
     { path: config.routes.bxhRank, component: BxhRank },

@@ -4,15 +4,14 @@ import imgs from '~/assets/imgs';
 
 export const useGetCategory = () => {
     const [state, setState] = useState(() => {
-        const category = listBookData.map((item) => {
-            return [item.Category, item.tagCategory];
+        const category = listBookData.map((item, index) => {
+            return [item.Category, item.tagCategory, index];
         });
 
-        category.unshift(['Tất cả', '']);
+        category.unshift(['Tất cả', '', { end: true }]);
 
         return category;
     });
-
     return [state, setState];
 };
 

@@ -14,8 +14,6 @@ function BackGrpImgs() {
     const numRandom = Math.floor(Math.random() * state.length);
     const numRef = useRef([0]);
 
-    // console.log(numImg);
-
     useLayoutEffect(() => {
         if (numRef.current.length > state.length) {
             numRef.current = [];

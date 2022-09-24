@@ -19,9 +19,17 @@ function App() {
                                         <Page />
                                     </DefaultLayout>
                                 }
-                            />
+                            ></Route>
                         );
                     })}
+                    <Route
+                        path="*"
+                        element={
+                            <div>
+                                <h1>404</h1>
+                            </div>
+                        }
+                    ></Route>
                 </Routes>
             </div>
         </Router>
