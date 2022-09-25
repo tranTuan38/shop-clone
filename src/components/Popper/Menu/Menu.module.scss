@@ -1,0 +1,34 @@
+.category-item, .rank-item {
+    width: 100%;
+
+    & .menu-link {
+        display: block;
+        color: inherit;
+    }
+    
+    .menu-link:hover span{
+        color: var(--text-primary);
+    }
+
+    .active {
+        background-color: var(--text-primary);
+        color: #fff;
+    }
+
+    .menu-link.active span{
+        color: #fff;
+    }
+}
+
+.category-item {
+    & .menu-link {
+        padding: 6px 0;
+        padding-left: 8px;
+    }
+}
+
+.rank-item {
+    & .menu-link {
+        padding: 6px 20px;
+    }
+}

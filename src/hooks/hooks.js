@@ -8,8 +8,6 @@ export const useGetCategory = () => {
             return [item.Category, item.tagCategory, index];
         });
 
-        category.unshift(['Tất cả', '', { end: true }]);
-
         return category;
     });
     return [state, setState];

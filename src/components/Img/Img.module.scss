@@ -1,0 +1,13 @@
+.logo {
+    display: block;
+    height: 100%;
+    padding: 12px 0;
+    margin-right: 24px;
+    box-sizing: inherit;
+
+    img {
+        height: 48px;
+        width: 48px;
+        object-fit: cover;
+    }
+}

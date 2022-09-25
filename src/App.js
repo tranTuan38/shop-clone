@@ -1,6 +1,6 @@
+import { Fragment } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { publishRoute } from '~/routes';
-import config from '~/config';
 import DefaultLayout from '~/layouts';
 
 function App() {
@@ -10,16 +10,25 @@ function App() {
                 <Routes>
                     {publishRoute.map((route, index) => {
                         const Page = route.component;
+
+                        let Layout = DefaultLayout;
+
+                        if (route.layout) {
+                            Layout = route.layout;
+                        } else if (route.layout === null) {
+                            Layout = Fragment;
+                        }
+
                         return (
                             <Route
                                 key={index}
                                 path={route.path}
                                 element={
-                                    <DefaultLayout>
+                                    <Layout>
                                         <Page />
-                                    </DefaultLayout>
+                                    </Layout>
                                 }
-                            ></Route>
+                            />
                         );
                     })}
                     <Route

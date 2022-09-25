@@ -1,0 +1,23 @@
+.content {
+    --nav-color: #fff;
+    --nav-text: #212529;
+
+    .menu {
+        font-size: 1.6rem;
+        color: var(--nav-text);
+        background-color: var(--nav-color);
+        box-shadow: 0 10px 15px 0 rgb(0 0 0 / 9%);
+    }
+    
+    .menu.category-menu {
+        width: 500px;
+        max-width: 500px;
+        padding: 12px 24px;
+    }
+
+    .menu.rank-menu {
+        width: 160px;
+        max-width: 160px;
+        padding: 12px 0;
+    }
+}

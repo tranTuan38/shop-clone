@@ -74,12 +74,28 @@ a {
   }
 
 #arrow {
-    top: -18px;
-    border: 9px solid;
+    top: -16px;
+    border: 8px solid;
     border-bottom-color: #fff;
     border-top-color: transparent;
     border-left-color: transparent;
     border-right-color: transparent;
+}
+
+footer {
+    width: 100%;
+    color: #333;
+    font-size: 1.5rem;
+    padding: 24px 0;
+    background: #fff url('./footer-bg.png') no-repeat bottom;
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid #eee;
+    box-sizing: content-box;
+    height: 0;
+    overflow: visible;
 }
 
 

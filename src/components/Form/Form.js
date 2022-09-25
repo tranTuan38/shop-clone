@@ -57,7 +57,7 @@ function Form({ formName, close }) {
                             Quên mật khẩu?
                         </a>
                     </div>
-                    <input id="password" className={cx('input')} placeholder="Nhập mật khẩu" />
+                    <input id="password" type="password" className={cx('input')} placeholder="Nhập mật khẩu" />
                 </div>
                 <div className={cx('item', { ['re-item']: true })}>
                     <div className={cx('re-password')}>
@@ -65,7 +65,7 @@ function Form({ formName, close }) {
                             Nhập lại mật khẩu
                         </label>
                     </div>
-                    <input id="re-password" className={cx('input')} placeholder="Nhập mật khẩu" />
+                    <input id="re-password" type="password" className={cx('input')} placeholder="Nhập mật khẩu" />
                 </div>
                 <div className={cx('item', { ['check-item']: true })}>
                     <label className={cx('check-container')}>
@@ -78,7 +78,7 @@ function Form({ formName, close }) {
                 </div>
                 <div className={cx('item')}>
                     <button className={cx('button')}>
-                        <span className={cx('button-title')}>Đăng nhập</span>
+                        <span className={cx('button-title')}>{check === 'SignIn' ? 'Đăng nhập' : 'Đăng ký'}</span>
                     </button>
                 </div>
             </div>

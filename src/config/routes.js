@@ -4,7 +4,7 @@ const routes = {
     user: '/user',
     listBook: '/list-book/',
     book: '/list-book/:name',
-    bxh: '/bxh',
+    bxh: '/bxh/*',
     bxhTime: '/bxh/:time',
     bxhRank: `/bxh/:time/:rank`,
 };

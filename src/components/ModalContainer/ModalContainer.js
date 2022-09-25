@@ -7,7 +7,6 @@ import Form from '~/components/Form';
 const cx = classNames.bind(styles);
 
 function ModalContainer({ formName, close }) {
-    // console.log(formName);
     return (
         <div className={cx('modal')}>
             <div className={cx('inner')}>

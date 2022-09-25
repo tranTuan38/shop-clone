@@ -1,8 +1,9 @@
 import classNames from 'classnames/bind';
 import styles from './DefaultLayout.module.scss';
 
-import Header from '../Header';
-import BackGrpImgs from '~/components/BackGrpImgs';
+import Header from '../component/Header';
+import BackGrpImgs from '../component/BackGrpImgs';
+import Footer from '../component/Footer';
 
 const cx = classNames.bind(styles);
 
@@ -18,6 +19,7 @@ function DefaultLayout({ children }) {
                     </div>
                 </div>
             </div>
+            <Footer />
             <div id="popup-root" />
         </div>
     );
