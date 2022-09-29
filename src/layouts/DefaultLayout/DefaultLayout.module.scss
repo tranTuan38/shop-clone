@@ -1,25 +1,26 @@
 .wrapper{
-    position: relative;
+    top: 24px;
     padding-top: 250px;
     padding-bottom: 24px;
     
 }
 
 .container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding-right: 15px;
-      padding-left: 15px;
-      margin-right: auto;
-      margin-left: auto;
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    max-width: 1200px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .content {
-    background-color: #ccc;
-    padding: 20px;
     position: relative;
-    border-radius: 6px;
+    width: 100%;
+    // padding: 20px;
+    border-radius: 8px;
+    background-color: #fff;
 }
 
 

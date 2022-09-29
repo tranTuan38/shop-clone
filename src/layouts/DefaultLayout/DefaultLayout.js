@@ -13,10 +13,8 @@ function DefaultLayout({ children }) {
             <Header />
             <BackGrpImgs />
             <div className={cx('wrapper')}>
-                <div className="grid wide">
-                    <div className={cx('container')}>
-                        <div className={cx('content')}>{children}</div>
-                    </div>
+                <div className={cx('container')}>
+                    <div className={cx('content')}>{children}</div>
                 </div>
             </div>
             <Footer />

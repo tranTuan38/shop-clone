@@ -1,0 +1,13 @@
+.all-view {
+    font-size: 1.4rem;
+    display: none;
+    color: var(--text-primary);
+
+    & > span {
+        display: block;
+    }
+
+    &:hover {
+        color: #785b1a;
+    }
+}

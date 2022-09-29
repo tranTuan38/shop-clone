@@ -3,6 +3,7 @@ import styles from './Footer.module.scss';
 
 import imgs from '~/assets/imgs';
 import footerImg from '~/assets/imgs/footer';
+import Img from '~/components/Img';
 
 const cx = classNames.bind(styles);
 
@@ -17,9 +18,7 @@ function Footer() {
                 <div className="grid wide">
                     <div className={cx('container')}>
                         <div className={cx('content')}>
-                            <a href="/" className={cx('logo')}>
-                                <img src={logo} alt={noImg} />
-                            </a>
+                            <Img href="/" className={cx('logo')} src={logo} alt={noImg} />
                             <div className={cx('for-me')}>
                                 <p>
                                     {' '}
@@ -29,12 +28,8 @@ function Footer() {
                                 </p>
                             </div>
                             <div className={cx('app-down')}>
-                                <a href="/" className={cx('logo-down')}>
-                                    <img src={appStoreImg} alt={noImg} />
-                                </a>
-                                <a href="/" className={cx('logo-down')}>
-                                    <img src={googleImg} alt={noImg} />
-                                </a>
+                                <Img href="/" className={cx('logo-down')} src={appStoreImg} alt={noImg} />
+                                <Img href="/" className={cx('logo-down')} src={googleImg} alt={noImg} />
                             </div>
                             <div className={cx('list-unstyled')}>
                                 <a href="/" className={cx('unstyled-item')}>

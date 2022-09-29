@@ -20,13 +20,13 @@ function Form({ formName, close }) {
         <div className={cx('Form', { [check]: check })}>
             <header className={cx('header')}>
                 <button
-                    onClick={() => handleClick('SignIn')}
+                    onClick={check === 'SignIn' ? () => {} : () => handleClick('SignIn')}
                     className={cx('signIn', { ['in-form']: check === 'SignIn' })}
                 >
                     Đăng nhập
                 </button>
                 <button
-                    onClick={() => handleClick('Regis')}
+                    onClick={check === 'Regis' ? () => {} : () => handleClick('Regis')}
                     className={cx('regis', { ['in-form']: check === 'Regis' })}
                 >
                     Đăng ký

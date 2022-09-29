@@ -94,7 +94,7 @@ function Header() {
 
                         <div className={cx('nav')}>
                             <div className={cx('nav-right')}>
-                                <a href="javascript:void(0)">
+                                <a href="#">
                                     <span className={cx('icon')}>
                                         <FontAwesomeIcon icon={faArrowAltCircleUp} />
                                     </span>
