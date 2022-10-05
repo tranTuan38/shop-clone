@@ -1,6 +1,7 @@
 .wrapper {
     padding: 16px 0;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
+    font-weight: 400;
 
     & a[href]:hover {
         color: var(--text-primary)
@@ -17,7 +18,8 @@
         align-items: center;
 
         .h2 {
-            font-size: 1.8rem;
+            font-size: 2rem;
+            font-weight: 600;
         }
 
         .title-link {
@@ -32,9 +34,9 @@
 }
 
 .list-update {
-    font-size: inherit;
+    font-size: 1.5rem;
     border-top: 1px solid #eee;
-
+    
     .list-item {
         display: flex;
         align-items: center;
@@ -62,12 +64,13 @@
         }
 
         .link {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
+            font-weight: 600;
         }
 
-        // .link-chapter {
-
-        // }
+        .link-chapter {
+            font-size: 1.4rem;
+        }
 
         .link, .link-chapter, .author {
             display: -webkit-box;
@@ -79,6 +82,7 @@
 
         .author {
             flex: 2;
+            font-size: 1.4rem;
             max-width: 245px;
             color: #212529;
         }
@@ -92,11 +96,12 @@
             text-overflow: ellipsis;
         }
         
-        // .creator {
-
-        // }
+        .creator {
+            font-size: 1.4rem;
+        }
 
         .time {
+            font-size: 1.4rem;
             text-align: right;  
         }
 

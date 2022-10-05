@@ -58,7 +58,8 @@
 }
 
 .nav-right {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
+    font-weight: 400;
     margin-left: auto;
     color: var(--text-color);
     display: flex;
@@ -71,7 +72,9 @@
 
 
 .icon {
-    font-size: 1.6rem;
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
     margin-right: 8px;
 }
 
@@ -94,4 +97,5 @@
 .regis {
     background-color: var(--header-color);
 }
+
 

@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './Form.module.scss';
 
-import { Check } from '~/components/Icons';
+import { CheckIcon } from '~/components/Icons';
 import { useEffect, useLayoutEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
@@ -72,7 +72,7 @@ function Form({ formName, close }) {
                         <span className={cx('check-title')}>Ghi nhớ mật khẩu</span>
                         <input className={cx('checkbox')} type="checkbox" />
                         <span className={cx('checkmark')}>
-                            <Check className={cx('check-icon')} />
+                            <CheckIcon className={cx('check-icon')} />
                         </span>
                     </label>
                 </div>

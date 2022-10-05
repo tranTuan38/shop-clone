@@ -25,4 +25,89 @@ function handleTime(timeCur, timeItem) {
     return result;
 }
 
-export { handleTime };
+function handleGetRankWeekRead(data) {
+    data.sort((a, b) => {
+        return b.rankWeekRead - a.rankWeekRead;
+    });
+
+    return data;
+}
+
+function handleGetRankWeekPrevailing(data) {
+    data.sort((a, b) => {
+        return b.rankWeekPrevailing - a.rankWeekPrevailing;
+    });
+
+    return data;
+}
+
+function handleGetRankWeekNomination(data) {
+    data.sort((a, b) => {
+        return b.rankWeekNomination - a.rankWeekNomination;
+    });
+
+    return data;
+}
+
+function handleGetBookById(data, id) {
+    const book = data.find((item) => {
+        return item.idBook === id;
+    });
+
+    return book;
+}
+
+function handleCompareTime(data) {
+    const timeData = new Date(data.time);
+
+    return timeData;
+}
+
+function handleGetUserById(data, userData) {
+    // console.log(id);
+    const user = userData.map((item) => {
+        const rateData = data.reduce((acc, ele) => {
+            if (ele.idUser === item.id) {
+                return [...acc, { comment: ele.comment, rate: ele.useRating, time: ele.time }];
+            }
+
+            return acc;
+        }, []);
+
+        rateData.sort((a, b) => {
+            const aTime = new Date(a.time);
+            const bTime = new Date(b.time);
+            return aTime - bTime;
+        });
+        return { userName: item.name, userAvata: item.avatar, dataRating: rateData };
+    });
+
+    user.sort((a, b) => {
+        const atime = new Date(a.dataRating[a.dataRating.length - 1].time);
+        const btime = new Date(b.dataRating[b.dataRating.length - 1].time);
+
+        return btime - atime;
+    });
+
+    // console.log(user);
+
+    return user;
+}
+
+function handleSortSelecter(data, item) {
+    if (data.includes(item)) {
+        return data;
+    } else {
+        return [...data, item];
+    }
+}
+
+export {
+    handleTime,
+    handleGetRankWeekRead,
+    handleGetRankWeekPrevailing,
+    handleGetRankWeekNomination,
+    handleGetBookById,
+    handleGetUserById,
+    handleSortSelecter,
+};

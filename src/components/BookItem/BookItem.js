@@ -1,9 +1,8 @@
 import classNames from 'classnames/bind';
 import styles from './BookItem.module.scss';
 
-import Taga from '~/components/Taga';
-import Img from '~/components/Img';
 import MediaItem from '~/components/MediaItem';
+import RatingItem from '~/components/HomePage/Rating/RatingItem';
 
 const cx = classNames.bind(styles);
 
@@ -17,7 +16,11 @@ function BookItem({ data, type }) {
                             {item.map((item, index) => {
                                 return (
                                     <div key={index} className="col c-6">
-                                        <MediaItem data={item} type={type} />
+                                        {type === 'rating' ? (
+                                            <RatingItem data={item} type={type} />
+                                        ) : (
+                                            <MediaItem data={item} type={type} />
+                                        )}
                                     </div>
                                 );
                             })}

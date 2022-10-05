@@ -14,7 +14,7 @@ function MediaItem({ data, type }) {
             })}
         >
             <Img href="/" src={data.bookImg} className={cx('img-item')} />
-            {data && type === 'sugges' ? (
+            {(data && type === 'sugges') || (data && type === 'status') ? (
                 <div className={cx('body')}>
                     <h2 className={cx('item-title')}>
                         <Taga href="#" title={data.name} className={cx('item-link')} />
@@ -23,7 +23,12 @@ function MediaItem({ data, type }) {
                         <p>{data.description}</p>
                     </div>
                     <div className={cx('intimate')}>
-                        <span className={cx('author')}>{data.authorName}</span>
+                        <span className={cx('author')}>
+                            <span className={cx('author-inner')}>
+                                <i className="nh-icon icon-user-edit"></i>
+                                {data.authorName}
+                            </span>
+                        </span>
                         <Taga href="#" className={cx('category', { ['item-link']: type })} title={data.category} />
                     </div>
                 </div>

@@ -1,0 +1,36 @@
+.wrapper {
+    padding: 24px 0;
+}
+
+.content {
+
+    .appreciate, .judge {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 24px;
+
+        .h2 {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+        }
+
+        .rating-link {
+            margin-bottom: 16px;
+        }
+    }
+
+    .judge {
+        margin-bottom: 6px;  
+    }
+
+    &:hover .rating-link {
+        display: block;
+    }
+}
+
+
+
+.inner {
+
+}

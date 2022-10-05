@@ -9,7 +9,6 @@ const cx = classNames.bind(styles);
 
 function ListUpdate({ data }) {
     const time = new Date();
-    console.log(data);
     return (
         <div className={cx('list-update')}>
             {data.map((item, index) => {

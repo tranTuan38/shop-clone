@@ -3,7 +3,7 @@ import imgs from '~/assets/imgs';
 const listBookData = [
     {
         idBook: 0,
-        timeCreateBook: '26-09-2022T08:42:32',
+        timeCreateBook: '2022-09-28T07:42:32',
         creator: 'Tuan@tn38',
         status: 'Hoàn thành',
         properties: 'Chọn lọc',
@@ -14,6 +14,9 @@ const listBookData = [
         bookImg: imgs.listImgs.Img0,
         name: 'Ta Có Một Thế Giới Tu Tiên',
         authorName: 'Thuần Cửu Liên Bảo Đăng',
+        rankWeekRead: 200000,
+        rankWeekPrevailing: 45,
+        rankWeekNomination: 773,
         tagName: ['Hoàn thành', 'Tiên Hiệp', 'Điềm Đạm', 'Xuyên Qua'],
         tagCategory: 'tien-hiep',
         category: 'Tiên Hiệp', // Thể loại
@@ -32,7 +35,7 @@ const listBookData = [
     },
     {
         idBook: 1,
-        timeCreateBook: '26-09-2022T08:42:32',
+        timeCreateBook: '2022-09-27T09:42:32',
         creator: 'Tuan@tn38',
         status: 'Đang ra',
         reading: true,
@@ -45,6 +48,9 @@ const listBookData = [
         bookImg: imgs.listImgs.Img1,
         name: 'Ta Chỉ Muốn Làm Nhàn Vương, Ngươi Lại Để Cho Ta Thủ Biên Giới?',
         authorName: 'Đương Thì Minh Nguyệt Thanh',
+        rankWeekRead: 12000,
+        rankWeekPrevailing: 20,
+        rankWeekNomination: 450,
         tagName: ['Đang ra', 'Huyền Huyễn', 'Nhiệt Huyết'],
         tagCategory: 'huyen-huyen',
         category: 'Huyền Huyễn', // Thể loại
@@ -86,7 +92,7 @@ const listBookData = [
     },
     {
         idBook: 2,
-        timeCreateBook: '26-09-2022T08:42:32',
+        timeCreateBook: '2022-09-28T11:42:32',
         creator: 'Tuan@tn38',
         status: 'Hoàn thành',
         properties: 'Chất lượng cao',
@@ -97,6 +103,9 @@ const listBookData = [
         bookImg: imgs.listImgs.Img2,
         name: 'Ta, Godzilla, Great Old One',
         authorName: 'Tái Biệt Liễu Khang Kiều',
+        rankWeekRead: 9000,
+        rankWeekPrevailing: 10,
+        rankWeekNomination: 172,
         tagName: ['Hoàn thành', 'Khoa Huyễn', 'Nhẹ nhàng'],
         tagCategory: 'khoa-huyen',
         category: 'Khoa Huyễn', // Thể loại
@@ -123,7 +132,7 @@ const listBookData = [
     },
     {
         idBook: 3,
-        timeCreateBook: '26-09-2022T08:42:32',
+        timeCreateBook: '2022-09-28T12:42:32',
         creator: 'Tuan@tn38',
         status: 'Đang ra',
         reading: true,
@@ -136,6 +145,9 @@ const listBookData = [
         bookImg: imgs.listImgs.Img3,
         name: 'Một Cái Cũng Đừng Nghĩ Chạy Ra Tân Thủ thôn',
         authorName: 'Trường Bạch Sơn Thượng Trường Bạch Khách',
+        rankWeekRead: 3000,
+        rankWeekPrevailing: 9,
+        rankWeekNomination: 90,
         tagName: ['Đang ra', 'Võng Du'],
         tagCategory: 'vong-du',
         category: 'Võng Du', // Thể loại
@@ -159,7 +171,7 @@ const listBookData = [
     },
     {
         idBook: 4,
-        timeCreateBook: '26-09-2022T08:42:32',
+        timeCreateBook: '2022-09-29T08:42:32',
         creator: 'Tuan@tn38',
         status: 'Đang ra',
         properties: 'Chọn lọc',
@@ -170,6 +182,9 @@ const listBookData = [
         bookImg: imgs.listImgs.Img4,
         name: 'Bác Sĩ ? Hắn Rõ Ràng Là Quỷ Dị !',
         authorName: 'Bất Xuyên Cước Đích Hài',
+        rankWeekRead: 50000,
+        rankWeekPrevailing: 22,
+        rankWeekNomination: 351,
         tagName: ['Đang ra', 'Đô Thị', 'Lãnh Khốc'],
         tagCategory: 'do-thi',
         category: 'Đô Thị', // Thể loại
@@ -197,7 +212,7 @@ const listBookData = [
     },
     {
         idBook: 5,
-        timeCreateBook: '26-09-2022T08:42:32',
+        timeCreateBook: '2022-09-30T08:42:32',
         creator: 'Tuan@tn38',
         status: 'Đang ra',
         reading: true,
@@ -210,6 +225,9 @@ const listBookData = [
         bookImg: imgs.listImgs.Img5,
         name: 'Bị Grindelwald Vừa Ý Ta Đi Hogwarts',
         authorName: 'Tuyệt Vọng Đích Bạch Khai Thủy',
+        rankWeekRead: 450000,
+        rankWeekPrevailing: 12,
+        rankWeekNomination: 222,
         tagName: ['Đang ra', 'Đồng Nhân', 'Cơ Trí'],
         tagCategory: 'dong-nhan',
         category: 'Đồng Nhân', // Thể loại
@@ -239,7 +257,7 @@ const listBookData = [
     },
     {
         idBook: 6,
-        timeCreateBook: '26-09-2022T08:42:32',
+        timeCreateBook: '2022-09-30T16:42:32',
         creator: 'Tuan@tn38',
         status: 'Đang ra',
         reading: true,
@@ -252,6 +270,9 @@ const listBookData = [
         bookImg: imgs.listImgs.Img6,
         name: 'Tổng Võ: Ta Dương Quá Vốn Là Không Qua, Sao Là Sửa Về',
         authorName: 'Thanh Đồng Dũng Sĩ',
+        rankWeekRead: 145600,
+        rankWeekPrevailing: 36,
+        rankWeekNomination: 351,
         tagName: ['Đang ra', 'Kiếm Hiệp', 'Cơ Trí'],
         tagCategory: 'kiem-hiep',
         category: 'Kiếm Hiệp', // Thể loại
@@ -294,7 +315,7 @@ const listBookData = [
     },
     {
         idBook: 7,
-        timeCreateBook: '26-09-2022T08:42:32',
+        timeCreateBook: '2022-09-30T08:42:30',
         creator: 'Tuan@tn38',
         status: 'Hoàn thành',
         properties: 'Chọn lọc',
@@ -305,6 +326,9 @@ const listBookData = [
         bookImg: imgs.listImgs.Img7,
         name: 'Ta Có Một Thế Giới Tu Tiên',
         authorName: 'Thuần Cửu Liên Bảo Đăng',
+        rankWeekRead: 21000,
+        rankWeekPrevailing: 15,
+        rankWeekNomination: 165,
         tagName: ['Hoàn thành', 'Tiên Hiệp', 'Điềm Đạm', 'Xuyên Qua'],
         tagCategory: 'tien-hiep',
         category: 'Tiên Hiệp', // Thể loại
@@ -323,7 +347,7 @@ const listBookData = [
     },
     {
         idBook: 8,
-        timeCreateBook: '26-09-2022T08:42:32',
+        timeCreateBook: '2022-09-28T21:42:32',
         creator: 'Tuan@tn38',
         status: 'Đang ra',
         reading: true,
@@ -336,6 +360,9 @@ const listBookData = [
         bookImg: imgs.listImgs.Img8,
         name: 'Ta Chỉ Muốn Làm Nhàn Vương, Ngươi Lại Để Cho Ta Thủ Biên Giới?',
         authorName: 'Đương Thì Minh Nguyệt Thanh',
+        rankWeekRead: 312000,
+        rankWeekPrevailing: 9,
+        rankWeekNomination: 181,
         tagName: ['Đang ra', 'Huyền Huyễn', 'Nhiệt Huyết'],
         tagCategory: 'huyen-huyen',
         category: 'Huyền Huyễn', // Thể loại
@@ -377,7 +404,7 @@ const listBookData = [
     },
     {
         idBook: 9,
-        timeCreateBook: '26-09-2022T08:42:32',
+        timeCreateBook: '2022-09-28T22:42:32',
         creator: 'Tuan@tn38',
         status: 'Đang ra',
         properties: 'Chất lượng cao',
@@ -388,6 +415,9 @@ const listBookData = [
         bookImg: imgs.listImgs.Img9,
         name: 'Ta, Godzilla, Great Old One',
         authorName: 'Tái Biệt Liễu Khang Kiều',
+        rankWeekRead: 21020,
+        rankWeekPrevailing: 15,
+        rankWeekNomination: 300,
         tagName: ['Đang ra', 'Khoa Huyễn', 'Nhẹ nhàng'],
         tagCategory: 'khoa-huyen',
         category: 'Khoa Huyễn', // Thể loại
@@ -414,7 +444,7 @@ const listBookData = [
     },
     {
         idBook: 10,
-        timeCreateBook: '26-09-2022T08:42:32',
+        timeCreateBook: '2022-09-29T23:42:32',
         creator: 'Tuan@tn38',
         status: 'Đang ra',
         properties: 'Chọn lọc',
@@ -425,6 +455,9 @@ const listBookData = [
         bookImg: imgs.listImgs.Img10,
         name: 'Một Cái Cũng Đừng Nghĩ Chạy Ra Tân Thủ thôn',
         authorName: 'Trường Bạch Sơn Thượng Trường Bạch Khách',
+        rankWeekRead: 140256,
+        rankWeekPrevailing: 24,
+        rankWeekNomination: 430,
         tagName: ['Đang ra', 'Võng Du'],
         tagCategory: 'vong-du',
         category: 'Võng Du', // Thể loại
@@ -448,7 +481,7 @@ const listBookData = [
     },
     {
         idBook: 11,
-        timeCreateBook: '26-09-2022T08:42:32',
+        timeCreateBook: '2022-09-28T08:32:32',
         creator: 'Tuan@tn38',
         status: 'Hoàn thành',
         properties: 'Chọn lọc',
@@ -459,6 +492,9 @@ const listBookData = [
         bookImg: imgs.listImgs.Img11,
         name: 'Ta Có Một Thế Giới Tu Tiên',
         authorName: 'Thuần Cửu Liên Bảo Đăng',
+        rankWeekRead: 181415,
+        rankWeekPrevailing: 28,
+        rankWeekNomination: 197,
         tagName: ['Hoàn thành', 'Tiên Hiệp', 'Điềm Đạm', 'Xuyên Qua'],
         tagCategory: 'tien-hiep',
         category: 'Tiên Hiệp', // Thể loại
@@ -477,7 +513,7 @@ const listBookData = [
     },
     {
         idBook: 12,
-        timeCreateBook: '26-09-2022T08:42:32',
+        timeCreateBook: '2022-09-28T16:42:32',
         creator: 'Tuan@tn38',
         status: 'Hoàn thành',
         properties: 'Chọn lọc',
@@ -488,6 +524,9 @@ const listBookData = [
         bookImg: imgs.listImgs.Img11,
         name: 'Ta Có Một Thế Giới Tu Tiên',
         authorName: 'Thuần Cửu Liên Bảo Đăng',
+        rankWeekRead: 140770,
+        rankWeekPrevailing: 14,
+        rankWeekNomination: 172,
         tagName: ['Hoàn thành', 'Tiên Hiệp', 'Điềm Đạm', 'Xuyên Qua'],
         tagCategory: 'tien-hiep',
         category: 'Tiên Hiệp', // Thể loại
@@ -506,7 +545,7 @@ const listBookData = [
     },
     {
         idBook: 13,
-        timeCreateBook: '26-09-2022T08:42:32',
+        timeCreateBook: '2022-09-28T12:42:32',
         creator: 'Tuan@tn38',
         status: 'Hoàn thành',
         properties: 'Chọn lọc',
@@ -517,6 +556,9 @@ const listBookData = [
         bookImg: imgs.listImgs.Img11,
         name: 'Ta Có Một Thế Giới Tu Tiên',
         authorName: 'Thuần Cửu Liên Bảo Đăng',
+        rankWeekRead: 200354,
+        rankWeekPrevailing: 19,
+        rankWeekNomination: 259,
         tagName: ['Hoàn thành', 'Tiên Hiệp', 'Điềm Đạm', 'Xuyên Qua'],
         tagCategory: 'tien-hiep',
         category: 'Tiên Hiệp', // Thể loại
@@ -535,7 +577,7 @@ const listBookData = [
     },
     {
         idBook: 14,
-        timeCreateBook: '26-09-2022T08:42:32',
+        timeCreateBook: '2022-09-28T08:15:32',
         creator: 'Tuan@tn38',
         status: 'Hoàn thành',
         properties: 'Chọn lọc',
@@ -546,7 +588,74 @@ const listBookData = [
         bookImg: imgs.listImgs.Img11,
         name: 'Ta Có Một Thế Giới Tu Tiên',
         authorName: 'Thuần Cửu Liên Bảo Đăng',
+        rankWeekRead: 121243,
+        rankWeekPrevailing: 16,
+        rankWeekNomination: 216,
         tagName: ['Hoàn thành', 'Tiên Hiệp', 'Điềm Đạm', 'Xuyên Qua'],
+        tagCategory: 'tien-hiep',
+        category: 'Tiên Hiệp', // Thể loại
+        totalChapter: 333,
+        description:
+            'Trần Mạc Bạch, Tiên Môn lớp 12 học sinh, đang cố gắng ôn tập chuẩn bị thi đậu đại đạo viện, lúc đầu hắn đời này mơ ước lớn nhất cũng chính là Trúc Cơ thành công, thẳng đến hắn có thể xuyên qua đến một cái khác thế giới tu tiên, sau đó, mộng tưởng liền thay đổi. . .',
+        listChapter: [
+            {
+                nameChapter: 'Bộ xương màu đen',
+                numberChapter: 1,
+                id_chapter: 0,
+                timeCreatChapter: '2022-09-28T04:22:36',
+                content: 'Chưa có gì',
+            },
+        ],
+    },
+    {
+        idBook: 15,
+        timeCreateBook: '2022-09-29T12:42:32',
+        creator: 'Tuan@tn38',
+        status: 'Đang ra',
+        properties: 'Chọn lọc',
+        character: 'Cơ trí',
+        background: 'Đông phương huyền huyễn',
+        sect: 'Hệ thống',
+        sight: 'Góc nhìn nam',
+        bookImg: imgs.listImgs.Img11,
+        name: 'Ta Có Một Thế Giới Tu Tiên',
+        authorName: 'Thuần Cửu Liên Bảo Đăng',
+        rankWeekRead: 121243,
+        rankWeekPrevailing: 16,
+        rankWeekNomination: 216,
+        tagName: ['Đang ra', 'Tiên Hiệp', 'Điềm Đạm', 'Xuyên Qua'],
+        tagCategory: 'tien-hiep',
+        category: 'Tiên Hiệp', // Thể loại
+        totalChapter: 333,
+        description:
+            'Trần Mạc Bạch, Tiên Môn lớp 12 học sinh, đang cố gắng ôn tập chuẩn bị thi đậu đại đạo viện, lúc đầu hắn đời này mơ ước lớn nhất cũng chính là Trúc Cơ thành công, thẳng đến hắn có thể xuyên qua đến một cái khác thế giới tu tiên, sau đó, mộng tưởng liền thay đổi. . .',
+        listChapter: [
+            {
+                nameChapter: 'Bộ xương màu đen',
+                numberChapter: 1,
+                id_chapter: 0,
+                timeCreatChapter: '2022-09-28T04:22:36',
+                content: 'Chưa có gì',
+            },
+        ],
+    },
+    {
+        idBook: 16,
+        timeCreateBook: '2022-09-30T23:42:32',
+        creator: 'Tuan@tn38',
+        status: 'Đang ra',
+        properties: 'Chọn lọc',
+        character: 'Cơ trí',
+        background: 'Đông phương huyền huyễn',
+        sect: 'Hệ thống',
+        sight: 'Góc nhìn nam',
+        bookImg: imgs.listImgs.Img11,
+        name: 'Ta Có Một Thế Giới Tu Tiên',
+        authorName: 'Thuần Cửu Liên Bảo Đăng',
+        rankWeekRead: 121243,
+        rankWeekPrevailing: 16,
+        rankWeekNomination: 216,
+        tagName: ['Đang ra', 'Tiên Hiệp', 'Điềm Đạm', 'Xuyên Qua'],
         tagCategory: 'tien-hiep',
         category: 'Tiên Hiệp', // Thể loại
         totalChapter: 333,

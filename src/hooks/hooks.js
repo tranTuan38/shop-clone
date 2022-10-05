@@ -1,7 +1,14 @@
 import { useEffect, useState } from 'react';
-import { listBookData } from '~/initdata';
+import { listBookData, listRating, userData } from '~/initdata';
 import imgs from '~/assets/imgs';
-import { handleTime } from '~/handler';
+import {
+    handleGetRankWeekRead,
+    handleGetRankWeekPrevailing,
+    handleGetRankWeekNomination,
+    handleGetBookById,
+    handleGetUserById,
+    handleSortSelecter,
+} from '~/handler';
 
 export const useGetCategory = () => {
     const [state, setState] = useState(() => {
@@ -94,4 +101,179 @@ export const useGetCreateChater = () => {
     });
 
     return data;
+};
+
+export const useGetRankWeek = () => {
+    const [data, setData] = useState(() => {
+        const datas = [
+            handleGetRankWeekRead(listBookData).slice(0, 10),
+            handleGetRankWeekPrevailing(listBookData).slice(0, 10),
+            handleGetRankWeekNomination(listBookData).slice(0, 10),
+        ];
+
+        return datas;
+    });
+
+    return data;
+};
+
+export const useGetRate = () => {
+    const [data, setData] = useState(() => {
+        const datas = listRating.filter((item) => {
+            const rateItem = item.rating.some((overvalue) => {
+                return overvalue.useRating === 5;
+            });
+
+            return rateItem;
+        });
+
+        const dataRating = datas.slice(0, 6);
+
+        return dataRating;
+    });
+
+    return data;
+};
+
+export const useGetBookRating = (list) => {
+    const [data, setData] = useState(() => {
+        const result = [];
+        const datas = listBookData.reduce((acc, item) => {
+            let sumRating = 0;
+            const dataItem = list.find((listItem) => {
+                return listItem.idBook === item.idBook;
+            });
+            if (dataItem) {
+                dataItem.rating.forEach((el) => {
+                    if (el.useRating === 5) {
+                        sumRating++;
+                    }
+                });
+
+                acc = [...acc, [item, sumRating]];
+                return acc;
+            }
+
+            return acc;
+        }, []);
+
+        const newData = [...datas];
+
+        while (newData.length) {
+            result.push(newData.splice(0, 2));
+        }
+
+        return result;
+    });
+
+    return data;
+};
+
+export const useGetComment = () => {
+    const [data, setData] = useState(() => {
+        let results;
+        const datas = listRating.map((rate) => {
+            const book = handleGetBookById(listBookData, rate.idBook);
+            const user = handleGetUserById(rate.rating, userData);
+            // console.log(rate.idBook, user);
+
+            return { user, bookName: book.name };
+        });
+
+        datas.sort((a, b) => {
+            const aEle = a.user[0].dataRating;
+            const bEle = b.user[0].dataRating;
+            const aTime = new Date(aEle[aEle.length - 1].time);
+            const bTime = new Date(bEle[bEle.length - 1].time);
+
+            return bTime - aTime;
+        });
+
+        results = datas.slice(0, 3);
+
+        return results;
+    });
+
+    return data;
+};
+
+export const useGetAddNewBook = () => {
+    const [data, setData] = useState(() => {
+        const datas = listBookData.filter((item) => {
+            return item.status === 'Đang ra';
+        });
+
+        datas.sort((a, b) => {
+            const aTime = new Date(a.timeCreateBook);
+            const bTime = new Date(b.timeCreateBook);
+
+            return bTime - aTime;
+        });
+
+        const result = datas.slice(0, 10);
+
+        return result;
+    });
+
+    return data;
+};
+
+export const useGetCompletedNewBook = () => {
+    const [data, setData] = useState(() => {
+        const result = [];
+        const datas = listBookData.filter((item) => {
+            return item.status === 'Hoàn thành';
+        });
+
+        datas.sort((a, b) => {
+            const aTime = new Date(a.timeCreateBook);
+            const bTime = new Date(b.timeCreateBook);
+
+            return bTime - aTime;
+        });
+
+        let newData;
+
+        newData = datas.slice(0, 6);
+
+        while (newData.length) {
+            result.push(newData.splice(0, 2));
+        }
+
+        return result;
+    });
+
+    return data;
+};
+
+export const useGetListSelecter = () => {
+    const [state, setState] = useState(() => {
+        const datas = listBookData.reduce((acc, item) => {
+            if (Object.keys(acc).length) {
+                return {
+                    categorys: handleSortSelecter(acc.categorys, item.category),
+                    status: handleSortSelecter(acc.status, item.status),
+                    prototypes: handleSortSelecter(acc.prototypes, item.properties),
+                    characters: handleSortSelecter(acc.characters, item.character),
+                    backGrg: handleSortSelecter(acc.backGrg, item.background),
+                    sects: handleSortSelecter(acc.sects, item.sect),
+                    sights: handleSortSelecter(acc.sights, item.sight),
+                };
+            }
+
+            return {
+                categorys: [item.category],
+                status: [item.status],
+                prototypes: [item.properties],
+                characters: [item.character],
+                backGrg: [item.background],
+                sects: [item.sect],
+                sights: [item.sight],
+            };
+        }, {});
+
+        return datas;
+    });
+
+    return state;
 };

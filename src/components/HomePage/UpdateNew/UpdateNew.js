@@ -10,8 +10,6 @@ const cx = classNames.bind(styles);
 function Home() {
     const data = useGetCreateChater();
 
-    // console.log(data);
-
     return (
         <div className={cx('wrapper')}>
             <div className={cx('title')}>

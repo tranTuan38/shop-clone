@@ -25,6 +25,8 @@ function Header() {
     const [formName, setFormName] = useState('');
     const { pathname, search } = useLocation();
 
+    console.log(pathname, search);
+
     const id = searchParams.get('id');
     const { logo, noImg } = imgs;
 
@@ -63,7 +65,7 @@ function Header() {
                             >
                                 <div className={cx('nav-item', { ['nav-left']: true })}>
                                     <span className={cx('icon')}>
-                                        <FontAwesomeIcon icon={faBars} />
+                                        <i className="nh-icon icon-menu"></i>
                                     </span>
                                     <span>Thể loại</span>
                                 </div>
@@ -94,10 +96,8 @@ function Header() {
 
                         <div className={cx('nav')}>
                             <div className={cx('nav-right')}>
-                                <a href="#">
-                                    <span className={cx('icon')}>
-                                        <FontAwesomeIcon icon={faArrowAltCircleUp} />
-                                    </span>
+                                <a className={cx('icon')} href="#">
+                                    <i className="nh-icon icon-up"></i>
                                     <span>Đăng truyện</span>
                                 </a>
                             </div>
