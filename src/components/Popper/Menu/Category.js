@@ -35,7 +35,7 @@ function Category({ navItem, pathname, search, data, id }) {
                                             active: index == id ? true : false,
                                         });
                                     }}
-                                    to={`/list-book/?id=${index}`}
+                                    to={`/list-book/?genre=${index}`}
                                 >
                                     <span>{item[0]}</span>
                                 </NavLink>

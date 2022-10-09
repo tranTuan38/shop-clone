@@ -25,7 +25,7 @@ function Header() {
     const [formName, setFormName] = useState('');
     const { pathname, search } = useLocation();
 
-    console.log(pathname, search);
+    // console.log(pathname, search);
 
     const id = searchParams.get('id');
     const { logo, noImg } = imgs;
@@ -62,6 +62,7 @@ function Header() {
                                 pathname={pathname}
                                 search={search}
                                 TypeMenu={CategoryMenu}
+                                isArrow={true}
                             >
                                 <div className={cx('nav-item', { ['nav-left']: true })}>
                                     <span className={cx('icon')}>
@@ -83,6 +84,7 @@ function Header() {
                                 pathname={pathname}
                                 search={search}
                                 TypeMenu={RankMenu}
+                                isArrow={true}
                             >
                                 <div className={cx('nav-item', { ['nav-left']: true })}>
                                     <Link to="/bxh">

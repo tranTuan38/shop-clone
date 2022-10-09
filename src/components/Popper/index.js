@@ -1,1 +1,1 @@
-export { default as HeaderPopper } from './Popper';
+export { default as HeaderPopper, default as TopSideBarPopper } from './Popper';

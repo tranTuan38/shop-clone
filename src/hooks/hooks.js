@@ -251,7 +251,7 @@ export const useGetListSelecter = () => {
         const datas = listBookData.reduce((acc, item) => {
             if (Object.keys(acc).length) {
                 return {
-                    categorys: handleSortSelecter(acc.categorys, item.category),
+                    genre: handleSortSelecter(acc.genre, item.category),
                     status: handleSortSelecter(acc.status, item.status),
                     prototypes: handleSortSelecter(acc.prototypes, item.properties),
                     characters: handleSortSelecter(acc.characters, item.character),
@@ -262,7 +262,7 @@ export const useGetListSelecter = () => {
             }
 
             return {
-                categorys: [item.category],
+                genre: [item.category],
                 status: [item.status],
                 prototypes: [item.properties],
                 characters: [item.character],

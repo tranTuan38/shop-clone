@@ -21,10 +21,16 @@ function Popper({
     search,
     TypeMenu,
     children,
+    arrow,
+    isArrow,
+    onClick,
+    check,
+    type,
 }) {
     return (
         <div className={cx('content')}>
             <Tippy
+                arrow={isArrow}
                 trigger={trigger}
                 interactive={interactive}
                 placement={placement}
@@ -39,6 +45,7 @@ function Popper({
                         {...attrs}
                     >
                         <TypeMenu
+                            check={check}
                             name={name}
                             navName={navName}
                             navItem={navItem}
@@ -46,8 +53,10 @@ function Popper({
                             search={search}
                             data={data}
                             id={id}
+                            onClick={onClick}
+                            type={type}
                         />
-                        <div id="arrow" data-popper-arrow></div>
+                        {isArrow && <div id="arrow" className={`${cx('arror')} ${arrow}`} data-popper-arrow></div>}
                     </div>
                 )}
             >
