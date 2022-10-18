@@ -1,0 +1,44 @@
+.wrapper {
+    position: relative;
+    padding-top: 250px;
+    padding-bottom: 24px;
+
+    .container {
+        font-size: 1.5rem;
+        margin-top: 100px;
+        color: #333;
+
+        .err-img {
+
+        }
+
+        .title {
+            color: inherit;
+            font-size: 2.4rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .info {
+            font-size: inherit;
+            color: inherit;
+            margin: 8px;
+        }
+
+        .control {
+            margin-bottom: 16px;
+
+            .back-home,.reload {
+                font-size: inherit;
+                color: var(--text-primary)
+            }
+    
+            .space {
+                font-size: inherit;
+                margin: 0 8px;
+            }
+        }
+
+
+    }
+}

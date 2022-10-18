@@ -24,7 +24,11 @@ function Status() {
                     <div className={cx('content', { ['add-content']: addListBook })}>
                         <div className={cx('new-book')}>
                             <h2 className={cx('h2')}>Mới đăng</h2>
-                            <Taga className={cx('status-link')} href="#" title="Xem tất cả" />
+                            <Taga
+                                className={cx('status-link')}
+                                href="/list-book/?sort_by=create_at"
+                                title="Xem tất cả"
+                            />
                         </div>
                         <div className={cx('inner', { ['slider-thumb']: addListBook })}>
                             <StatusItem data={addListBook} type="add-book" />
@@ -35,7 +39,11 @@ function Status() {
                     <div className={cx('content', { ['completed-content']: completedBook })}>
                         <div className={cx('completed')}>
                             <h2 className={cx('h2')}>Mới hoàn thành</h2>
-                            <Taga className={cx('status-link')} href="#" title="Xem tất cả" />
+                            <Taga
+                                className={cx('status-link')}
+                                href="/list-book/?sort_by=new_chap_at&status=0"
+                                title="Xem tất cả"
+                            />
                         </div>
                         <div className={cx('inner')}>
                             <BookItem data={completedBook} type="status" />

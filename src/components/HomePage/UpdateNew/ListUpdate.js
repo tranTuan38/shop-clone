@@ -1,13 +1,15 @@
 import classNames from 'classnames/bind';
 import styles from './UpadteNew.module.scss';
 
-import { useGetProperties, useGetReadingBook, useGetCreateChater } from '~/hooks';
+import { useGetCategory, useGetProperties, useGetReadingBook, useGetCreateChater } from '~/hooks';
+
 import { handleTime } from '~/handler';
 import Taga from '~/components/Taga';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-function ListUpdate({ data }) {
+function ListUpdate({ data, formatLink }) {
     const time = new Date();
     return (
         <div className={cx('list-update')}>
@@ -23,13 +25,16 @@ function ListUpdate({ data }) {
                         <p className={cx('category')}>{item.category}</p>
                         <div className={cx('text-over')}>
                             <h2>
-                                <a href="#" className={cx('link')}>
+                                <Link to={formatLink(item.name)} className={cx('link')}>
                                     {item.name}
-                                </a>
+                                </Link>
                             </h2>
                         </div>
                         <div className={cx('text-over')}>
-                            <a href="#" className={cx('link-chapter')}>{`Chương${numberChapter}: ${chapterName}`}</a>
+                            <Link
+                                to={`${formatLink(item.name)}/chuong-${numberChapter}`}
+                                className={cx('link-chapter')}
+                            >{`Chương${numberChapter}: ${chapterName}`}</Link>
                         </div>
                         <p className={cx('author')}>
                             <span>{item.authorName}</span>

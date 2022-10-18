@@ -2,16 +2,18 @@ import classNames from 'classnames/bind';
 import styles from './Status.module.scss';
 
 import { useGetAddNewBook, useGetCompletedNewBook } from '~/hooks';
+import { removeVietnameseTones } from '~/handler';
 import Taga from '~/components/Taga';
 import BookItem from '~/components/BookItem';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-function StatusItemEle({ data, id }) {
+function StatusItemEle({ data, id, formatLink }) {
     return (
-        <a className={cx('img-link')} href="#">
+        <Link className={cx('img-link')} to={formatLink(data.name)}>
             <img src={data.bookImg} alt="product imgs" />
-        </a>
+        </Link>
     );
 }
 

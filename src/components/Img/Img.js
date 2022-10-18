@@ -3,14 +3,15 @@ import classNames from 'classnames/bind';
 
 import styles from './Img.module.scss';
 import imgs from '~/assets/imgs';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-function Img({ href, src, alt = imgs.noImg, className }) {
+function Img({ href, src, alt = imgs.noImg, className, loading }) {
     return (
-        <a href={href} className={cx(className)}>
-            <img src={src} alt={alt} />
-        </a>
+        <Link to={href} className={cx(className)}>
+            <img src={src} alt={alt} loading={loading} />
+        </Link>
     );
 }
 

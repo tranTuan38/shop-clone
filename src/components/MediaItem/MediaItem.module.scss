@@ -1,16 +1,58 @@
 .media {
     display: flex;
-    margin-bottom: 11px;
-
+    margin-bottom: 6px;
+    
     &.sugges .body {
         align-items: flex-start;
     }
-
+    
     &.reading {
         align-items: center;
         padding: 8px 0;
         margin-bottom: 4px;
-        
+    }
+
+    &.listBook {
+        padding: 24px 0;
+        margin-bottom: 0;
+        border-bottom: 1px solid #eee;
+
+        .img-item {
+            width: 90px;
+        }
+
+        .intimate {
+            align-items: flex-start;
+            margin-top: 16px;
+
+            .author {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                font-size: 1.3rem;
+                
+                .author-inner {
+                    text-align: center;
+                    font-size: 1.3rem;
+                }
+                
+                .author-inner i {
+                    font-size: inherit;
+                    width: 20px;
+                    margin-right: 8px;
+                }
+                
+                .author-inner:first-child {
+                    margin-bottom: 4px;
+                }
+
+                .author-inner:last-child {
+                    & > i {
+                        font-size: 80%;
+                    }
+                }
+            }
+        }
     }
 
     &.new-rating {
@@ -34,6 +76,7 @@
         margin-bottom: 4px;
     }
 
+
 }
 
 .img-item {
@@ -51,7 +94,7 @@
         display: block;
     }
 
-    & > img {
+    & img {
         position: absolute;
         top: 0;
         right: 0;
@@ -110,7 +153,7 @@
 
 
     & .category.item-link {
-        display: block;
+        display: -webkit-inline-box;
     }
     
     .description {

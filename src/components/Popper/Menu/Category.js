@@ -6,7 +6,7 @@ import styles from './Menu.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Category({ navItem, pathname, search, data, id }) {
+function Category({ navItem, pathname, search, data, genre }) {
     return (
         <>
             <div className="row no-gutters">
@@ -32,7 +32,7 @@ function Category({ navItem, pathname, search, data, id }) {
                                 <NavLink
                                     className={(nav) => {
                                         return cx('menu-link', {
-                                            active: index == id ? true : false,
+                                            active: index === genre ? true : false,
                                         });
                                     }}
                                     to={`/list-book/?genre=${index}`}

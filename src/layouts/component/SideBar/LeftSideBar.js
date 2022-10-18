@@ -3,7 +3,7 @@ import { useLocation, useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
 
 import { useGetListSelecter } from '~/hooks';
-import { handlerSetDataLeftBar, handlerSetDatWithPath, handleLeftSideBarPath, handleDeletePath } from '~/handler';
+import { handlerSetDataLeftBar, handlerSetDataWithPath, handleLeftSideBarPath, handleDeletePath } from '~/handler';
 import styles from './SideBar.module.scss';
 import { ListLeftSideBar } from '~/components/ListSideBar';
 import { useEffect, useRef } from 'react';
@@ -42,37 +42,52 @@ function LeftSideBar() {
     const status = searchParams.get('status');
     const prototypes = searchParams.get('prototypes');
     const tag = searchParams.get('tag');
+    const page = searchParams.get('page');
+    const limit = searchParams.get('limit');
+    const keyword = searchParams.get('keyword');
 
     const tags = [...datas.characters, ...datas.backGrg, ...datas.sects, ...datas.sights];
 
-    const listRequest = {
-        sort_by,
-        tag,
-        genre,
-        status,
-        prototypes,
-    };
+    const listRequest = { sort_by, tag, genre, status, prototypes };
+
+    // const indexItem = useRef();
 
     // console.log('datas:', datas);
     // console.log('dataKeys:', dataKeys);
     // console.log('data:', data);
-    console.log('location:', location);
-    console.log('listRequest:', listRequest);
+    // console.log('listRequest:', listRequest);
+    // console.log('search:', location.search);
 
-    // useEffect(() => {
-    //     const results = handlerSetDatWithPath(data, datas, listRequest, tags);
-    //     setData(results);
-    // }, []);
-
-    // console.log('re-render');
+    useEffect(() => {
+        if (location.search) {
+            const results = handlerSetDataWithPath(initdata, datas, listRequest, tags, location.search);
+            setData(results);
+        } else {
+            setData(initdata);
+        }
+    }, [sort_by, genre, location.search]);
 
     const handlerAddItem = (idType, itemValue, itemIndex) => {
         const results = handlerSetDataLeftBar(idType, itemValue, data, dataKeys, listRequest);
         setData(results);
         handleLeftSideBarPath(idType, dataKeys, location, listRequest, tags, itemIndex, itemValue, setSearchParams);
+        // handleLeftSideBarPath(
+        //     idType,
+        //     dataKeys,
+        //     location,
+        //     { ...listRequest, limit, page, keyword },
+        //     tags,
+        //     itemIndex,
+        //     itemValue,
+        //     setSearchParams,
+        // );
     };
 
-    const handleDelete = (id) => {
+    // const handlerBtnSearch = () => {
+    //     handleLeftSideBarPath(idType, dataKeys, location, listRequest, tags, itemIndex, itemValue, setSearchParams);
+    // };
+
+    const handleDelete = (id, itemValue) => {
         setData((prev) => {
             const newData = [...prev.selected];
             newData.splice(id, 1);
@@ -81,7 +96,10 @@ function LeftSideBar() {
                 selected: newData,
             };
         });
-        handleDeletePath();
+
+        if (location.search) {
+            handleDeletePath(id, itemValue, data, listRequest, setSearchParams);
+        }
     };
 
     const handleActive = (item) => {
@@ -103,13 +121,22 @@ function LeftSideBar() {
                             <div key={index} className={cx('item')}>
                                 <div className={cx('link', { ['selected']: true })}>
                                     <span className={cx('btn')}>{item}</span>
-                                    <button onClick={() => handleDelete(index)} className={cx('delete')}>
+                                    <button onClick={() => handleDelete(index, item)} className={cx('delete')}>
                                         <i className="nh-icon icon-close"></i>
                                     </button>
                                 </div>
                             </div>
                         ))}
                 </div>
+                {/* {!!data.selected.length && (
+                    <div className={cx('search')}>
+                        <button className={cx('search-btn')} onClick={handlerBtnSearch}>
+                            <span className={cx('icon-search')}>
+                                <i className="nh-icon icon-search"></i>
+                            </span>
+                        </button>
+                    </div>
+                )} */}
             </div>
 
             {Object.entries(datas).map((data, index) => {

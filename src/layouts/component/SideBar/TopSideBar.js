@@ -3,7 +3,8 @@ import classNames from 'classnames/bind';
 
 import styles from './SideBar.module.scss';
 import { ListTopSideBar } from '~/components/ListSideBar';
-import { handleTopSideBarTitle } from '~/handler';
+import { handleTopSideBarTitle, handleTopSideBarSetPath, handleCheckActive } from '~/handler';
+import { useEffect, useState, useRef } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -31,24 +32,51 @@ const titleTopSideBar = {
 };
 
 function TopSideBar() {
+    const location = useLocation();
     const [searchParams, setSearchParams] = useSearchParams();
-    const obj = useLocation();
-    const sortBy = searchParams.get('sort_by');
-    // const result = handleTopSideBarTitle();
+    const [listData, setListData] = useState([]);
 
-    // console.log(result);
+    const sort_by = searchParams.get('sort_by');
+    const genre = searchParams.get('genre');
+    const status = searchParams.get('status');
+    const prototypes = searchParams.get('prototypes');
+    const tag = searchParams.get('tag');
+    const page = searchParams.get('page');
+    const limit = searchParams.get('limit');
+    const keyword = searchParams.get('keyword');
+
+    const listRequest = { sort_by, tag, genre, status, prototypes, keyword };
+
+    // console.log('listRequest: ', listRequest);
+    // console.log('sort_by: ', sort_by);
+
+    // const isCheckActive = handleCheckActive('update', listRequest, location, 0);
+
+    // console.log(isCheckActive);
+
+    useEffect(() => {
+        setListData(Object.entries(titleTopSideBar));
+    }, []);
+
+    const funcEmpty = () => {};
 
     return (
         <div className={cx('top-wrapper')}>
-            {Object.entries(titleTopSideBar).map((item, index) => (
+            {listData.map((item, index) => (
                 <ListTopSideBar
                     key={index}
                     type={item[0]}
                     data={item[1]}
-                    check={sortBy}
-                    pathname={obj.pathname}
-                    search={obj.search}
+                    check={listRequest.sort_by}
+                    pathname={location.pathname}
+                    search={location.search}
                     onSetTitle={handleTopSideBarTitle}
+                    onSetPath={handleTopSideBarSetPath}
+                    onSetActive={handleCheckActive}
+                    onSetSearch={setSearchParams}
+                    listRequest={listRequest}
+                    location={location}
+                    funcEmpty={funcEmpty}
                 />
             ))}
         </div>

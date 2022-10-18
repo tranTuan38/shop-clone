@@ -4,10 +4,11 @@ import styles from './Status.module.scss';
 import { useGetAddNewBook, useGetCompletedNewBook } from '~/hooks';
 import Taga from '~/components/Taga';
 import BookItem from '~/components/BookItem';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-function StatusBookContent({ data }) {
+function StatusBookContent({ data, formatLink, genreLink }) {
     return (
         <div className={cx('book-content-wrapper')}>
             <div className={cx('book-content-info')}>
@@ -20,12 +21,16 @@ function StatusBookContent({ data }) {
                             {data.authorName}
                         </span>
                     </div>
-                    <a className={cx('category')}>
+                    <Link className={cx('category')} to={genreLink(data.category)}>
                         <span>{data.category}</span>
-                    </a>
+                    </Link>
                 </div>
             </div>
-            <button>Đọc ngay</button>
+            <div style={{ textAlign: 'center' }}>
+                <Link className={cx('btn')} to={formatLink(data.name)}>
+                    Đọc ngay
+                </Link>
+            </div>
         </div>
     );
 }

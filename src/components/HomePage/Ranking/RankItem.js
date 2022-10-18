@@ -7,10 +7,11 @@ import { useGetProperties, useGetReadingBook } from '~/hooks';
 import Taga from '~/components/Taga';
 import { RankOne, RankSecond, RankThird } from '~/components/Icons';
 import imgs from '~/assets/imgs';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-function RankItem({ data, type }) {
+function RankItem({ data, type, formatLink }) {
     return (
         <div className="col c-4">
             <div className={cx('content')}>
@@ -34,7 +35,7 @@ function RankItem({ data, type }) {
                                         <div className={cx('item-content')}>
                                             <div className={cx('info')}>
                                                 <h3 className={cx('item-name')}>
-                                                    <a href="#">{item.name}</a>
+                                                    <Link to={formatLink(item.name)}>{item.name}</Link>
                                                 </h3>
                                                 <div className={cx('item-icon')}>
                                                     <span
@@ -66,13 +67,13 @@ function RankItem({ data, type }) {
                                             </div>
                                             <div className={cx('img')}>
                                                 <div className={cx('book-cover')}>
-                                                    <a href="#">
+                                                    <Link to={formatLink(item.name)}>
                                                         <img
                                                             src={item.bookImg}
                                                             alt={imgs.noImg}
                                                             className={cx('book-img')}
                                                         />
-                                                    </a>
+                                                    </Link>
                                                     <span className={cx('book-img-shadow')}></span>
                                                 </div>
                                             </div>
@@ -89,7 +90,7 @@ function RankItem({ data, type }) {
                                         <div className={cx('item-content')}>
                                             <div className={cx('item-body')}>
                                                 <p className={cx('item-name')}>
-                                                    <a href="#">{item.name}</a>
+                                                    <Link to={formatLink(item.name)}>{item.name}</Link>
                                                 </p>
                                                 <span className={cx('data-rank')}>
                                                     {!type && item.rankWeekRead.toLocaleString('en-US')}

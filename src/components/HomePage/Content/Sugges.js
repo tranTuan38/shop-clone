@@ -13,7 +13,7 @@ function Sugges({ data, type }) {
             <div className={cx('sugges')}>
                 <div className={cx('media-title', { ['sugges-title']: type })}>
                     <h2 className={cx('title')}>Biên tập viên đề cử</h2>
-                    <Taga href="/" className={cx('all')} title="Xem tất cả" />
+                    <Taga href="/list-book/?sort_by=new_chap_at" className={cx('all')} title="Xem tất cả" />
                 </div>
                 <BookItem data={data} type={'sugges'} />
             </div>

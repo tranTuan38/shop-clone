@@ -8,6 +8,7 @@ import {
     handleGetBookById,
     handleGetUserById,
     handleSortSelecter,
+    handlerGetDataWithRequest,
 } from '~/handler';
 
 export const useGetCategory = () => {
@@ -276,4 +277,27 @@ export const useGetListSelecter = () => {
     });
 
     return state;
+};
+
+export const useDebounce = (value, delay) => {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+
+    useEffect(() => {
+        const handle = setTimeout(() => setDebouncedValue(value), delay);
+
+        return () => clearTimeout(handle);
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [value]);
+
+    return debouncedValue;
+};
+
+export const useGetListBookByRequest = (request) => {
+    const { sort_by, tag, genre, status, prototypes } = request;
+    const [data, setData] = useState([]);
+
+    useEffect(() => {}, [request]);
+
+    return data;
 };

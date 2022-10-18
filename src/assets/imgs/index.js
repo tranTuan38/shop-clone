@@ -9,6 +9,7 @@ const imgs = {
     listImgs: { ...listImgs },
     bgrImgs: [...bgrImgs],
     avatarImg,
+    notFound: require('~/assets/imgs/404-img.png'),
 };
 
 export default imgs;

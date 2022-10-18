@@ -195,16 +195,26 @@
         }
     }
 
-    & > button {
+    & .btn {
         margin: 0 auto;
         font-size: 1.6rem;
+        font-weight: 600;
         line-height: 1.5;
         color: #fff;
-        display: block;
+        display: inline-block;
         padding: 8px 46px;
         border-radius: 20px;
         border: 1px solid #bf2c24;
         background-color: #bf2c24;
+
+        &:hover {
+            background-color: #9f251e;
+            border-color: #94221c;
+        }
+
+        &:focus {
+            box-shadow: 0 0 0 0.2rem rgb(201 76 69 / 50%);
+        }
     }
 
 }

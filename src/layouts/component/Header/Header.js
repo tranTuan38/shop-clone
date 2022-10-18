@@ -27,7 +27,15 @@ function Header() {
 
     // console.log(pathname, search);
 
-    const id = searchParams.get('id');
+    let genreId;
+    const genre = searchParams.get('genre');
+
+    if (genre) {
+        genreId = Number(genre);
+    } else {
+        genreId = undefined;
+    }
+
     const { logo, noImg } = imgs;
 
     const handleOpenSignIn = () => {
@@ -55,7 +63,7 @@ function Header() {
                                 navName="category-menu"
                                 navItem="category-item"
                                 data={category}
-                                id={id}
+                                genre={genreId}
                                 trigger="click mouseenter"
                                 placement="top-end"
                                 offset={[0, 0]}
@@ -77,7 +85,7 @@ function Header() {
                                 navName="rank-menu"
                                 navItem="rank-item"
                                 data={listRank}
-                                id={id}
+                                genre={genreId}
                                 trigger="mouseenter"
                                 placement="top-start"
                                 offset={[0, 0]}

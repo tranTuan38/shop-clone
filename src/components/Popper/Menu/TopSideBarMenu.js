@@ -6,25 +6,43 @@ import styles from '~/layouts/component/SideBar/SideBar.module.scss';
 
 const cx = classNames.bind(styles);
 
-function TopSideBarMenu({ data, onClick, type, check, pathname, search }) {
+function TopSideBarMenu({
+    data,
+    onClick,
+    type,
+    check,
+    pathname,
+    search,
+    onSetPath,
+    onSetSearch,
+    location,
+    listRequest,
+    onSetActive,
+    funcEmpty,
+}) {
+    // console.log(data);
     return (
         <div className={cx('inner')}>
             {data.children.map((item, index) => (
                 <div
                     key={index}
                     className={cx('nav-item', {
-                        ['active']:
-                            check === data.search[index] ||
-                            (index == 0 && type == 'update' && pathname == '/list-book/' && !search),
+                        ['active']: onSetActive(type, data.search[index], data, listRequest, location, index),
                     })}
                 >
-                    <Link
-                        to={`/list-book/?sort_by=${data.search[index]}`}
+                    <button
                         className={cx('nav-link')}
-                        onClick={() => onClick(item)}
+                        onClick={
+                            onSetActive(type, data.search[index], data, listRequest, location, index)
+                                ? funcEmpty
+                                : () => {
+                                      onClick(item);
+                                      onSetPath(type, data.search[index], data, listRequest, location, onSetSearch);
+                                  }
+                        }
                     >
                         {item}
-                    </Link>
+                    </button>
                 </div>
             ))}
         </div>

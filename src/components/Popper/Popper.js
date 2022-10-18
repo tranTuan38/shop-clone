@@ -9,7 +9,7 @@ const cx = classNames.bind(styles);
 
 function Popper({
     data,
-    id,
+    genre,
     name,
     navName,
     navItem,
@@ -26,6 +26,15 @@ function Popper({
     onClick,
     check,
     type,
+    onSetPath,
+    listRequest,
+    prevListRequest,
+    prevSearch,
+    onSetSearch,
+    location,
+    onSetTitle,
+    onSetActive,
+    funcEmpty,
 }) {
     return (
         <div className={cx('content')}>
@@ -52,9 +61,17 @@ function Popper({
                             pathname={pathname}
                             search={search}
                             data={data}
-                            id={id}
+                            genre={genre}
                             onClick={onClick}
                             type={type}
+                            onSetPath={onSetPath}
+                            listRequest={listRequest}
+                            prevListRequest={prevListRequest}
+                            prevSearch={prevSearch}
+                            onSetSearch={onSetSearch}
+                            location={location}
+                            onSetActive={onSetActive}
+                            funcEmpty={funcEmpty}
                         />
                         {isArrow && <div id="arrow" className={`${cx('arror')} ${arrow}`} data-popper-arrow></div>}
                     </div>

@@ -4,21 +4,24 @@ import styles from '~/components/MediaItem/MediaItem.module.scss';
 import { useGetProperties, useGetReadingBook, useGetRankWeek, useGetRate, useGetBookRating } from '~/hooks';
 import Taga from '~/components/Taga';
 import Img from '~/components/Img';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-function RatingItem({ data, type }) {
+function RatingItem({ data, type, formatLink, genreLink }) {
     return (
         <div
             className={cx('media', {
                 [type]: type,
             })}
         >
-            {data[0] && type === 'rating' && <Img href="/" src={data[0].bookImg} className={cx('img-item')} />}
+            {data[0] && type === 'rating' && (
+                <Img href={formatLink(data[0].name)} src={data[0].bookImg} className={cx('img-item')} />
+            )}
             {data[0] && type === 'rating' ? (
                 <div className={cx('body')}>
                     <h2 className={cx('item-title')}>
-                        <Taga href="#" title={data[0].name} className={cx('item-link')} />
+                        <Taga href={formatLink(data[0].name)} title={data[0].name} className={cx('item-link')} />
                     </h2>
                     <div className={cx('user-rate')}>
                         <div className={cx('number')}>
@@ -36,7 +39,11 @@ function RatingItem({ data, type }) {
                                 {data[0].authorName}
                             </span>
                         </span>
-                        <Taga href="#" className={cx('category', { ['item-link']: type })} title={data[0].category} />
+                        <Taga
+                            href={genreLink(data[0].category)}
+                            className={cx('category', { ['item-link']: type })}
+                            title={data[0].category}
+                        />
                     </div>
                 </div>
             ) : undefined}
@@ -46,17 +53,20 @@ function RatingItem({ data, type }) {
                         {data.map((item, index) => (
                             <div className={cx('user-container')} key={index}>
                                 <div key={index} className={cx('user-info')}>
-                                    <a href="#" className={cx('user-avatar')}>
+                                    <Link to="#" className={cx('user-avatar')}>
                                         <img className={cx('avatar')} src={item.user[0].userAvata} />
-                                    </a>
+                                    </Link>
                                     <div className={cx('newLink')}>
-                                        <a className={cx('item-link')} href="#">
+                                        <Link className={cx('item-link')} to="#">
                                             {item.user[0].userName}
                                             <span> đánh giá</span>
-                                        </a>
-                                        <a className={cx('item-link', { ['book-name']: type })} href="#">
+                                        </Link>
+                                        <Link
+                                            className={cx('item-link', { ['book-name']: type })}
+                                            to={formatLink(item.bookName)}
+                                        >
                                             <span>{item.bookName}</span>
-                                        </a>
+                                        </Link>
                                     </div>
                                     <div className={cx('user-rate')}>
                                         <span className={cx('number-2')}>

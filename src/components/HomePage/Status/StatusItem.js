@@ -4,6 +4,8 @@ import SwiperCore, { Navigation, Thumbs, EffectCoverflow, Pagination, EffectFade
 import { Swiper, SwiperSlide } from 'swiper/react';
 import styles from './Status.module.scss';
 
+import { useGetCategory } from '~/hooks';
+import { removeVietnameseTones } from '~/handler';
 import StatusItemEle from './StatusItemEle';
 import StatusBookContent from './StatusBookContent';
 
@@ -12,10 +14,28 @@ const cx = classNames.bind(styles);
 SwiperCore.use([Navigation, Pagination, Thumbs, EffectCoverflow, EffectFade]);
 
 function StatusItem({ data }) {
+    const [listGenre] = useGetCategory();
     const [controlledSwiper, setControlledSwiper] = useState(null);
 
     const navigationPrevRef = useRef(null);
     const navigationNextRef = useRef(null);
+
+    const formatLink = (link) => {
+        return `/list-book/${removeVietnameseTones(link)}`;
+    };
+
+    const genreLink = (value) => {
+        let indexValue;
+        for (let i = 0; i < listGenre.length; i++) {
+            const element = listGenre[i];
+            if (listGenre[i].includes(value)) {
+                indexValue = i;
+                break;
+            }
+        }
+
+        return `/list-book/?genre=${indexValue}`;
+    };
 
     return (
         <div className={cx('slider-thumb-container')}>
@@ -48,7 +68,7 @@ function StatusItem({ data }) {
                 {data.map((item, index) => {
                     return (
                         <SwiperSlide key={index} className={cx('swiper-slide')}>
-                            <StatusItemEle data={item} />
+                            <StatusItemEle data={item} formatLink={formatLink} />
                         </SwiperSlide>
                     );
                 })}
@@ -80,7 +100,7 @@ function StatusItem({ data }) {
                             key={index}
                             className={`book-info-swiper-slide ${cx('book-info-swiper-slide')}`}
                         >
-                            <StatusBookContent data={item} />
+                            <StatusBookContent data={item} formatLink={formatLink} genreLink={genreLink} />
                         </SwiperSlide>
                     );
                 })}

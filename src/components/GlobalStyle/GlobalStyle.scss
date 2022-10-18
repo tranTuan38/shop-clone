@@ -53,8 +53,6 @@ a {
     text-decoration: none;
 }
 
-
-
 // Font emmbeded
 
 @font-face {
@@ -191,6 +189,10 @@ a {
         content: "\EA24";
     }
 
+    &.icon-search::before {
+        content: "\EA0C";
+    }
+
     &.icon-menu::before {
         content: "\EA0A";
     }
@@ -239,6 +241,7 @@ a {
 }
 
 footer {
+    position: relative;
     width: 100%;
     color: #333;
     font-size: 1.5rem;
