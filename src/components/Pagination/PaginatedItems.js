@@ -25,8 +25,8 @@ function PaginatedItems({ limitPage, data, listRequest, firstRender }) {
     const location = useLocation();
 
     useEffect(() => {
-        if (firstRender === 1) {
-            if (limit && page) {
+        if (page) {
+            if (firstRender === 1) {
                 const newOffset = ((Number(page) - 1) * limitPage) % data.length;
                 const endOffset = newOffset + limitPage;
                 setPageOffset(newOffset);
@@ -35,18 +35,30 @@ function PaginatedItems({ limitPage, data, listRequest, firstRender }) {
                 setListData(data.slice(newOffset, endOffset));
                 setPageCount(Math.ceil(data.length / limitPage));
             }
+            const newOffset = ((Number(page) - 1) * limitPage) % data.length;
+            const endOffset = newOffset + limitPage;
+            setPageOffset(newOffset);
+            setPageCur(Number(page));
+            setValue(Number(page));
+            setListData(data.slice(newOffset, endOffset));
+            setPageCount(Math.ceil(data.length / limitPage));
+            return;
         } else {
-            const endOffset = pageOffset + limitPage;
-            setListData(data.slice(pageOffset, endOffset));
+            const noPage = 0;
+            const endOffset = noPage + limitPage;
+            setPageOffset(noPage);
+            setPageCur(Number(noPage + 1));
+            setValue(Number(noPage + 1));
+            setListData(data.slice(noPage, endOffset));
             setPageCount(Math.ceil(data.length / limitPage));
         }
-    }, [pageOffset, limitPage]);
+    }, [pageOffset, limitPage, page]);
 
     const handlerPageChange = (event) => {
-        const newOffset = (event.selected * limitPage) % data.length;
-        setPageOffset(newOffset);
-        setPageCur(event.selected + 1);
-        setValue(event.selected + 1);
+        // const newOffset = (event.selected * limitPage) % data.length;
+        // setPageOffset(newOffset);
+        // setPageCur(event.selected + 1);
+        // setValue(event.selected + 1);
         handlerSetpathWitPagination(
             { limit: limitPage, page: event.selected + 1 },
             { ...listRequest, limit: limit, page: page },
@@ -77,9 +89,9 @@ function PaginatedItems({ limitPage, data, listRequest, firstRender }) {
         const pageNumber = Number(value);
         const isCheck = pageNumber === pageCur;
         if (!isCheck) {
-            const newOffset = ((pageNumber - 1) * limitPage) % data.length;
-            setPageOffset(newOffset);
-            setPageCur(pageNumber);
+            // const newOffset = ((pageNumber - 1) * limitPage) % data.length;
+            // setPageOffset(newOffset);
+            // setPageCur(pageNumber);
             window.scrollTo({
                 top: 200,
                 behavior: 'smooth',

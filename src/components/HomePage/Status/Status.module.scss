@@ -58,6 +58,7 @@
 
 .img-link {
     display: block;
+    margin: 0 auto;
     position: relative;
     width: 140px;
     height: 100%;
@@ -81,6 +82,10 @@
         left: 0;
         max-width: 100%;
         min-height: 100%;
+    }
+
+    &:hover {
+        opacity: .9;
     }
 
 }

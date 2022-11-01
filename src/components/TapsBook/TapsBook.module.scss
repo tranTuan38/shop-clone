@@ -1,0 +1,90 @@
+.tabs {
+
+    .list {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #e6e6e6;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+
+        .item {
+            position: relative;
+            -webkit-user-select: none;
+            user-select: none;
+            font-size: 20px;
+            font-weight: 600;
+            padding: 16px 0;
+            margin-right: 24px;
+            outline: none;
+            cursor: pointer;
+
+            &:hover {
+                color: var(--text-primary);
+            }
+
+            .sub-item {
+                font-size: 1.5rem;
+                font-weight: 400;
+                background-color: #f7f7f7;
+                color: #666;
+                border-radius: 16px;
+                padding: 4px 8px;
+                margin-left: 4px;
+            }
+        }
+
+        .item.active {
+            color: var(--text-primary);
+
+            &::before {
+                content: "";
+                height: 2px;
+                width: 100%;
+                position: absolute;
+                bottom: -1px;
+                left: 0;
+                right: 0;
+                background-color: #b78a28;
+            }
+
+            .sub-item {
+                background-color: #f7f5f0;
+                color: #b78a28;
+            }
+        }
+    }
+    
+    
+    .panel-list {
+        
+        .content {
+            display: none;
+        }
+        
+        .content.active {
+            display: block;
+        }
+
+        .fade {
+            transition: all .25s linear;
+        }
+        
+        .fade:not(.show) {
+            opacity: 0;
+        }
+
+        .show {
+            animation: fadeIn .25s linear;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0}
+            to { opacity: 1}
+        }
+    }
+    
+}
+
+
+
+

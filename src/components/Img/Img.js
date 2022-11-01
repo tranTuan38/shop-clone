@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-function Img({ href, src, alt = imgs.noImg, className, loading }) {
+function Img({ href, src, alt = 'ảnh sách', className, loading }) {
     return (
         <Link to={href} className={cx(className)}>
             <img src={src} alt={alt} loading={loading} />

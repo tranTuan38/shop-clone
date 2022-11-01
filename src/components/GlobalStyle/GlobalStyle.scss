@@ -172,6 +172,10 @@ a {
 .w-100 {
     width: 100%;
 }
+
+.text-center {
+    text-align: center;
+}
   
 .nh-icon {
     font-size: 1.3rem;
@@ -198,36 +202,139 @@ a {
     }
 
     &.icon-user-edit::before {
-        content: "\EA0E"
+        content: "\EA0E";
     }
 
     &.icon-eye-glasses::before {
-        content: "\EA42"
+        content: "\EA42";
     }
     
     &.icon-book::before {
-        content: "\EA05"
+        content: "\EA05";
     }
 
     &.icon-up::before {
-        content: "\EA24"
+        content: "\EA24";
     }
     
     &.icon-flower::before {
-        content: "\EA2E"
+        content: "\EA2E";
     }
 
     &.icon-prev::before {
-        content: "\EA18"
+        content: "\EA18";
     }
 
     &.icon-next::before {
-        content: "\EA19"
+        content: "\EA19";
     }
 
     &.icon-close::before {
-        content: "\EA06"
+        content: "\EA06";
     }
+
+    &.icon-flag::before {
+        content: "\EA2D";
+    }
+
+    &.icon-star::before {
+        content: "\EA1E";
+    }
+
+    &.icon-glass::before {
+        content: "\EA1D";
+    }
+
+    &.icon-save::before {
+        content: "\EA1B";
+    }
+
+    &.icon-flower.no-content {
+        width: 12px;
+        height: 14px;
+        background-image: url('../Icons/flower.svg');
+
+        &::before {
+            content: none;
+        }
+    }
+
+    &.icon-book::before {
+        content: "\EA05";
+    }
+    
+    &.icon-layer::before {
+        content: "\EA1F";
+    }
+    
+    &.icon-badge::before {
+        content: "\EA45";
+    }
+
+    &.icon-sort-asc::before {
+        content: "\EA48";
+    }
+
+    &.icon-sort-desc::before {
+        content: "\EA49";
+    }
+
+    &.icon-send::before {
+        content: "\EA13";
+    }
+
+    &.icon-clock::before {
+        content: "\EA34";
+    }
+
+    &.icon-like::before {
+        content: "\EA09";
+    }
+
+    &.icon-like-alt::before {
+        content: "\EA46";
+    }
+
+    &.icon-reply::before {
+        content: "\EA40";
+    }
+
+    &.icon-clock::before {
+        content: "\EA34";
+    }
+
+}
+
+.fs-80 {
+    font-size: 80%!important;
+}
+
+.fw-6 {
+    font-weight: 600;
+}
+
+.mr-2 {
+    margin-right: 2px;
+}
+
+.mr-4 {
+    margin-right: 4px;
+}
+
+.mr-8 {
+    margin-right: 8px;
+}
+
+.mt-2 {
+    margin-top: 2px;
+}
+
+.border-bottom-dashed {
+    border-bottom: 1px dashed #eee
+}
+
+.align-center {
+    align-items: center;
 }
 
 
@@ -272,9 +379,6 @@ hr {
     z-index: 1;
     pointer-events: all;
     
-    &:hover {
-        opacity: .9;
-    }
 }
 
 .swiper-slide-next {

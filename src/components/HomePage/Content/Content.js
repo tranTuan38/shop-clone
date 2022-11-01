@@ -16,8 +16,8 @@ function Content() {
         <div className={cx('wrapper')}>
             <div className={cx('content')}>
                 <div className="row">
-                    <Sugges data={data} type={'sugges'} />
-                    <Reading data={[read, listGuide]} type={'reading'} />
+                    {data && <Sugges data={data} type={'sugges'} />}
+                    {read && <Reading data={[read, listGuide]} type={'reading'} />}
                 </div>
             </div>
         </div>

@@ -1,4 +1,4 @@
-import { listBookData } from '~/initdata';
+import { listBookData, listRating } from '~/initdata';
 import { useGetListSelecter } from '~/hooks';
 
 function handleTime(timeCur, timeItem) {
@@ -6,7 +6,7 @@ function handleTime(timeCur, timeItem) {
     const minute = Math.floor(second / 60);
     const hour = Math.floor(minute / 60);
     const day = Math.floor(hour / 24);
-    const month = Math.floor(hour / 30);
+    const month = Math.floor(day / 30);
     const year = Math.floor(month / 12);
 
     let result = '';
@@ -67,10 +67,10 @@ function handleCompareTime(data) {
 }
 
 function handleGetUserById(data, userData) {
-    const user = userData.map((item) => {
+    let user = userData.map((item, index) => {
         const rateData = data.reduce((acc, ele) => {
             if (ele.idUser === item.id) {
-                return [...acc, { comment: ele.comment, rate: ele.useRating, time: ele.time }];
+                return [...acc, { comment: ele.comment, rate: ele.getTotalRate(), time: ele.time }];
             }
 
             return acc;
@@ -84,14 +84,22 @@ function handleGetUserById(data, userData) {
         return { userName: item.name, userAvata: item.avatar, dataRating: rateData };
     });
 
+    const userDataRatingEmty = user.findIndex((item) => !item.dataRating.length);
+
+    if (userDataRatingEmty || userDataRatingEmty === 0) {
+        if (userDataRatingEmty) {
+            user = user.slice(0, userDataRatingEmty);
+        } else {
+            user = user.slice(1);
+        }
+    }
+
     user.sort((a, b) => {
         const atime = new Date(a.dataRating[a.dataRating.length - 1].time);
         const btime = new Date(b.dataRating[b.dataRating.length - 1].time);
 
         return btime - atime;
     });
-
-    // console.log(user);
 
     return user;
 }
@@ -172,18 +180,39 @@ function handlerSelecedDataWithPath(data, listRequest, listSelecter, location) {
 
             const newData = listSelecterDataValue.flat();
 
+            const lowerCaseString = (strs) => {
+                const dataValues = strs.map((str) => {
+                    return str.toLowerCase();
+                });
+
+                return dataValues;
+            };
+
+            const listCheckData = (data) => {
+                const datasValue = [
+                    data.category,
+                    data.status,
+                    data.properties,
+                    data.character,
+                    data.background,
+                    data.sect,
+                    data.sight,
+                    ...data.tagName,
+                ];
+
+                const resultData = datasValue.reduce((acc, val) => {
+                    if (!acc.includes(val.toLowerCase())) {
+                        acc.push(val.toLowerCase());
+                    }
+                    return acc;
+                }, []);
+
+                return resultData;
+            };
+
             const resultData = data.filter((item) => {
                 let isCheck;
-                let listCheck = [
-                    item.category,
-                    item.status,
-                    item.properties,
-                    item.character,
-                    item.background,
-                    item.sect,
-                    item.sight,
-                    ...item.tagName,
-                ].reduce((acc, item) => {
+                let listCheck = [...listCheckData(item)].reduce((acc, item) => {
                     if (acc.indexOf(item) === -1) {
                         acc.push(item);
                     }
@@ -191,7 +220,7 @@ function handlerSelecedDataWithPath(data, listRequest, listSelecter, location) {
                 }, []);
 
                 isCheck = newData.every((item) => {
-                    return listCheck.includes(item);
+                    return listCheck.includes(item.toLowerCase());
                 });
 
                 return isCheck;
@@ -318,13 +347,55 @@ function handlerGetDataWithRequest(req) {
                 return data;
             }
         } else {
-            const results = listData.filter((item) => {
-                const index = Number(genre);
-                const value = listSelecter.genre[index];
-                return item.category === value;
-            });
+            // sort_by, tag, genre, status, prototypes
+            let results;
+            if (genre) {
+                results = listData.filter((item) => {
+                    const index = Number(genre);
+                    const value = listSelecter.genre[index];
+                    return item.category.toLowerCase() === value.toLowerCase();
+                });
 
-            return results;
+                return results;
+            } else if (status) {
+                results = listData.filter((item) => {
+                    const index = Number(status);
+                    const value = listSelecter.status[index];
+                    return item.status.toLowerCase() === value.toLowerCase();
+                });
+                return results;
+            } else if (tag) {
+                const tags = [
+                    ...listSelecter.characters,
+                    ...listSelecter.backGrg,
+                    ...listSelecter.sects,
+                    ...listSelecter.sights,
+                ];
+
+                const lowerCaseString = (strs) => {
+                    const dataValues = strs.map((str) => {
+                        return str.toLowerCase();
+                    });
+
+                    return dataValues;
+                };
+
+                results = listData.filter((item) => {
+                    const bookListTag = [
+                        item.status.toLowerCase(),
+                        item.category.toLowerCase(),
+                        item.character.toLowerCase(),
+                        item.sect.toLowerCase(),
+                        item.sight.toLowerCase(),
+                        item.background.toLowerCase(),
+                        ...lowerCaseString(item.tagName),
+                    ];
+                    const index = Number(tag);
+                    const value = tags[index];
+                    return bookListTag.includes(value.toLowerCase());
+                });
+                return results;
+            }
         }
     } else {
         listData.sort((a, b) => {
@@ -804,6 +875,300 @@ function removeVietnameseTones(str) {
     return str;
 }
 
+function handlerViewBookData(data) {
+    let view;
+    let viewValue;
+    let viewCheck;
+
+    if (data) {
+        if (typeof data === 'number') {
+            view = data;
+        } else {
+            view = data.view;
+        }
+    } else {
+        view = 0;
+    }
+
+    if (view < 1e3) {
+        return view;
+    } else if (view >= 1e3 && view < 1e6) {
+        const setView = +(view / 1000).toFixed(2);
+        return `${setView}K`;
+    } else if (view >= 1e6 && view < 1e10) {
+        const setView = +(view / 1000000).toFixed(2);
+        return `${setView}M`;
+    }
+}
+
+function handlerGetBookMediaData(rating, listComment) {
+    const listInfo = (data) => {
+        let viewValue = handlerViewBookData(data);
+
+        return {
+            totalChapter: [data.totalChapter, 'Chương'],
+            chapWithWeek: [Math.ceil(data.totalChapter / 75), 'Chương/tuần'],
+            view: [viewValue, 'Lượt đọc'],
+            keep: [data.rankWeekNomination, 'Cất giữ'],
+        };
+    };
+
+    const setRating = (id) => {
+        const bookRating = rating.find((item) => id === item.idBook);
+        if (bookRating) {
+            const bookRatingLength = bookRating.rating.length * 5;
+            const totalRating = bookRating.rating.reduce((acc, rate) => {
+                return acc + rate.getTotalRate();
+            }, 0);
+
+            const percentRate = (totalRating / bookRatingLength) * 100;
+
+            return percentRate;
+        } else {
+            return 0;
+        }
+    };
+
+    const setRate = (percent) => {
+        let result;
+        const mediumRate = (percent / 100) * 5;
+        if (Number.isInteger(mediumRate)) {
+            result = mediumRate;
+        } else {
+            result = mediumRate.toFixed(2);
+            const dotNum = result.indexOf('.');
+            const checkNum = result.slice(dotNum + 1);
+            if (+checkNum % 10 === 0) {
+                result = result.slice(0, dotNum + 2);
+            } else {
+                result = result.slice(0);
+            }
+        }
+
+        return result;
+    };
+
+    const rateUser = (id) => {
+        const bookRating = rating.find((item) => id === item.idBook);
+        if (bookRating) {
+            const bookRatingLength = bookRating.rating.length;
+            return bookRatingLength;
+        } else {
+            return 0;
+        }
+    };
+
+    const totalNumberUser = (id) => {
+        const bookRating = rating.find((item) => id === item.idBook);
+        if (bookRating) {
+            const bookRatingLength = bookRating.rating.length;
+            return bookRatingLength;
+        } else {
+            return 0;
+        }
+    };
+
+    const getCommentById = (idBook) => {
+        const book = listComment.find((item) => idBook === item.idBook);
+        if (book) {
+            return book.listComment;
+        }
+    };
+
+    return { listInfo, setRating, setRate, rateUser, totalNumberUser, getCommentById };
+}
+
+const handlerSetLink = () => {
+    const formatLink = (link) => {
+        return `/list-book/${removeVietnameseTones(link)}`;
+    };
+
+    const genreLink = (value, type, listGenre) => {
+        let indexValue;
+
+        indexValue = listGenre.findIndex((item) => {
+            return item.toLowerCase() === value.toLowerCase();
+        });
+
+        return `/list-book/?${type}=${indexValue}`;
+    };
+
+    return { formatLink, genreLink };
+};
+
+const handlerSetDataSubIntro = (data, userData, listRank, onSetTime) => {
+    const getNewChapter = () => {
+        const curTime = new Date();
+
+        const chap = data.listChapter;
+        const newChap = chap[chap.length - 1];
+        const chapName = newChap.nameChapter;
+        const chapNumber = newChap.numberChapter;
+        const timeChap = new Date(newChap.timeCreatChapter);
+
+        // console.log(timeChap);
+
+        return {
+            chapNumber: `chuong-${chapNumber}`,
+            chapValue: `Chương${chapNumber}: ${chapName}`,
+            time: onSetTime(curTime, timeChap),
+        };
+    };
+
+    const getRankNomination = () => {
+        const listRank = [...listBookData];
+        listRank.sort((a, b) => {
+            const aRank = a.rankWeekNomination;
+            const bRank = b.rankWeekNomination;
+
+            return bRank - aRank;
+        });
+
+        const rankNum = listRank.findIndex((item, index) => item.idBook === data.idBook);
+
+        return rankNum + 1;
+    };
+
+    const getUserData = () => {
+        const user = userData.find((item) => {
+            return item.name === data.poster;
+        });
+
+        return { ...user, rank: listRank[user.level - 1] };
+    };
+
+    const userTotalPost = () => {
+        const userListBook = listBookData.filter((item) => item.poster === data.poster);
+        const totalBook = userListBook.length;
+        const totalChap = userListBook.reduce((acc, item) => {
+            return (acc = acc + item.totalChapter);
+        }, 0);
+
+        return { totalBook, totalChap };
+    };
+
+    const userListPostData = () => {
+        let datas;
+        const userListBook = listBookData.filter((item) => item.poster === data.poster);
+        const listBookLength = userListBook.length;
+        userListBook.sort((a, b) => {
+            const aBook = a.view;
+            const bBook = b.view;
+
+            return bBook - aBook;
+        });
+
+        if (listBookLength <= 10) {
+            return userListBook;
+        } else {
+            datas = userListBook.slice(0, 10);
+            return datas;
+        }
+    };
+
+    const getListAuthorData = () => {
+        const listAuthor = listBookData.reduce((acc, item) => {
+            if (!acc.includes(item.authorName)) {
+                acc.push(item.authorName);
+            }
+            return acc;
+        }, []);
+    };
+
+    const getListBookWithAuthor = () => {
+        const listBook = listBookData.filter((item) => item.authorName === data.authorName);
+        listBook.sort((a, b) => {
+            const aBook = a.view;
+            const bBook = b.view;
+
+            return bBook - aBook;
+        });
+
+        if (listBook.length <= 5) {
+            return listBook;
+        } else {
+            const datas = listBook.slice(0, 5);
+            return datas;
+        }
+    };
+
+    const setDescription = (value) => {
+        const dataValue = value.slice(0, 110);
+
+        return `
+
+        ${dataValue}...
+
+    `;
+    };
+
+    return {
+        getNewChapter,
+        getRankNomination,
+        getUserData,
+        userTotalPost,
+        userListPostData,
+        getListAuthorData,
+        getListBookWithAuthor,
+        setDescription,
+    };
+};
+
+function getListRatingForBook(id) {
+    let data;
+    const bookData = listRating.find((book) => {
+        return book.idBook === id;
+    });
+
+    if (bookData) {
+        const rateLength = bookData.rating.length;
+        data = bookData.rating.reduce((acc, rate) => {
+            if (acc.character) {
+                acc = {
+                    character: acc.character + rate.rateCharacter,
+                    story: acc.story + rate.rateContent,
+                    background: acc.background + rate.rateBgr,
+                    totalRate: acc.totalRate + rate.getTotalRate(),
+                };
+
+                return acc;
+            }
+
+            acc = {
+                character: rate.rateCharacter,
+                story: rate.rateContent,
+                background: rate.rateBgr,
+                totalRate: rate.getTotalRate(),
+            };
+
+            return acc;
+        }, {});
+
+        Object.keys(data).forEach((key) => {
+            const numValue = (data[key] / rateLength).toFixed(2);
+            data[key] = numValue;
+        });
+
+        return data;
+    } else {
+        return {
+            character: 0,
+            story: 0,
+            background: 0,
+            totalRate: 0,
+        };
+    }
+}
+
+function SetPersonRatingForBook(rateNum) {
+    if (+rateNum) {
+        const percent = +rateNum * 20;
+        return percent;
+    } else {
+        return 0;
+    }
+}
+
 export {
     handleTime,
     handleGetRankWeekRead,
@@ -824,4 +1189,10 @@ export {
     handlerSetpathWitPagination,
     checkPath,
     removeVietnameseTones,
+    handlerViewBookData,
+    handlerGetBookMediaData,
+    handlerSetLink,
+    handlerSetDataSubIntro,
+    getListRatingForBook,
+    SetPersonRatingForBook,
 };

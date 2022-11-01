@@ -8,7 +8,7 @@ import Img from '~/components/Img';
 const cx = classNames.bind(styles);
 
 function Footer() {
-    const { logo, noImg } = imgs;
+    const { logo, Logo } = imgs;
     const { appStoreImg, googleImg } = footerImg;
 
     return (
@@ -18,7 +18,7 @@ function Footer() {
                 <div className="grid wide">
                     <div className={cx('container')}>
                         <div className={cx('content')}>
-                            <Img href="/" className={cx('logo')} src={logo} alt={noImg} />
+                            <Img href="/" className={cx('logo')} src={logo} alt="Logo" />
                             <div className={cx('for-me')}>
                                 <p>
                                     {' '}
@@ -28,8 +28,8 @@ function Footer() {
                                 </p>
                             </div>
                             <div className={cx('app-down')}>
-                                <Img href="/" className={cx('logo-down')} src={appStoreImg} alt={noImg} />
-                                <Img href="/" className={cx('logo-down')} src={googleImg} alt={noImg} />
+                                <Img href="/" className={cx('logo-down')} src={appStoreImg} alt="Logo" />
+                                <Img href="/" className={cx('logo-down')} src={googleImg} alt="Logo" />
                             </div>
                             <div className={cx('list-unstyled')}>
                                 <a href="/" className={cx('unstyled-item')}>

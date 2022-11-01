@@ -40,7 +40,7 @@ function ListUpdate({ data, formatLink }) {
                             <span>{item.authorName}</span>
                         </p>
                         <p className={cx('creator')}>
-                            <span>{item.creator}</span>
+                            <span>{item.poster}</span>
                         </p>
                         <p className={cx('time')}>
                             <span>{handleTime(time, timeItem)}</span>

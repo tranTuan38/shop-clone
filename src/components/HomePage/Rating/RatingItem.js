@@ -1,7 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from '~/components/MediaItem/MediaItem.module.scss';
 
-import { useGetProperties, useGetReadingBook, useGetRankWeek, useGetRate, useGetBookRating } from '~/hooks';
 import Taga from '~/components/Taga';
 import Img from '~/components/Img';
 import { Link } from 'react-router-dom';

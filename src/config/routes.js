@@ -1,7 +1,7 @@
 const routes = {
     home: '/',
     profile: '/@:id',
-    user: '/user',
+    author: '/tac-gia/:id',
     listBook: '/list-book/',
     book: '/list-book/:name',
     chapter: '/list-book/:name/:chapter',

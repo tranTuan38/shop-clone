@@ -39,30 +39,72 @@ function ListBook() {
         prototypes,
     };
 
+    const tagsRef = useRef(
+        !sort_by && (genre || status || tag || prototypes) && `${genre},${status},${tag},${prototypes}`,
+    );
+    const sortByCur = useRef();
+
+    // if (!sort_by && (genre || status || tag)) {
+    //     tagsRef.current = genre || status || tag;
+    //     console.log('tagsRef: ', tagsRef.current);
+    // }
+    // console.log('tag: ', genre);
+    // console.log('tagsRef: ', tagsRef.current);
+    // console.log('sortByCur: ', sortByCur.current);
+
+    // console.log(listData);
+    // console.log('renderCom: ', renderCom);
+
     useEffect(() => {
+        // console.log('Search: ', location);
+        document.title = 'Danh Sách Truyện Covert';
+
         if (location.search) {
             if (sort_by) {
                 if (sort_by === 'new_chap_at') {
-                    if (limit && page) {
+                    if (page) {
                         if (renderCom === 0) {
                             setRenderCom(renderCom + 1);
+                            tagsRef.current = `${genre},${status},${tag},${prototypes}`;
                             requestData({ setLoading, setListData }, listRequest, location, listSelecter);
                         }
                         return;
                     }
-                    setRenderCom(renderCom + 1);
                     requestData({ setLoading, setListData }, listRequest, location, listSelecter);
+                    tagsRef.current = `${genre},${status},${tag},${prototypes}`;
+                    window.scrollTo({
+                        top: 200,
+                    });
                 } else {
-                    setRenderCom(renderCom + 1);
                     requestData({ setLoading, setListData }, listRequest, location, listSelecter);
+                    tagsRef.current = `${genre},${status},${tag},${prototypes}`;
+                    window.scrollTo({
+                        top: 200,
+                    });
                 }
             } else {
-                setRenderCom(renderCom + 1);
+                if (renderCom > 0) {
+                    if (`${genre},${status},${tag},${prototypes}` !== tagsRef.current) {
+                        requestData({ setLoading, setListData }, listRequest, location, listSelecter);
+                        tagsRef.current = `${genre},${status},${tag},${prototypes}`;
+                        return;
+                    } else {
+                        return;
+                    }
+                }
                 requestData({ setLoading, setListData }, listRequest, location, listSelecter);
+                setRenderCom(renderCom + 1);
+                window.scrollTo({
+                    top: 200,
+                });
             }
         } else {
-            setRenderCom(renderCom + 1);
             requestData({ setLoading, setListData }, listRequest, location, listSelecter);
+            setRenderCom(renderCom + 1);
+            tagsRef.current = `${genre},${status},${tag},${prototypes}`;
+            window.scrollTo({
+                top: 200,
+            });
         }
     }, [sort_by, tag, genre, status, prototypes]);
 

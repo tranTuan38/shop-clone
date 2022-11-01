@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 import styles from './NotFound.module.scss';
 import imgs from '~/assets/imgs';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -10,6 +11,10 @@ function NotFound() {
     const handlerReload = (event) => {
         event.view.location.reload();
     };
+
+    useEffect(() => {
+        document.title = '401';
+    }, [document.title]);
 
     return (
         <div className={cx('wrapper')}>

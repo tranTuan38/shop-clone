@@ -46,35 +46,51 @@ export const useGetBrgImg = () => {
     return [bgr, setBgr];
 };
 
-export const useGetProperties = () => {
-    const [data, setData] = useState(() => {
+export const useGetProperties = (num) => {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
         const results = [];
         const listProperty = listBookData.filter((item, index) => {
             return item.properties === 'Chọn lọc';
         });
-
+        listProperty.sort((a, b) => {
+            return a.idBook - b.idBook;
+        });
         const newData = listProperty.slice(0, 8);
-
         while (newData.length) {
             results.push(newData.splice(0, 2));
         }
 
-        return [listProperty, results];
-    });
+        setData([listProperty, results]);
+    }, []);
+
     return data;
 };
 
 export const useGetReadingBook = () => {
-    const [data, setData] = useState(() => {
+    // const [data, setData] = useState(() => {
+    //     const listReadingBook = listBookData.filter((item, index) => {
+    //         return item.reading;
+    //     });
+    //     const newData = [...listReadingBook];
+    //     newData.length = 5;
+    //     return [listReadingBook, newData];
+    // });
+    // return data;
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
         const listReadingBook = listBookData.filter((item, index) => {
             return item.reading;
         });
-
+        listReadingBook.sort((a, b) => {
+            return a.idBook - b.idBook;
+        });
         const newData = [...listReadingBook];
         newData.length = 5;
-
-        return [listReadingBook, newData];
-    });
+        setData([listReadingBook, newData]);
+    }, []);
 
     return data;
 };
@@ -122,7 +138,7 @@ export const useGetRate = () => {
     const [data, setData] = useState(() => {
         const datas = listRating.filter((item) => {
             const rateItem = item.rating.some((overvalue) => {
-                return overvalue.useRating === 5;
+                return overvalue.getTotalRate() === 5;
             });
 
             return rateItem;
@@ -132,6 +148,8 @@ export const useGetRate = () => {
 
         return dataRating;
     });
+
+    // console.log(data);
 
     return data;
 };
@@ -146,7 +164,7 @@ export const useGetBookRating = (list) => {
             });
             if (dataItem) {
                 dataItem.rating.forEach((el) => {
-                    if (el.useRating === 5) {
+                    if (el.getTotalRate() === 5) {
                         sumRating++;
                     }
                 });
@@ -176,7 +194,6 @@ export const useGetComment = () => {
         const datas = listRating.map((rate) => {
             const book = handleGetBookById(listBookData, rate.idBook);
             const user = handleGetUserById(rate.rating, userData);
-            // console.log(rate.idBook, user);
 
             return { user, bookName: book.name };
         });

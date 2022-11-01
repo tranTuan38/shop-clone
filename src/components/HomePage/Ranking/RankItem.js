@@ -70,7 +70,7 @@ function RankItem({ data, type, formatLink }) {
                                                     <Link to={formatLink(item.name)}>
                                                         <img
                                                             src={item.bookImg}
-                                                            alt={imgs.noImg}
+                                                            alt="ảnh sách"
                                                             className={cx('book-img')}
                                                         />
                                                     </Link>

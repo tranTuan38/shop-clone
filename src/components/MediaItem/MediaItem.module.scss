@@ -6,7 +6,9 @@
         align-items: flex-start;
     }
     
-    &.reading {
+    &.reading,
+    &.intro
+    {
         align-items: center;
         padding: 8px 0;
         margin-bottom: 4px;
@@ -76,6 +78,19 @@
         margin-bottom: 4px;
     }
 
+    &.intro .body-2 {
+        display: block;
+    }
+
+    &.intro .img-item {
+        width: 32px;
+        
+    }
+
+    &.intro .item-title {
+        margin-bottom: 4px;
+    }
+
 
 }
 
@@ -115,6 +130,7 @@
 
 .body-2 {
     display: block;
+    font-size: 1.5rem;
 
     & > .item-title {
         margin-bottom: 4px;
@@ -124,6 +140,16 @@
         font-size: 1.4rem;
         font-weight: 400;
         color: #6c757d;
+    }
+
+    & .intro-genre {
+        font-size: 80%;
+        display: flex;
+        align-items: center;
+        
+        & i {
+            font-size: inherit;
+        }
     }
 }
 

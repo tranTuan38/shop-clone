@@ -5,9 +5,9 @@ import styles from './Loading.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Loading() {
+function Loading(props) {
     return (
-        <div className={cx('wrapper')}>
+        <div className={cx('wrapper')} {...props}>
             <span className={cx('border')}>
                 <span className={cx('title')}>Loading</span>
             </span>
