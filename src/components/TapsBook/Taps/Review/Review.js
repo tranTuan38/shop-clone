@@ -14,7 +14,17 @@ const listSelected = [
     { title: 'Bố cục thế giới', type: 'background' },
 ];
 
-function Review({ checkTapsIndex, data, listRating, userData, totalNumberUser, setListRating, setPerson, setTime }) {
+function Review({
+    checkTapsIndex,
+    data,
+    listRating,
+    userData,
+    totalNumberUser,
+    setListRating,
+    setPerson,
+    setTime,
+    className,
+}) {
     const [bookData, setBooData] = useState({
         character: 0,
         story: 0,
@@ -105,7 +115,7 @@ function Review({ checkTapsIndex, data, listRating, userData, totalNumberUser, s
     }, [data.idBook, value, checkTapsIndex]);
 
     return (
-        <div className={cx('wrapper')}>
+        <div className={cx('wrapper', { [className]: !!className })}>
             <div className="row">
                 <div className="col c-8">
                     <div className={cx('container')}>

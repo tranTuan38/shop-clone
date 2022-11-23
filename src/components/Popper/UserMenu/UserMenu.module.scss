@@ -1,0 +1,104 @@
+.wrapper {
+    min-width: 280px;
+    padding: 12px 24px;
+
+    .container {
+        text-align: center;
+        font-size: 1.6rem;
+        color: #333;
+
+    }
+    
+    .media {
+        display: flex;
+        align-items: center;
+        margin-bottom: 24px;
+
+        .user-avatar {
+            width: 45px;
+            position: relative;
+            margin-right: 16px;
+
+            &::before {
+                padding-top: 100%;
+                display: block;
+                content: "";
+            }
+
+            img {
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                max-width: 100%;
+                margin: auto;
+                height: auto;
+                max-height: 100%;
+                border-radius: 50%;
+                object-fit: fill;
+            }
+        }
+
+        .media-body {
+
+            .user-name {
+                display: block;
+                text-align: left;
+                margin-bottom: 4px;
+                font-weight: 600;
+            }
+
+            .list-icon {
+                display: flex;
+
+                .icon:last-child i {
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+
+            .icon {
+                display: flex;
+                align-items: center;
+                margin-right: 24px;
+
+                i {
+                    width: 11px;
+                    height: 18px;
+                    margin-right: 8px;
+                    display: inline-block;
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                }
+            }
+        }
+    }
+
+    .list-menu {
+        
+        .item {
+            margin-top: 8px;
+            text-align: left;
+        }
+
+        .item-link {
+            display: block;
+            padding: 8px 0;
+            cursor: pointer;
+
+            &:hover {
+                color: var(--text-primary);
+            }
+        }
+    }
+
+    hr {
+        margin: 8px 0;
+        overflow: hidden;
+        border-top: 1px solid #e9ecef;
+    }
+    
+}

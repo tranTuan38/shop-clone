@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 
@@ -40,4 +40,4 @@ function BookMedia({ data }) {
     );
 }
 
-export default BookMedia;
+export default memo(BookMedia);

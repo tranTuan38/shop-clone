@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { listBookData, listRating, userData } from '~/initdata';
+import { useEffect, useState, useContext } from 'react';
+import { listBookData, listRating, userData, listAuthors, listUserReadBook } from '~/initdata';
 import imgs from '~/assets/imgs';
 import {
     handleGetRankWeekRead,
@@ -10,6 +10,7 @@ import {
     handleSortSelecter,
     handlerGetDataWithRequest,
 } from '~/handler';
+import { StoreContext } from '~/components/store';
 
 export const useGetCategory = () => {
     const [state, setState] = useState(() => {
@@ -69,15 +70,6 @@ export const useGetProperties = (num) => {
 };
 
 export const useGetReadingBook = () => {
-    // const [data, setData] = useState(() => {
-    //     const listReadingBook = listBookData.filter((item, index) => {
-    //         return item.reading;
-    //     });
-    //     const newData = [...listReadingBook];
-    //     newData.length = 5;
-    //     return [listReadingBook, newData];
-    // });
-    // return data;
     const [data, setData] = useState([]);
 
     useEffect(() => {
@@ -317,4 +309,43 @@ export const useGetListBookByRequest = (request) => {
     useEffect(() => {}, [request]);
 
     return data;
+};
+
+export const useGetAuthorData = (id) => {
+    const [data, setData] = useState({});
+
+    useEffect(() => {
+        const author = listAuthors.find((item) => item.idAuthor === id);
+
+        if (author) {
+            const bookDatas = listBookData.filter(
+                (item) => item.authorName.toLowerCase() === author.name.toLowerCase(),
+            );
+            const authorData = { ...author, books: bookDatas };
+            setData(authorData);
+        }
+    }, [id]);
+
+    return data;
+};
+
+export const useGetUserAction = (id) => {
+    const [data, setData] = useState({});
+
+    useEffect(() => {
+        const user = userData.find((item) => id === item.id);
+        if (user) {
+            const userRead = listUserReadBook.find((item) => id === item.idUser);
+            const userPost = listBookData.filter((item) => item.poster.toLowerCase() === user.name.toLowerCase());
+            setData({ user, userRead, userPost });
+        }
+    }, [id]);
+
+    return data;
+};
+
+export const useStore = () => {
+    const [state, dispatch] = useContext(StoreContext);
+
+    return [state, dispatch];
 };

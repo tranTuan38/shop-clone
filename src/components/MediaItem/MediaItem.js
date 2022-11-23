@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './MediaItem.module.scss';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import Taga from '~/components/Taga';
 import Img from '~/components/Img';
@@ -9,8 +9,9 @@ import { useGetCategory } from '~/hooks';
 
 const cx = classNames.bind(styles);
 
-function MediaItem({ data, type }) {
+function MediaItem({ data, type, nameSearch, onClick = () => {} }) {
     const location = useLocation();
+    const navigate = useNavigate();
     const [listGenre] = useGetCategory();
     const formatLink = (link) => {
         let linkValue;
@@ -33,6 +34,7 @@ function MediaItem({ data, type }) {
 
         return `/list-book/?genre=${indexValue}`;
     };
+
     return (
         <div
             className={cx('media', {
@@ -43,9 +45,11 @@ function MediaItem({ data, type }) {
                 <Img href={formatLink(data.name)} src={data.bookImg} className={cx('img-item')} />
             ) : (
                 <Img
+                    name={data.name}
                     href={`/list-book/${removeVietnameseTones(data.name)}`}
                     src={data.bookImg}
                     className={cx('img-item')}
+                    onClick={onClick}
                 />
             )}
             {(data && type === 'sugges') || (data && type === 'status') || (data && type === 'listBook') ? (
@@ -92,6 +96,7 @@ function MediaItem({ data, type }) {
                             className={cx('item-link')}
                             href={`/list-book/${removeVietnameseTones(data.name)}`}
                             title={data.name}
+                            onClick={onClick}
                         />
                     </h3>
                     <div className={cx('intro-genre')}>

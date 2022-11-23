@@ -4,6 +4,7 @@ import styles from './Footer.module.scss';
 import imgs from '~/assets/imgs';
 import footerImg from '~/assets/imgs/footer';
 import Img from '~/components/Img';
+import { memo } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -53,4 +54,4 @@ function Footer() {
     );
 }
 
-export default Footer;
+export default memo(Footer);

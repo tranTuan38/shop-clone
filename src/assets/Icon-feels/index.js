@@ -6,4 +6,5 @@ export const iconFeel = {
     angry: require('~/assets/Icon-feels/react-angry.svg').default,
     attack: require('~/assets/Icon-feels/react-attack.svg').default,
     flower: require('~/assets/Icon-feels/flower.svg').default,
+    candy: require('~/assets/Icon-feels/candy.svg').default,
 };

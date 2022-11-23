@@ -1,7 +1,6 @@
 import classNames from 'classnames/bind';
-import styles from './ListBookLayout.module.scss';
-import { useParams, useSearchParams } from 'react-router-dom';
 
+import styles from './ListBookLayout.module.scss';
 import Header from '../component/Header';
 import BackGrpImgs from '../component/BackGrpImgs';
 import Footer from '../component/Footer';

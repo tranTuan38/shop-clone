@@ -15,8 +15,8 @@ function NotFoundLayout({ children }) {
             <div className={cx('container')}>
                 <div className={cx('content')}>{children}</div>
             </div>
-            <Footer />
             <div id="popup-root" />
+            <Footer />
         </div>
     );
 }

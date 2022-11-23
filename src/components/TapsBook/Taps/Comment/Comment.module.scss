@@ -16,4 +16,51 @@
         margin-top: 16px;
         margin-bottom: 24px;
     }
+
+    .add-media {
+        
+        .add-button {
+            border: 1px solid;
+            border-radius: 20px;
+            border-color: #666;
+            padding: 8px 24px;
+            display: block;
+            font-weight: 600;
+            line-height: 1.6;
+            margin: 0 auto;
+            font-size: 1.6rem;
+            color: #333;
+
+            &:hover {
+                background-color: #666;
+            }
+        }
+    }
+
+    .qc {
+
+        .qc-link {
+            display: block;
+            color: #333;
+            background-color: transparent;
+        }
+    
+        .qc-img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+    }
+
+    .hr {
+        margin: 16px 0;
+        border: 0;
+        border-top: 1px solid #eee;
+    }
+
+    .hr:last-child {
+        display: none!important;
+    }
+
+    
 }

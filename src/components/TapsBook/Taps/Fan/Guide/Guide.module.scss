@@ -1,0 +1,82 @@
+.wrapper {
+        
+    .h2 {
+        font-size: 2rem;
+        margin-bottom: 16px;
+
+        h2 {
+            font-size: inherit;
+            font-weight: 600;
+        }
+    }
+
+    .container {
+
+        .content {
+            margin-bottom: 24px;
+
+            .title {
+                font-size: 1.6rem;
+                font-weight: 600;
+                margin-bottom: 8px;
+            }
+            
+            span {
+                margin-right: 4px;
+            }
+            
+            .level {
+                color: #212529;
+                border-top: 2px solid #eee;
+                border-bottom: 1px solid #eee;
+                margin-bottom: 16px;
+                
+                .level-content {
+                    display: flex;
+
+                    .level-list-title {
+                        display: flex;
+                        flex-direction: column;
+                        flex: 1;
+
+                        .level-title {
+                            line-height: 1.5;
+                            padding: 12px 0;
+                            padding-right: 12px;
+                        }
+                    }
+                    
+
+                    .level-info {
+                        flex: 9;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-around;
+
+                        .level-list-item {
+                            display: flex;
+                            flex-direction: column;
+
+                            .level-item {
+                                padding: 8px 12px;
+
+                                img {
+                                    display: block;
+                                    height: 20px;
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+
+        .content:last-child .title {
+            margin-bottom: 16px;
+        }
+
+    }
+    
+
+}

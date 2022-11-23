@@ -4,6 +4,7 @@ import classNames from 'classnames/bind';
 import styles from '../BookMedia.module.scss';
 import { useGetListSelecter } from '~/hooks';
 import { handlerSetLink } from '~/handler';
+import { listAuthors } from '~/initdata';
 
 const cx = classNames.bind(styles);
 
@@ -29,16 +30,14 @@ function ListTag({ data }) {
         return acc;
     }, []);
 
-    const { genreLink } = handlerSetLink();
+    const { genreLink, authorLink } = handlerSetLink();
     const tags = [...datas.characters, ...datas.backGrg, ...datas.sects, ...datas.sights];
-    // console.log(tags);
 
     const handlerSetLinkListTag = (type, value) => {
         let link;
-        if (type > 2) {
-            // console.log(value);
-        }
+
         if (!type) {
+            link = authorLink('author', value, listAuthors);
         } else {
             if (type === 1) {
                 link = genreLink(value, 'status', status);
@@ -54,23 +53,24 @@ function ListTag({ data }) {
     return (
         <div className={cx('list-tag')}>
             <div className={cx('tag')}>
-                {dataLoopSelected.map((item, index) => {
-                    return (
-                        <div
-                            key={index}
-                            className={cx('link', {
-                                ['border-secondary']: index === 0,
-                                ['border-danger']: index === 1,
-                                ['border-primary']: index === 2,
-                                ['border-success']: index > 2,
-                            })}
-                        >
-                            <Link className={cx('link-item')} to={handlerSetLinkListTag(index, item)}>
-                                {item}
-                            </Link>
-                        </div>
-                    );
-                })}
+                {!!dataLoopSelected.length &&
+                    dataLoopSelected.map((item, index) => {
+                        return (
+                            <div
+                                key={index}
+                                className={cx('link', {
+                                    ['border-secondary']: index === 0,
+                                    ['border-danger']: index === 1,
+                                    ['border-primary']: index === 2,
+                                    ['border-success']: index > 2,
+                                })}
+                            >
+                                <Link className={cx('link-item')} to={handlerSetLinkListTag(index, item)}>
+                                    {item}
+                                </Link>
+                            </div>
+                        );
+                    })}
             </div>
         </div>
     );

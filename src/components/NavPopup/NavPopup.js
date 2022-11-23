@@ -4,26 +4,20 @@ import classNames from 'classnames/bind';
 
 import styles from './NavPopup.module.scss';
 import ModalContainer from '../ModalContainer';
+import { memo } from 'react';
 
 const cx = classNames.bind(styles);
 
-function NavPopup({ className, formName, item, closeOnDocumentClick = false, onOpen, onClose }) {
+function NavPopup({ className, formName, item, closeOnDocumentClick = false, overlayStyle, contentStyle }) {
     return (
         <div className={`${className} ${cx('nav-right')} `}>
             <Popup
+                nested
                 modal
                 closeOnDocumentClick={closeOnDocumentClick}
-                overlayStyle={{
-                    backgroundColor: 'rgba(0,0,0,0.4)',
-                    alignItems: 'center',
-                    transition: 'opacity .15s linear',
-                    overFlow: 'hidden',
-                    disPlay: formName ? 'flex' : 'none',
-                }}
-                contentStyle={{ backgroundColor: '#fff', borderRadius: '8px' }}
+                overlayStyle={overlayStyle}
+                contentStyle={contentStyle}
                 trigger={item}
-                onOpen={onOpen}
-                onClose={onClose}
             >
                 {(close) => <ModalContainer formName={formName} close={close} />}
             </Popup>
@@ -31,4 +25,4 @@ function NavPopup({ className, formName, item, closeOnDocumentClick = false, onO
     );
 }
 
-export default NavPopup;
+export default memo(NavPopup);

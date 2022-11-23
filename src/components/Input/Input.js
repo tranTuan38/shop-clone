@@ -5,9 +5,17 @@ import styles from './Input.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Input({ value, className, placeholder, onChange }) {
+function Input({ value, id, className, type, placeholder, autoComplete = 'on', onChange }) {
     return (
-        <input value={value} className={`${cx('input')} ${className}`} placeholder={placeholder} onChange={onChange} />
+        <input
+            id={id}
+            autoComplete={autoComplete}
+            className={`${cx('input')} ${className}`}
+            type={type}
+            placeholder={placeholder}
+            value={value}
+            onChange={onChange}
+        />
     );
 }
 

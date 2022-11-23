@@ -2,93 +2,71 @@ import classNames from 'classnames/bind';
 import styles from './Form.module.scss';
 
 import { CheckIcon } from '~/components/Icons';
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { memo, useEffect, useState, useRef } from 'react';
+import { useStore } from '~/hooks';
+import { actions } from '~/components/store';
+import SignIn from './SignIn';
+import RegisForm from './RegisForm';
 
 const cx = classNames.bind(styles);
 
+const listFormGroup = [
+    { title: 'Email', id: 'email', type: 'email', placeholder: 'Email' },
+    { title: 'Mật khẩu', id: 'password', type: 'password', placeholder: 'Nhập mật khẩu' },
+    {
+        title: 'Nhập lại mật khẩu',
+        id: 'retype-password',
+        type: 'password',
+        placeholder: 'Nhập lại mật khẩu',
+    },
+];
+
 function Form({ formName, close }) {
-    const [check, setCheck] = useState(formName);
+    const [typeForm, setTypeForm] = useState(formName);
+    const [state, dispatch] = useStore();
 
-    useLayoutEffect(() => {
-        setCheck(formName);
-    }, [formName]);
-
-    const handleClick = (title) => {
-        setCheck(title);
+    const handlerSetFormType = (type) => {
+        if (type !== typeForm) {
+            setTypeForm(type);
+        }
     };
+
+    useEffect(() => {}, []);
+
     return (
-        <div className={cx('Form', { [check]: check })}>
-            <header className={cx('header')}>
+        <div className={cx('wrapper')}>
+            <div className={cx('header')}>
                 <button
-                    onClick={check === 'SignIn' ? () => {} : () => handleClick('SignIn')}
-                    className={cx('signIn', { ['in-form']: check === 'SignIn' })}
+                    className={cx('header-title', { active: typeForm === 'login' })}
+                    onClick={() => handlerSetFormType('login')}
                 >
                     Đăng nhập
                 </button>
                 <button
-                    onClick={check === 'Regis' ? () => {} : () => handleClick('Regis')}
-                    className={cx('regis', { ['in-form']: check === 'Regis' })}
+                    className={cx('header-title', { active: typeForm === 'regis' })}
+                    onClick={() => handlerSetFormType('regis')}
                 >
                     Đăng ký
                 </button>
-
                 <button className={cx('close')} onClick={close}>
                     &times;
                 </button>
-            </header>
-            <div className={cx('body')}>
-                <div className={cx('item')}>
-                    <div className={cx('email')}>
-                        <label htmlFor="email" className={cx('title')}>
-                            Email
-                        </label>
-                        <a className={cx('what')} href="#">
-                            Gửi lại email kích hoạt
-                        </a>
-                    </div>
-                    <input id="email" className={cx('input')} placeholder="Nhập email" />
-                </div>
-                <div className={cx('item')}>
-                    <div className={cx('password')}>
-                        <label htmlFor="password" className={cx('title')}>
-                            Mật khẩu
-                        </label>
-                        <a className={cx('what')} href="#">
-                            Quên mật khẩu?
-                        </a>
-                    </div>
-                    <input id="password" type="password" className={cx('input')} placeholder="Nhập mật khẩu" />
-                </div>
-                <div className={cx('item', { ['re-item']: true })}>
-                    <div className={cx('re-password')}>
-                        <label htmlFor="re-password" className={cx('title')}>
-                            Nhập lại mật khẩu
-                        </label>
-                    </div>
-                    <input id="re-password" type="password" className={cx('input')} placeholder="Nhập mật khẩu" />
-                </div>
-                <div className={cx('item', { ['check-item']: true })}>
-                    <label className={cx('check-container')}>
-                        <span className={cx('check-title')}>Ghi nhớ mật khẩu</span>
-                        <input className={cx('checkbox')} type="checkbox" />
-                        <span className={cx('checkmark')}>
-                            <CheckIcon className={cx('check-icon')} />
-                        </span>
-                    </label>
-                </div>
-                <div className={cx('item')}>
-                    <button className={cx('button')}>
-                        <span className={cx('button-title')}>{check === 'SignIn' ? 'Đăng nhập' : 'Đăng ký'}</span>
-                    </button>
-                </div>
+            </div>
+            <div className={cx('container')}>
+                {typeForm === 'login' && <SignIn listFormGroup={listFormGroup.slice(0, 2)} dispatch={dispatch} />}
+                {typeForm === 'regis' && <RegisForm listFormGroup={listFormGroup} dispatch={dispatch} />}
             </div>
 
-            <div className={cx('footer')}>
-                <span className={cx('about-what')}>Bạn chưa có tài khoản?</span>
-                <a className={cx('signUp-now')}> Đăng ký ngay</a>
-            </div>
+            {typeForm === 'login' && (
+                <div className={cx('footer')}>
+                    <span className={cx('about-what')}>Bạn chưa có tài khoản? </span>
+                    <button className={cx('signUp-now')} onClick={() => handlerSetFormType('regis')}>
+                        Đăng ký ngay
+                    </button>
+                </div>
+            )}
         </div>
     );
 }
 
-export default Form;
+export default memo(Form);

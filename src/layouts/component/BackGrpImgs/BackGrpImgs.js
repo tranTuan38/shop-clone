@@ -1,37 +1,53 @@
 import { useGetBrgImg } from '~/hooks';
-import { useState, useEffect, useRef, useLayoutEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useLayoutEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import classNames from 'classnames/bind';
 
 import styles from './BackGrpImgs.module.scss';
+import { memo } from 'react';
 
 const cx = classNames.bind(styles);
 
 function BackGrpImgs() {
     const [state, setState] = useGetBrgImg();
-    const [numImg, setNumImg] = useState(0);
+    const [listImgs, setListImg] = useState([]);
+    const [index, setIndex] = useState(Math.floor(Math.random() * state.length));
+    const location = useLocation();
+    const { pathname } = location;
 
-    const numRandom = Math.floor(Math.random() * state.length);
-    const numRef = useRef([0]);
+    function getIndexImg() {
+        const numRandom = Math.floor(Math.random() * state.length);
+        const isIndexCheck = listImgs.includes(numRandom);
+
+        if (isIndexCheck) {
+            return getIndexImg();
+        } else {
+            return numRandom;
+        }
+    }
 
     useLayoutEffect(() => {
-        if (numRef.current.length > state.length) {
-            numRef.current = [];
+        if (listImgs.length === 6) {
+            setIndex(0);
+            setListImg([]);
+        } else {
+            if (!listImgs.length) {
+                setListImg([index]);
+            } else {
+                const imgNum = getIndexImg();
+                setIndex(imgNum);
+                setListImg((prev) => [...prev, imgNum]);
+            }
         }
 
-        if (!numRef.current.includes(numRandom)) {
-            numRef.current = [...numRef.current, numImg];
-            setNumImg(numRandom);
-        } else {
-            return;
-        }
-    }, [numRandom]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [pathname]);
 
     return (
         <div className={cx('content')}>
-            <img className={cx('img')} src={state[numImg]} alt="ảnh nền" />
+            <img className={cx('img')} src={state[index]} alt="ảnh nền" />
         </div>
     );
 }
 
-export default BackGrpImgs;
+export default memo(BackGrpImgs);

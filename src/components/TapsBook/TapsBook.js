@@ -1,11 +1,12 @@
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 // import 'react-tabs/style/react-tabs.css';
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
 
 import { Intro, Review, Chap, Comment, Fan } from './Taps';
 import styles from './TapsBook.module.scss';
 import { handleTime, handlerGetBookMediaData, getListRatingForBook, SetPersonRatingForBook } from '~/handler';
+import imgs from '~/assets/imgs';
 
 const cx = classNames.bind(styles);
 
@@ -15,13 +16,16 @@ const listTaps = {
     components: [Intro, Review, Chap, Comment, Fan],
 };
 
-function TapsBook({ data, listBookData, rating, userData, listComment }) {
+function TapsBook({ data, listBookData, nameSearch, rating, userData, listComment }) {
+    const [firstRender, setFirstRender] = useState(0);
     const [num, setNum] = useState(0);
+    const [curBook, setCurBook] = useState();
     const [listData, setListData] = useState({ tapKeys: [], titles: [], components: [] });
 
     const { listInfo, setRating, setRate, rateUser, totalNumberUser, getCommentById } = handlerGetBookMediaData(
         rating,
         listComment,
+        userData,
     );
 
     const handlerSetSubItem = (type) => {
@@ -34,11 +38,20 @@ function TapsBook({ data, listBookData, rating, userData, listComment }) {
         }
     };
 
-    // console.log('TapIndex: ', num);
-
     useEffect(() => {
-        setListData({ ...listTaps });
-    }, [data.idBook]);
+        if (nameSearch !== curBook) {
+            setNum(0);
+            setCurBook(nameSearch);
+            setFirstRender(0);
+        }
+
+        if (!firstRender) {
+            setListData({ ...listTaps });
+            setFirstRender(firstRender + 1);
+            setCurBook(nameSearch);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [nameSearch, curBook]);
 
     return (
         <div className={cx('taps-book')}>
@@ -67,10 +80,11 @@ function TapsBook({ data, listBookData, rating, userData, listComment }) {
                     {!!listData.components.length &&
                         listData.components.map((component, index) => {
                             const TabContent = component;
-                            let props = {};
+                            let props = { checkTapsIndex: num === index };
+
                             if (index === 1) {
                                 props = {
-                                    checkTapsIndex: num === index,
+                                    ...props,
                                     listRating: rating,
                                     userData,
                                     setRating,
@@ -81,9 +95,9 @@ function TapsBook({ data, listBookData, rating, userData, listComment }) {
                                     setTime: handleTime,
                                 };
                             } else if (index === 2) {
-                                props = { checkTapsIndex: num === index };
+                                props = { ...props };
                             } else if (index === 3) {
-                                props = { listDataCmt: getCommentById(data.idBook) };
+                                props = { ...props, listDataCmt: getCommentById(data.idBook), c4Data: imgs.imgAdver };
                             }
                             return (
                                 <TabPanel
@@ -91,11 +105,15 @@ function TapsBook({ data, listBookData, rating, userData, listComment }) {
                                     className={cx('content', {
                                         [listData.tapKeys[index]]: index || !index,
                                         ['active']: index === num,
-                                        ['show']: index === num,
-                                        ['fade']: true,
                                     })}
                                 >
-                                    <TabContent data={data} listBookData={listBookData} {...props} />
+                                    <TabContent
+                                        data={data}
+                                        nameSearch={nameSearch}
+                                        listBookData={listBookData}
+                                        {...props}
+                                        className={cx('none', { active: index === num })}
+                                    />
                                 </TabPanel>
                             );
                         })}
@@ -105,4 +123,4 @@ function TapsBook({ data, listBookData, rating, userData, listComment }) {
     );
 }
 
-export default TapsBook;
+export default memo(TapsBook);

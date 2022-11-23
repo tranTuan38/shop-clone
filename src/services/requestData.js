@@ -2,7 +2,7 @@ import { handlerGetDataWithRequest, handlerSelecedDataWithPath } from '~/handler
 import { getListBookServices } from './getListBookServices';
 
 export const requestData = async (req, listRequest, location, listSelecter) => {
-    const { dataList, type, setLoading, setListData } = req;
+    const { dataList, type, delay, setLoading, setListData } = req;
     setLoading(true);
     if (!dataList) {
         const data = handlerGetDataWithRequest({ listRequest, location, listSelecter });
@@ -10,7 +10,7 @@ export const requestData = async (req, listRequest, location, listSelecter) => {
         const listDataSelect = handlerSelecedDataWithPath(result, listRequest, listSelecter, location);
         setListData(listDataSelect);
     } else {
-        const result = await getListBookServices(dataList, type);
+        const result = await getListBookServices(dataList, type, delay);
         setListData(result);
     }
     // console.log('data: ', data);

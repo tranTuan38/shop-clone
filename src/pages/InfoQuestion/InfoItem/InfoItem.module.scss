@@ -1,0 +1,47 @@
+.content {
+    margin-bottom: 4px;
+    border: 1px solid #f7f7f7;
+
+    .question {
+        font-size: inherit;
+        background-color: #f7f5f0;
+
+        .btn {
+            font-size: 1.6rem;
+            padding: 8px;
+            display: block;
+            width: 100%;
+            font-weight: 400;
+            color: #333;
+            user-select: none;
+            background-color: transparent;
+            border: 1px solid transparent;
+            border-radius: 20px;
+            text-align: left;
+            transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out,-moz-box-shadow .15s ease-in-out;
+        }
+
+        &:hover .btn{
+            color: var(--text-primary);
+        }
+    }
+
+    .guide {
+        height: 0;
+        position: relative;
+        overflow: hidden;
+        transition: height 0.35s ease;
+        
+        .guide-body {
+            padding: 16px;
+            font-size: 1.5rem;
+            color: #333;
+            word-break: break-word;
+            white-space: pre-line;
+        }
+    }
+    
+    .guide.active {
+        // height: 190px;
+    }
+}

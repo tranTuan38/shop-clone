@@ -303,6 +303,18 @@ a {
         content: "\EA34";
     }
 
+    &.icon-page::before {
+        content: "\EA16";
+    }
+
+    &.icon-user::before {
+        content: "\EA20";
+    }
+
+    &.icon-bell::before {
+        content: "\EA10";
+    }
+
 }
 
 .fs-80 {

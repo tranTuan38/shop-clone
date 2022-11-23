@@ -10,15 +10,17 @@ import { requestData } from '~/services';
 
 const cx = classNames.bind(styles);
 
-function Reply({ data, navActiveData, pageCur = 1 }) {
-    const [checkPageCur, setCheckPageCur] = useState(pageCur);
+function Reply({ data, listDataCmt, navActiveData }) {
     const [checkView, setCheckView] = useState(false);
     const [firstAll, setFirstAll] = useState(false);
     const [listReply, setListReply] = useState([]);
     const [checkRep, setCheckRep] = useState({});
     const [notIn, setNotIn] = useState(false);
 
-    // const { setRepData, setTime, setCmtUser } = navActiveData;
+    // console.log('listDataCmt: ', listDataCmt);
+    // console.log('data: ', data);
+
+    const { setTime, setCmtUser } = navActiveData;
 
     const handlerViewAll = () => {
         setNotIn(true);
@@ -39,46 +41,37 @@ function Reply({ data, navActiveData, pageCur = 1 }) {
     // console.log('checkPageCur: ', checkPageCur);
 
     useEffect(() => {
-        // if (pageCur !== checkPageCur) {
-        //     setListReply([]);
-        //     setCheckPageCur(pageCur);
-        //     setNotIn(false);
-        //     setFirstAll(false);
-        // }
-        // console.log('notIn :', notIn);
-        // if (notIn && pageCur === checkPageCur) {
-        //     const listData = setRepData(data.userReply);
-        //     const listCheck = data.userReply.reduce((acc, user, index) => {
-        //         return { ...acc, [`${index}`]: user.repCmt.length < 400 };
-        //     }, {});
-        //     const setDataRep = (data) => {
-        //         return new Promise((resolve, reject) => {
-        //             setTimeout(() => {
-        //                 resolve(data);
-        //             }, 500);
-        //         });
-        //     };
-        //     const asyncListData = async () => {
-        //         setFirstAll(true);
-        //         const result = await setDataRep(listData);
-        //         setListReply(result);
-        //         setCheckRep(listCheck);
-        //     };
-        //     asyncListData();
-        // }
-    }, [notIn, pageCur]);
+        if (notIn) {
+            const listCheck = listDataCmt.reduce((acc, user, index) => {
+                return { ...acc, [`${index}`]: user.repCmt.length < 400 };
+            }, {});
+            const setDataRep = (data) => {
+                return new Promise((resolve, reject) => {
+                    setTimeout(() => {
+                        resolve(data);
+                    }, 500);
+                });
+            };
+            const asyncListData = async () => {
+                setFirstAll(true);
+                const result = await setDataRep(listDataCmt);
+                setListReply(result);
+                setCheckRep(listCheck);
+            };
+            asyncListData();
+        }
+    }, [notIn]);
 
     return (
         <div className={cx('wrapper')}>
             <div className={cx('action')}>
                 <div className={cx('all-reply')} onClick={handlerViewAll}>
-                    {/* {!!data.userReply.length && !notIn && `Xem ${data.userReply.length} trả lời`} */}
-                    123
+                    {!!data.userReply.length && !notIn && `Xem ${data.userReply.length} trả lời`}
                 </div>
                 <div className={cx('action-btn')}>
                     <button className={cx('btn', { active: false })}>
                         <i className="nh-icon icon-like"></i>
-                        {/* {data.rateLike} */}
+                        {data.cmtLike}
                     </button>
                     <button className={cx('btn', { active: notIn || firstAll })}>
                         <i className="nh-icon icon-reply"></i>
@@ -91,7 +84,7 @@ function Reply({ data, navActiveData, pageCur = 1 }) {
                 </div>
             </div>
             <div className={cx('list')}>
-                {/* {notIn && (
+                {notIn && (
                     <>
                         <div className={cx('media')}>
                             {!!listReply.length &&
@@ -138,9 +131,9 @@ function Reply({ data, navActiveData, pageCur = 1 }) {
                             Ẩn trả lời
                         </button>
                     </>
-                )} */}
+                )}
                 {firstAll && <InputReply />}
-                <InputReply />
+                {/* <InputReply /> */}
             </div>
         </div>
     );

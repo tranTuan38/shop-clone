@@ -14,7 +14,7 @@ function Reading({ data, type }) {
             <div className={cx('reading')}>
                 <div className={cx('media-title', { ['reading-title']: type })}>
                     <h2 className={cx('title')}>Đang đọc</h2>
-                    <Taga href="/" className={cx('all')} title="Xem tất cả" />
+                    <Taga href="/account/1" className={cx('all')} title="Xem tất cả" />
                 </div>
                 <div className={cx('content')}>
                     {listReading.map((item, index) => (

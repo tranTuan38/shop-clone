@@ -9,9 +9,9 @@ import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-function StatusItemEle({ data, id, formatLink }) {
+function StatusItemEle({ data, id, formatLink, nameSearch, navigate, onClick = () => {} }) {
     return (
-        <Link className={cx('img-link')} to={formatLink(data.name)}>
+        <Link className={cx('img-link')} to={formatLink(data.name)} onClick={(e) => onClick(e, data.name)}>
             <img src={data.bookImg} alt="product imgs" />
         </Link>
     );

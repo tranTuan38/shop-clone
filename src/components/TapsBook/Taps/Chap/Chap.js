@@ -9,35 +9,37 @@ import { requestData } from '~/services';
 
 const cx = classNames.bind(styles);
 
-function Chap({ data, checkTapsIndex }) {
-    const [id, setId] = useState(data.idBook);
+function Chap({ data, checkTapsIndex, className }) {
+    const [id, setId] = useState();
     const [firstRender, setFirstRender] = useState(0);
     const [listChap, setListChap] = useState([]);
     const [check, setCheck] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    // console.log('firstRender : ', firstRender);
     // console.log('idPrev: ', id);
     // console.log('idBook: ', data.idBook);
     // console.log('checkTapsIndex : ', checkTapsIndex);
-    // console.log('firstRender : ', firstRender);
 
     useEffect(() => {
+        if (id !== data.idBook) {
+            setId(data.idBook);
+            setFirstRender(0);
+            return;
+        }
         if (checkTapsIndex && !firstRender) {
             const dataAsync = async () => {
                 const dataList = data.listChapter;
                 requestData({ dataList, setLoading, setListData: setListChap, type: 'chapter' });
             };
             dataAsync();
-            setFirstRender(firstRender + 1);
-        }
-
-        if (id !== data.idBook) {
             setId(data.idBook);
-            setFirstRender(0);
+            setFirstRender(firstRender + 1);
+            return;
         }
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data.idBook, checkTapsIndex]);
+    }, [data.idBook, firstRender, checkTapsIndex]);
 
     const setChap = (bookData) => {
         if (bookData.numberChapter < 10) {
@@ -67,7 +69,7 @@ function Chap({ data, checkTapsIndex }) {
     };
 
     return (
-        <div className={cx('wrapper')}>
+        <div className={cx('wrapper', { [className]: !!className })}>
             <div className={cx('nav')}>
                 <h4 className={cx('h4')}>Danh sách chương</h4>
                 <button className={cx('btn')} onClick={handlerBtnClick}>
@@ -80,20 +82,21 @@ function Chap({ data, checkTapsIndex }) {
             ) : (
                 <div className={cx('content')}>
                     <div className="row mt-2">
-                        {listChap.map((item, index) => {
-                            return (
-                                <div key={index} className="col c-4 border-bottom-dashed">
-                                    <Link to={`chuong-${item.numberChapter}`} className={cx('link')}>
-                                        <div className={cx('item')}>
-                                            <div className={cx('body')}>
-                                                {setChap(item)}
-                                                <span className={cx('time')}>{setTime(item)}</span>
+                        {!!listChap.length &&
+                            listChap.map((item, index) => {
+                                return (
+                                    <div key={index} className="col c-4 border-bottom-dashed">
+                                        <Link to={`chuong-${item.numberChapter}`} className={cx('link')}>
+                                            <div className={cx('item')}>
+                                                <div className={cx('body')}>
+                                                    {setChap(item)}
+                                                    <span className={cx('time')}>{setTime(item)}</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </Link>
-                                </div>
-                            );
-                        })}
+                                        </Link>
+                                    </div>
+                                );
+                            })}
                     </div>
                 </div>
             )}

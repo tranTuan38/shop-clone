@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './Search.module.scss';
 import Input from '~/components/Input';
 import Button from '~/components/Button';
+import { memo } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -26,4 +27,4 @@ function Search({ className, icon }) {
     );
 }
 
-export default Search;
+export default memo(Search);

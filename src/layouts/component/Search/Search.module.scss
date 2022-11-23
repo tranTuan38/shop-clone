@@ -18,6 +18,8 @@
     & .input {
         flex: 1;
         padding: 6px 68px 6px 24px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
     }
 
     &:focus-within { // khi thẻ input đc focus, thẻ cha chứa nó sẽ được ăn css 

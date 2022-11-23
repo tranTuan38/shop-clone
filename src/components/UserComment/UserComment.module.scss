@@ -4,7 +4,10 @@
 .list-media {
     margin-top: 16px;
     margin-bottom: 24px;
-    border-top: 1px solid #eee;
+
+    .media:last-child {
+        border-bottom: 1px solid #eee;
+    }
 }
 
 .media {
@@ -12,7 +15,7 @@
     padding: 8px 0;
     align-items: flex-start;
     word-break: break-word;
-    border-bottom: 1px solid #eee;
+    border-top: 1px solid #eee;
 
     .item-hover {
         &:hover {

@@ -25,6 +25,25 @@ const listBookData = [
         tagCategory: 'tien-hiep',
         category: 'Tiên Hiệp', // Thể loại
         totalChapter: 333,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description:
             'Trần Mạc Bạch, Tiên Môn lớp 12 học sinh, đang cố gắng ôn tập chuẩn bị thi đậu đại đạo viện, lúc đầu hắn đời này mơ ước lớn nhất cũng chính là Trúc Cơ thành công, thẳng đến hắn có thể xuyên qua đến một cái khác thế giới tu tiên, sau đó, mộng tưởng liền thay đổi. . .',
         listChapter: [
@@ -34,6 +53,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T01:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -63,6 +83,25 @@ const listBookData = [
         tagCategory: 'huyen-huyen',
         category: 'Huyền Huyễn', // Thể loại
         totalChapter: 101,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description: `Lý Thừa Duyên xuyên qua đến cổ võ thế giới, thành Đại Chu quốc Lục hoàng tử.
 
         Đúng lúc gặp Hoàng Đế băng hà, tân hoàng đăng cơ.
@@ -95,6 +134,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T15:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -122,6 +162,25 @@ const listBookData = [
         tagCategory: 'khoa-huyen',
         category: 'Khoa Huyễn', // Thể loại
         totalChapter: 253,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description: `---- Dị Thú lưu----
         Khang Kiều từ thế giới ban sơ sinh ra bên trong thức tỉnh, chỉ là hắn lúc này lại trở thành Godzilla ấu thể.
         
@@ -139,6 +198,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T14:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -168,6 +228,25 @@ const listBookData = [
         tagCategory: 'vong-du',
         category: 'Võng Du', // Thể loại
         totalChapter: 574,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description: `Thế giới biến thành chư thiên thế giới sân chơi, toàn bộ sinh linh đều số liệu hóa, ngồi đợi chư thiên thế giới người chơi giáng lâm vô số lần giết chết tra tấn.
 
         Hóa thân Tân Thủ thôn đệ nhất phế quái thỏ Dịch Chính, lựa chọn mang theo một đám con thỏ bắt đầu trên xanh mượt thảo nguyên phi nước đại, nằm ngửa ngồi dậy, nằm đẩy, chèo thuyền, bơi lội. . .
@@ -182,6 +261,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T12:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -209,6 +289,25 @@ const listBookData = [
         tagCategory: 'do-thi',
         category: 'Đô Thị', // Thể loại
         totalChapter: 100,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description: `Ác quỷ, Tà Linh, khôi lỗi, ma dược, khoa học kỹ thuật, phùng hợp quái. . .
 
         Lâm Dật xuyên qua đến bí hiểm thế giới, trở thành hạnh phúc phòng khám bệnh thầy thuốc, cũng may hắn đã thức tỉnh hệ thống.
@@ -227,6 +326,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T10:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -256,6 +356,25 @@ const listBookData = [
         tagCategory: 'dong-nhan',
         category: 'Đồng Nhân', // Thể loại
         totalChapter: 100,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description: `Hiệu trưởng: Gellert Grindelwald
 
         (hiệp hội cải cách phù thủy hội trưởng, Merlin hiệp sĩ đoàn cấp một ma pháp sư)
@@ -282,6 +401,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T22:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
             {
                 nameChapter: 'Giằng co - 2sdcsdvsdádcsacasasc',
@@ -289,6 +409,7 @@ const listBookData = [
                 id_chapter: 1,
                 timeCreatChapter: '2022-10-23T20:39:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -318,6 +439,25 @@ const listBookData = [
         tagCategory: 'kiem-hiep',
         category: 'Kiếm Hiệp', // Thể loại
         totalChapter: 169,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description: `Truyền thuyết, vài ngàn năm trước .
 
         Hạ Vũ đúc cửu đỉnh, trấn Cửu Châu thiên địa, sáng lập Hạ triều .
@@ -351,6 +491,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T20:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -378,6 +519,25 @@ const listBookData = [
         tagCategory: 'tien-hiep',
         category: 'Tiên Hiệp', // Thể loại
         totalChapter: 333,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description:
             'Trần Mạc Bạch, Tiên Môn lớp 12 học sinh, đang cố gắng ôn tập chuẩn bị thi đậu đại đạo viện, lúc đầu hắn đời này mơ ước lớn nhất cũng chính là Trúc Cơ thành công, thẳng đến hắn có thể xuyên qua đến một cái khác thế giới tu tiên, sau đó, mộng tưởng liền thay đổi. . .',
         listChapter: [
@@ -387,6 +547,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T07:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -416,6 +577,25 @@ const listBookData = [
         tagCategory: 'huyen-huyen',
         category: 'Huyền Huyễn', // Thể loại
         totalChapter: 101,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description: `Lý Thừa Duyên xuyên qua đến cổ võ thế giới, thành Đại Chu quốc Lục hoàng tử.
 
         Đúng lúc gặp Hoàng Đế băng hà, tân hoàng đăng cơ.
@@ -448,6 +628,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T09:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -475,6 +656,25 @@ const listBookData = [
         tagCategory: 'khoa-huyen',
         category: 'Khoa Huyễn', // Thể loại
         totalChapter: 253,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description: `---- Dị Thú lưu----
         Khang Kiều từ thế giới ban sơ sinh ra bên trong thức tỉnh, chỉ là hắn lúc này lại trở thành Godzilla ấu thể.
         
@@ -492,6 +692,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T23:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -519,6 +720,25 @@ const listBookData = [
         tagCategory: 'vong-du',
         category: 'Võng Du', // Thể loại
         totalChapter: 574,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description: `Thế giới biến thành chư thiên thế giới sân chơi, toàn bộ sinh linh đều số liệu hóa, ngồi đợi chư thiên thế giới người chơi giáng lâm vô số lần giết chết tra tấn.
 
         Hóa thân Tân Thủ thôn đệ nhất phế quái thỏ Dịch Chính, lựa chọn mang theo một đám con thỏ bắt đầu trên xanh mượt thảo nguyên phi nước đại, nằm ngửa ngồi dậy, nằm đẩy, chèo thuyền, bơi lội. . .
@@ -533,6 +753,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T12:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -560,6 +781,25 @@ const listBookData = [
         tagCategory: 'tien-hiep',
         category: 'Tiên Hiệp', // Thể loại
         totalChapter: 333,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description:
             'Trần Mạc Bạch, Tiên Môn lớp 12 học sinh, đang cố gắng ôn tập chuẩn bị thi đậu đại đạo viện, lúc đầu hắn đời này mơ ước lớn nhất cũng chính là Trúc Cơ thành công, thẳng đến hắn có thể xuyên qua đến một cái khác thế giới tu tiên, sau đó, mộng tưởng liền thay đổi. . .',
         listChapter: [
@@ -569,6 +809,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T18:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -596,6 +837,25 @@ const listBookData = [
         tagCategory: 'tien-hiep',
         category: 'Tiên Hiệp', // Thể loại
         totalChapter: 333,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description:
             'Trần Mạc Bạch, Tiên Môn lớp 12 học sinh, đang cố gắng ôn tập chuẩn bị thi đậu đại đạo viện, lúc đầu hắn đời này mơ ước lớn nhất cũng chính là Trúc Cơ thành công, thẳng đến hắn có thể xuyên qua đến một cái khác thế giới tu tiên, sau đó, mộng tưởng liền thay đổi. . .',
         listChapter: [
@@ -605,6 +865,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T11:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -632,6 +893,25 @@ const listBookData = [
         tagCategory: 'tien-hiep',
         category: 'Tiên Hiệp', // Thể loại
         totalChapter: 333,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description:
             'Trần Mạc Bạch, Tiên Môn lớp 12 học sinh, đang cố gắng ôn tập chuẩn bị thi đậu đại đạo viện, lúc đầu hắn đời này mơ ước lớn nhất cũng chính là Trúc Cơ thành công, thẳng đến hắn có thể xuyên qua đến một cái khác thế giới tu tiên, sau đó, mộng tưởng liền thay đổi. . .',
         listChapter: [
@@ -641,6 +921,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T06:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -668,6 +949,25 @@ const listBookData = [
         tagCategory: 'tien-hiep',
         category: 'Tiên Hiệp', // Thể loại
         totalChapter: 333,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description:
             'Trần Mạc Bạch, Tiên Môn lớp 12 học sinh, đang cố gắng ôn tập chuẩn bị thi đậu đại đạo viện, lúc đầu hắn đời này mơ ước lớn nhất cũng chính là Trúc Cơ thành công, thẳng đến hắn có thể xuyên qua đến một cái khác thế giới tu tiên, sau đó, mộng tưởng liền thay đổi. . .',
         listChapter: [
@@ -677,6 +977,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T04:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -704,6 +1005,25 @@ const listBookData = [
         tagCategory: 'tien-hiep',
         category: 'Tiên Hiệp', // Thể loại
         totalChapter: 333,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description:
             'Trần Mạc Bạch, Tiên Môn lớp 12 học sinh, đang cố gắng ôn tập chuẩn bị thi đậu đại đạo viện, lúc đầu hắn đời này mơ ước lớn nhất cũng chính là Trúc Cơ thành công, thẳng đến hắn có thể xuyên qua đến một cái khác thế giới tu tiên, sau đó, mộng tưởng liền thay đổi. . .',
         listChapter: [
@@ -713,6 +1033,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T04:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -740,6 +1061,25 @@ const listBookData = [
         tagCategory: 'tien-hiep',
         category: 'Tiên Hiệp', // Thể loại
         totalChapter: 333,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description:
             'Trần Mạc Bạch, Tiên Môn lớp 12 học sinh, đang cố gắng ôn tập chuẩn bị thi đậu đại đạo viện, lúc đầu hắn đời này mơ ước lớn nhất cũng chính là Trúc Cơ thành công, thẳng đến hắn có thể xuyên qua đến một cái khác thế giới tu tiên, sau đó, mộng tưởng liền thay đổi. . .',
         listChapter: [
@@ -749,6 +1089,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T04:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -776,6 +1117,25 @@ const listBookData = [
         tagCategory: 'tien-hiep',
         category: 'Tiên Hiệp', // Thể loại
         totalChapter: 333,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description:
             'Trần Mạc Bạch, Tiên Môn lớp 12 học sinh, đang cố gắng ôn tập chuẩn bị thi đậu đại đạo viện, lúc đầu hắn đời này mơ ước lớn nhất cũng chính là Trúc Cơ thành công, thẳng đến hắn có thể xuyên qua đến một cái khác thế giới tu tiên, sau đó, mộng tưởng liền thay đổi. . .',
         listChapter: [
@@ -785,6 +1145,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T01:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -814,6 +1175,25 @@ const listBookData = [
         tagCategory: 'huyen-huyen',
         category: 'Huyền Huyễn', // Thể loại
         totalChapter: 101,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description: `Lý Thừa Duyên xuyên qua đến cổ võ thế giới, thành Đại Chu quốc Lục hoàng tử.
 
         Đúng lúc gặp Hoàng Đế băng hà, tân hoàng đăng cơ.
@@ -846,6 +1226,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T15:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -873,6 +1254,25 @@ const listBookData = [
         tagCategory: 'khoa-huyen',
         category: 'Khoa Huyễn', // Thể loại
         totalChapter: 253,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description: `---- Dị Thú lưu----
         Khang Kiều từ thế giới ban sơ sinh ra bên trong thức tỉnh, chỉ là hắn lúc này lại trở thành Godzilla ấu thể.
         
@@ -890,6 +1290,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T14:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -919,6 +1320,25 @@ const listBookData = [
         tagCategory: 'vong-du',
         category: 'Võng Du', // Thể loại
         totalChapter: 574,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description: `Thế giới biến thành chư thiên thế giới sân chơi, toàn bộ sinh linh đều số liệu hóa, ngồi đợi chư thiên thế giới người chơi giáng lâm vô số lần giết chết tra tấn.
 
         Hóa thân Tân Thủ thôn đệ nhất phế quái thỏ Dịch Chính, lựa chọn mang theo một đám con thỏ bắt đầu trên xanh mượt thảo nguyên phi nước đại, nằm ngửa ngồi dậy, nằm đẩy, chèo thuyền, bơi lội. . .
@@ -933,6 +1353,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T12:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -960,6 +1381,25 @@ const listBookData = [
         tagCategory: 'do-thi',
         category: 'Đô Thị', // Thể loại
         totalChapter: 100,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description: `Ác quỷ, Tà Linh, khôi lỗi, ma dược, khoa học kỹ thuật, phùng hợp quái. . .
 
         Lâm Dật xuyên qua đến bí hiểm thế giới, trở thành hạnh phúc phòng khám bệnh thầy thuốc, cũng may hắn đã thức tỉnh hệ thống.
@@ -978,6 +1418,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T10:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -1007,6 +1448,25 @@ const listBookData = [
         tagCategory: 'dong-nhan',
         category: 'Đồng Nhân', // Thể loại
         totalChapter: 100,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description: `Hiệu trưởng: Gellert Grindelwald
 
         (hiệp hội cải cách phù thủy hội trưởng, Merlin hiệp sĩ đoàn cấp một ma pháp sư)
@@ -1027,6 +1487,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T22:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -1056,6 +1517,25 @@ const listBookData = [
         tagCategory: 'kiem-hiep',
         category: 'Kiếm Hiệp', // Thể loại
         totalChapter: 169,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description: `Truyền thuyết, vài ngàn năm trước .
 
         Hạ Vũ đúc cửu đỉnh, trấn Cửu Châu thiên địa, sáng lập Hạ triều .
@@ -1089,6 +1569,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T20:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -1116,6 +1597,25 @@ const listBookData = [
         tagCategory: 'tien-hiep',
         category: 'Tiên Hiệp', // Thể loại
         totalChapter: 333,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description:
             'Trần Mạc Bạch, Tiên Môn lớp 12 học sinh, đang cố gắng ôn tập chuẩn bị thi đậu đại đạo viện, lúc đầu hắn đời này mơ ước lớn nhất cũng chính là Trúc Cơ thành công, thẳng đến hắn có thể xuyên qua đến một cái khác thế giới tu tiên, sau đó, mộng tưởng liền thay đổi. . .',
         listChapter: [
@@ -1125,6 +1625,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T07:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -1154,6 +1655,25 @@ const listBookData = [
         tagCategory: 'huyen-huyen',
         category: 'Huyền Huyễn', // Thể loại
         totalChapter: 101,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description: `Lý Thừa Duyên xuyên qua đến cổ võ thế giới, thành Đại Chu quốc Lục hoàng tử.
 
         Đúng lúc gặp Hoàng Đế băng hà, tân hoàng đăng cơ.
@@ -1186,6 +1706,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T09:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -1213,6 +1734,25 @@ const listBookData = [
         tagCategory: 'khoa-huyen',
         category: 'Khoa Huyễn', // Thể loại
         totalChapter: 253,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description: `---- Dị Thú lưu----
         Khang Kiều từ thế giới ban sơ sinh ra bên trong thức tỉnh, chỉ là hắn lúc này lại trở thành Godzilla ấu thể.
         
@@ -1230,6 +1770,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T23:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -1257,6 +1798,25 @@ const listBookData = [
         tagCategory: 'vong-du',
         category: 'Võng Du', // Thể loại
         totalChapter: 574,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description: `Thế giới biến thành chư thiên thế giới sân chơi, toàn bộ sinh linh đều số liệu hóa, ngồi đợi chư thiên thế giới người chơi giáng lâm vô số lần giết chết tra tấn.
 
         Hóa thân Tân Thủ thôn đệ nhất phế quái thỏ Dịch Chính, lựa chọn mang theo một đám con thỏ bắt đầu trên xanh mượt thảo nguyên phi nước đại, nằm ngửa ngồi dậy, nằm đẩy, chèo thuyền, bơi lội. . .
@@ -1271,6 +1831,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T12:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -1298,6 +1859,25 @@ const listBookData = [
         tagCategory: 'tien-hiep',
         category: 'Tiên Hiệp', // Thể loại
         totalChapter: 333,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description:
             'Trần Mạc Bạch, Tiên Môn lớp 12 học sinh, đang cố gắng ôn tập chuẩn bị thi đậu đại đạo viện, lúc đầu hắn đời này mơ ước lớn nhất cũng chính là Trúc Cơ thành công, thẳng đến hắn có thể xuyên qua đến một cái khác thế giới tu tiên, sau đó, mộng tưởng liền thay đổi. . .',
         listChapter: [
@@ -1307,6 +1887,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T18:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -1334,6 +1915,25 @@ const listBookData = [
         tagCategory: 'tien-hiep',
         category: 'Tiên Hiệp', // Thể loại
         totalChapter: 333,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description:
             'Trần Mạc Bạch, Tiên Môn lớp 12 học sinh, đang cố gắng ôn tập chuẩn bị thi đậu đại đạo viện, lúc đầu hắn đời này mơ ước lớn nhất cũng chính là Trúc Cơ thành công, thẳng đến hắn có thể xuyên qua đến một cái khác thế giới tu tiên, sau đó, mộng tưởng liền thay đổi. . .',
         listChapter: [
@@ -1343,6 +1943,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T11:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -1370,6 +1971,25 @@ const listBookData = [
         tagCategory: 'tien-hiep',
         category: 'Tiên Hiệp', // Thể loại
         totalChapter: 333,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description:
             'Trần Mạc Bạch, Tiên Môn lớp 12 học sinh, đang cố gắng ôn tập chuẩn bị thi đậu đại đạo viện, lúc đầu hắn đời này mơ ước lớn nhất cũng chính là Trúc Cơ thành công, thẳng đến hắn có thể xuyên qua đến một cái khác thế giới tu tiên, sau đó, mộng tưởng liền thay đổi. . .',
         listChapter: [
@@ -1379,6 +1999,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T06:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -1406,6 +2027,25 @@ const listBookData = [
         tagCategory: 'tien-hiep',
         category: 'Tiên Hiệp', // Thể loại
         totalChapter: 333,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description:
             'Trần Mạc Bạch, Tiên Môn lớp 12 học sinh, đang cố gắng ôn tập chuẩn bị thi đậu đại đạo viện, lúc đầu hắn đời này mơ ước lớn nhất cũng chính là Trúc Cơ thành công, thẳng đến hắn có thể xuyên qua đến một cái khác thế giới tu tiên, sau đó, mộng tưởng liền thay đổi. . .',
         listChapter: [
@@ -1415,6 +2055,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T04:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -1442,6 +2083,25 @@ const listBookData = [
         tagCategory: 'tien-hiep',
         category: 'Tiên Hiệp', // Thể loại
         totalChapter: 333,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description:
             'Trần Mạc Bạch, Tiên Môn lớp 12 học sinh, đang cố gắng ôn tập chuẩn bị thi đậu đại đạo viện, lúc đầu hắn đời này mơ ước lớn nhất cũng chính là Trúc Cơ thành công, thẳng đến hắn có thể xuyên qua đến một cái khác thế giới tu tiên, sau đó, mộng tưởng liền thay đổi. . .',
         listChapter: [
@@ -1451,6 +2111,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T04:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },
@@ -1478,6 +2139,25 @@ const listBookData = [
         tagCategory: 'tien-hiep',
         category: 'Tiên Hiệp', // Thể loại
         totalChapter: 333,
+        getTotalFeel() {
+            const result = this.listChapter.reduce((acc, item) => {
+                const feel = item.feels;
+                if (Object.keys(acc).length) {
+                    return {
+                        love: acc.love + feel.love,
+                        like: acc.like + feel.like,
+                        fun: acc.fun + feel.fun,
+                        sad: acc.sad + feel.sad,
+                        angry: acc.angry + feel.angry,
+                        attack: acc.attack + feel.attack,
+                    };
+                }
+
+                return { ...feel };
+            }, {});
+
+            return result;
+        },
         description:
             'Trần Mạc Bạch, Tiên Môn lớp 12 học sinh, đang cố gắng ôn tập chuẩn bị thi đậu đại đạo viện, lúc đầu hắn đời này mơ ước lớn nhất cũng chính là Trúc Cơ thành công, thẳng đến hắn có thể xuyên qua đến một cái khác thế giới tu tiên, sau đó, mộng tưởng liền thay đổi. . .',
         listChapter: [
@@ -1487,6 +2167,7 @@ const listBookData = [
                 id_chapter: 0,
                 timeCreatChapter: '2022-09-28T04:22:36',
                 content: 'Chưa có gì',
+                feels: { love: 1, like: 2, fun: 4, sad: 0, angry: 0, attack: 5 },
             },
         ],
     },

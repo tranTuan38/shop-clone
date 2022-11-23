@@ -1,0 +1,124 @@
+.media {
+    position: relative;
+    padding-left: 36px;
+    border-bottom: 1px solid #eee;
+
+    .rank {
+        font-weight: 600;
+        width: 24px;
+        height: 32px;
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        line-height: 32px;
+        text-align: center;
+    }
+
+    .rank.top {
+
+        .number {
+            height: 24px;
+            width: 24px;
+            display: block;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            color: #fff;
+        }
+
+        .number.number-one {
+            padding-right: 1px;
+            background-color: #ffc000;
+        }
+
+        .number.number-two {
+            background-color: #f59644;
+        }
+
+        .number.number-three {
+            background-color: #f56844;
+        }
+
+        .number.number-four {
+            background-color: #ccc;
+        }
+    }
+
+    .content {
+        cursor: pointer;
+        padding: 8px 0;
+        display: flex;
+        align-items: center;
+
+        .avatar {
+            width: 50px;
+            display: inline-block;
+            overflow: hidden;
+            position: relative;
+            margin-right: 8px;
+            border-radius: 50%;
+
+            &::before {
+                padding-top: 100%;
+                content: "";
+                display: block;
+            }
+
+            .img {
+                display: block;
+                position: absolute;
+                width: 100%;
+                height: auto;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                margin: auto;
+                max-width: 100%;
+                min-height: 100%;
+            }
+
+            &:hover {
+                opacity: 0.9;
+            }
+        }
+
+        .info {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            word-break: break-word;
+            padding: 8px 0;
+            padding-left: 4px;
+
+            .info-name {
+                display: -webkit-box;
+                margin-bottom: 8px;
+                line-height: 1.2;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                -o-text-overflow: ellipsis;
+                text-overflow: ellipsis;
+
+                &:hover {
+                    color: var(--text-primary);
+                }
+            }
+
+            .name {
+                display: block;
+            }
+
+            .level {
+                display: flex;
+                color: #999;
+                align-items: center;
+            }
+        }
+    }
+}

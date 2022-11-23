@@ -14,6 +14,8 @@ function NotFound() {
 
     useEffect(() => {
         document.title = '401';
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [document.title]);
 
     return (

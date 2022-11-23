@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import styles from './UserComment.module.scss';
@@ -12,6 +12,8 @@ import { listBookData, listRating, userData } from '~/initdata';
 const cx = classNames.bind(styles);
 
 function UserComment({ data }) {
+    const [listUserData, setListUserData] = useState([]);
+
     const handlerSetComment = (comment, limit = 400) => {
         let cmtSlice;
         const cmtLength = comment.length;
@@ -25,7 +27,7 @@ function UserComment({ data }) {
 
     const handlerSetReplyCmt = (userReply) => {
         const listRepData = userReply.map((repUser) => {
-            const user = userData.find((item) => item.id === repUser.id);
+            const user = userData.find((item) => item.id === repUser.idUserRep);
             return {
                 ...repUser,
                 name: user.name,
@@ -37,31 +39,44 @@ function UserComment({ data }) {
         return listRepData;
     };
 
+    useEffect(() => {
+        setListUserData(data);
+    }, [data]);
+
     return (
         <div className={cx('list-media')}>
-            <div className={cx('media')}>
-                <div className={cx('avatar')}>
-                    <img src={imgs.avatarImg.userNoIn} alt={'NotThink'} />
-                    <span className={cx('level')}>cấp 2</span>
-                </div>
-                <div className={cx('body')}>
-                    <Link className={cx('name', { ['item-hover']: true })}>Trần Tuấn</Link>
-                    <div className={cx('nav-info')}>
-                        <span className={cx('info')}>
-                            <i className="nh-icon icon-clock"></i>
-                            20 giờ trước
-                        </span>
-                        <span className={cx('info')}>
-                            <i className="nh-icon icon-eye-glasses"></i>
-                            chương 1
-                        </span>
-                    </div>
-                    <div className={cx('comment')}>
-                        <Comment />
-                    </div>
-                    <Reply />
-                </div>
-            </div>
+            {!!listUserData &&
+                listUserData.map((item, index) => {
+                    return (
+                        <div className={cx('media')} key={index}>
+                            <div className={cx('avatar')}>
+                                <img src={item.avatar} alt={item.name} />
+                                <span className={cx('level')}>{`Cấp ${item.level}`}</span>
+                            </div>
+                            <div className={cx('body')}>
+                                <Link className={cx('name', { ['item-hover']: true })}>{item.name}</Link>
+                                <div className={cx('nav-info')}>
+                                    <span className={cx('info')}>
+                                        <i className="nh-icon icon-clock"></i>
+                                        {`${handleTime(new Date(), new Date(item.time))}`}
+                                    </span>
+                                    <span className={cx('info')}>
+                                        <i className="nh-icon icon-eye-glasses"></i>
+                                        {!item.cmtOutChap && `chương ${item.cmtInChap}`}
+                                    </span>
+                                </div>
+                                <div className={cx('comment')}>
+                                    <Comment data={item.comment} limitStrings={303} />
+                                </div>
+                                <Reply
+                                    data={item}
+                                    listDataCmt={handlerSetReplyCmt(item.userReply)}
+                                    navActiveData={{ setTime: handleTime, setCmtUser: handlerSetComment }}
+                                />
+                            </div>
+                        </div>
+                    );
+                })}
         </div>
     );
 }

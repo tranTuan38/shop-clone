@@ -3,7 +3,7 @@ import config from '~/config';
 import { ListBookLayout, ListRankLayout, NotFoundLayout, ChapterLayout } from '~/layouts';
 
 import Home from '~/pages/Home';
-import Profile from '~/pages/Book';
+import Profile from '~/pages/Profile';
 import ListBook from '~/pages/ListBook';
 import Book from '~/pages/Book';
 import Chapter from '~/pages/Chapter';
@@ -12,6 +12,8 @@ import BxhTime from '~/pages/Bxh/BxhTime';
 import BxhRank from '~/pages/Bxh/BxhRank';
 import NotFound from '~/pages/NotFound';
 import Author from '~/pages/Author';
+import Account from '~/pages/Account';
+import InfoQuestion from '~/pages/InfoQuestion';
 
 const publishRoute = [
     { path: config.routes.home, component: Home },
@@ -23,9 +25,10 @@ const publishRoute = [
     { path: config.routes.bxh, component: Bxh },
     { path: config.routes.bxhTime, component: BxhTime },
     { path: config.routes.bxhRank, component: BxhRank, layout: ListRankLayout },
+    { path: config.routes.infoQuestion, component: InfoQuestion },
     { path: config.routes.notFound, component: NotFound, layout: NotFoundLayout },
 ];
 
-const privateRoute = [];
+const privateRoute = [{ path: config.routes.account, component: Account, layoutNotLogin: NotFoundLayout }];
 
 export { publishRoute, privateRoute };

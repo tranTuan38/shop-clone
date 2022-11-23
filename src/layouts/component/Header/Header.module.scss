@@ -68,6 +68,10 @@
     &:hover a {
         color: var(--text-primary);
     }
+    &:hover .login {
+        color: inherit;
+        opacity: .9;
+    }
 }
 
 
@@ -77,6 +81,7 @@
     font-size: 1.5rem;
     margin-right: 8px;
 }
+
 
 .login, .regis {
     padding: 8px 16px;
@@ -96,6 +101,74 @@
 
 .regis {
     background-color: var(--header-color);
+}
+
+.notice {
+    display: block;
+    height: 100%;
+    padding: 8px 16px;
+    margin-left: 24px;
+    line-height: 0;
+    transition: all 0s ease;
+
+    i {
+        font-size: 2rem;
+        color: #333;
+    }
+
+    &:hover {
+        opacity: .9;
+    }
+}
+
+.show {
+    background-color: #fff;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    height: 100%;
+    transition: all 0s ease;
+
+    &:hover {
+        opacity: .9;
+    }
+
+    .avatar {
+        display: block;
+        position: relative;
+        width: 24px;
+        margin-right: 8px;
+
+        &::before {
+            padding-top: 100%;
+            display: block;
+            content: "";
+        }
+    }
+
+
+    .user-avatar {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        max-width: 100%;
+        margin: auto;
+        height: auto;
+        max-height: 100%;
+        border-radius: 50%;
+        object-fit: fill;
+    }
+
+    .user-name {
+        font-size: 1.5rem;
+    }
 }
 
 

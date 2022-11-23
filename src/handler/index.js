@@ -1,4 +1,4 @@
-import { listBookData, listRating } from '~/initdata';
+import { listBookData, listRating, userData } from '~/initdata';
 import { useGetListSelecter } from '~/hooks';
 
 function handleTime(timeCur, timeItem) {
@@ -839,7 +839,7 @@ function checkPath(prevPath, curPath) {
     return isCheck;
 }
 
-function removeVietnameseTones(str) {
+function removeVietnameseTones(str = '') {
     str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a');
     str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, 'e');
     str = str.replace(/ì|í|ị|ỉ|ĩ/g, 'i');
@@ -877,8 +877,6 @@ function removeVietnameseTones(str) {
 
 function handlerViewBookData(data) {
     let view;
-    let viewValue;
-    let viewCheck;
 
     if (data) {
         if (typeof data === 'number') {
@@ -901,7 +899,7 @@ function handlerViewBookData(data) {
     }
 }
 
-function handlerGetBookMediaData(rating, listComment) {
+function handlerGetBookMediaData(rating, listComment, userData) {
     const listInfo = (data) => {
         let viewValue = handlerViewBookData(data);
 
@@ -971,8 +969,18 @@ function handlerGetBookMediaData(rating, listComment) {
     const getCommentById = (idBook) => {
         const book = listComment.find((item) => idBook === item.idBook);
         if (book) {
-            return book.listComment;
+            if (book.listComment.length) {
+                const dataUser = book.listComment.map((data) => {
+                    const userInfo = userData.find((user) => user.id === data.idUser);
+
+                    return { ...data, name: userInfo.name, level: userInfo.level, avatar: userInfo.avatar };
+                });
+
+                return dataUser;
+            }
         }
+
+        return [];
     };
 
     return { listInfo, setRating, setRate, rateUser, totalNumberUser, getCommentById };
@@ -981,6 +989,10 @@ function handlerGetBookMediaData(rating, listComment) {
 const handlerSetLink = () => {
     const formatLink = (link) => {
         return `/list-book/${removeVietnameseTones(link)}`;
+    };
+
+    const formatName = (name) => {
+        return removeVietnameseTones(name);
     };
 
     const genreLink = (value, type, listGenre) => {
@@ -993,7 +1005,15 @@ const handlerSetLink = () => {
         return `/list-book/?${type}=${indexValue}`;
     };
 
-    return { formatLink, genreLink };
+    const authorLink = (type, value, listAuthor) => {
+        let author = listAuthor.find((item) => item.name.toLowerCase() === value.toLowerCase());
+
+        if (author) {
+            return `/author/${author.idAuthor}`;
+        }
+    };
+
+    return { formatLink, genreLink, formatName, authorLink };
 };
 
 const handlerSetDataSubIntro = (data, userData, listRank, onSetTime) => {
@@ -1038,7 +1058,7 @@ const handlerSetDataSubIntro = (data, userData, listRank, onSetTime) => {
     };
 
     const userTotalPost = () => {
-        const userListBook = listBookData.filter((item) => item.poster === data.poster);
+        const userListBook = listBookData.filter((item) => item.poster.toLowerCase() === data.poster.toLowerCase());
         const totalBook = userListBook.length;
         const totalChap = userListBook.reduce((acc, item) => {
             return (acc = acc + item.totalChapter);
@@ -1049,21 +1069,25 @@ const handlerSetDataSubIntro = (data, userData, listRank, onSetTime) => {
 
     const userListPostData = () => {
         let datas;
-        const userListBook = listBookData.filter((item) => item.poster === data.poster);
-        const listBookLength = userListBook.length;
-        userListBook.sort((a, b) => {
-            const aBook = a.view;
-            const bBook = b.view;
+        const userListBook = listBookData.filter((item) => item.poster.toLowerCase() === data.poster.toLowerCase());
+        if (userListBook.length) {
+            const listBookLength = userListBook.length;
+            userListBook.sort((a, b) => {
+                const aBook = a.view;
+                const bBook = b.view;
 
-            return bBook - aBook;
-        });
+                return bBook - aBook;
+            });
 
-        if (listBookLength <= 10) {
-            return userListBook;
-        } else {
-            datas = userListBook.slice(0, 10);
-            return datas;
+            if (listBookLength <= 10) {
+                return userListBook;
+            } else {
+                datas = userListBook.slice(0, 10);
+                return datas;
+            }
         }
+
+        return userListBook;
     };
 
     const getListAuthorData = () => {
@@ -1169,6 +1193,165 @@ function SetPersonRatingForBook(rateNum) {
     }
 }
 
+function handlerCheckSelected() {
+    const setDataByValue = (data, type) => {
+        if (type) {
+            if (type === 'oldest') {
+                return data.sort((a, b) => {
+                    const aTime = new Date(a.time);
+                    const bTime = new Date(b.time);
+
+                    return aTime - bTime;
+                });
+            } else {
+                return data.sort((a, b) => {
+                    const aTime = new Date(a.time);
+                    const bTime = new Date(b.time);
+
+                    return bTime - aTime;
+                });
+            }
+        } else {
+            return data.sort((a, b) => b.cmtLike - a.cmtLike);
+        }
+    };
+
+    const checkData = (type, listDataCmt) => {
+        let newData = [...listDataCmt];
+        if (type === 'like_count') {
+            return setDataByValue(newData);
+        } else if (type === 'id') {
+            return setDataByValue(newData, 'new');
+        } else if (type === 'oldest') {
+            return setDataByValue(newData, 'oldest');
+        }
+    };
+
+    return { setDataByValue, checkData };
+}
+
+function handlerSetFanData(data) {
+    const newData = [...data];
+
+    newData.sort((a, b) => {
+        const aPoint = a.point;
+        const bPoint = b.point;
+
+        return bPoint - aPoint;
+    });
+
+    const users = newData.reduce((acc, item, index) => {
+        const user = userData.find((ele) => item.userId === ele.id);
+        if (user) {
+            return [
+                ...acc,
+                {
+                    userId: item.userId,
+                    top: index + 1,
+                    userName: user.name,
+                    userAvatar: user.avatar,
+                    userPoint: item.point,
+                },
+            ];
+        }
+
+        return acc;
+    }, []);
+
+    return users;
+}
+
+function handlerSetFanLevel(point = 0) {
+    const listLevelpoint = [1000000, 700000, 500000, 400000, 300000, 200000, 100000, 50000, 20000, 5000, 0];
+    const listLevelName = [
+        'Minh chủ',
+        'Tông chủ',
+        'Chưởng môn',
+        'Trửng lão',
+        'Hộ pháp',
+        'Đường chủ',
+        'Đà chủ',
+        'Chấp sự',
+        'Đệ tử',
+        'Học đồ',
+        'Không',
+    ];
+
+    const level = listLevelpoint.findIndex((item) => point >= item);
+
+    return listLevelName[level];
+}
+
+function handlerGetDataUserInfo(userData) {
+    const handlerGetLevelPoint = (level) => {
+        if (!level) {
+            return 0;
+        }
+
+        if (level === 1) {
+            return 10;
+        } else if (level === 2) {
+            return 100;
+        } else if (level === 3) {
+            return 1000;
+        } else if (level === 4) {
+            return 10000;
+        } else if (level === 5) {
+            return 100000;
+        }
+    };
+
+    const handlerSetExp = (level) => {
+        const levelPoint = handlerGetLevelPoint(level);
+        if (userData.exp) {
+            return `Exp: ${userData.exp}/${levelPoint}`;
+        }
+        return `Exp: 0/${levelPoint}`;
+    };
+
+    const handlerSetWidthExp = (point, level) => {
+        const maxPoint = handlerGetLevelPoint(level);
+        const percent = (point / maxPoint) * 100;
+        if (percent <= 35) {
+            return `35%`;
+        } else {
+            return `${percent}%`;
+        }
+    };
+
+    return [handlerGetLevelPoint, handlerSetExp, handlerSetWidthExp];
+}
+
+function handlerGetListUserRead(id) {
+    const data = listBookData.find((item) => item.idBook === id);
+
+    if (data) {
+        return data;
+    }
+}
+
+function handlerSetUserLogin(data) {
+    const { userEmail, userPassword } = data;
+
+    const isLogin = userData.some(
+        (user) => user.email.trim() === userEmail.trim() && user.password.trim() === userPassword.trim(),
+    );
+
+    return isLogin;
+}
+
+function handlerGetUserDataLogin(data) {
+    const { userEmail, userPassword } = data;
+
+    const user = userData.find(
+        (user) => user.email.trim() === userEmail.trim() && user.password.trim() === userPassword.trim(),
+    );
+
+    if (user) {
+        return user;
+    }
+}
+
 export {
     handleTime,
     handleGetRankWeekRead,
@@ -1195,4 +1378,11 @@ export {
     handlerSetDataSubIntro,
     getListRatingForBook,
     SetPersonRatingForBook,
+    handlerCheckSelected,
+    handlerSetFanLevel,
+    handlerSetFanData,
+    handlerGetDataUserInfo,
+    handlerGetListUserRead,
+    handlerSetUserLogin,
+    handlerGetUserDataLogin,
 };

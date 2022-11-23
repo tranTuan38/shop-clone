@@ -4,6 +4,7 @@ import Tippy from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css';
 
 import styles from './Popper.module.scss';
+import { memo } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -35,10 +36,14 @@ function Popper({
     onSetTitle,
     onSetActive,
     funcEmpty,
+    onShow,
+    onHide,
 }) {
     return (
         <div className={cx('content')}>
             <Tippy
+                onHide={onHide}
+                onShow={onShow}
                 arrow={isArrow}
                 trigger={trigger}
                 interactive={interactive}
@@ -83,4 +88,4 @@ function Popper({
     );
 }
 
-export default Popper;
+export default memo(Popper);
