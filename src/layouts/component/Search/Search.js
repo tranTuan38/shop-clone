@@ -21,7 +21,14 @@ function Search({ className, icon }) {
 
     return (
         <div className={cx(className)}>
-            <Input value={value} className={cx('input')} placeholder="Tìm kiếm" onChange={onChange} />
+            <Input
+                value={value}
+                type="text"
+                className={cx('input')}
+                placeholder="Tìm kiếm"
+                onChange={onChange}
+                autoComplete="off"
+            />
             <Button className={cx('btn')} icon={icon} onClick={onClick} />
         </div>
     );

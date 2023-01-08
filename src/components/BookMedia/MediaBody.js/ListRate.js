@@ -1,4 +1,5 @@
 import classNames from 'classnames/bind';
+import { memo } from 'react';
 
 import styles from '../BookMedia.module.scss';
 
@@ -30,4 +31,4 @@ function ListRate({ data }) {
     );
 }
 
-export default ListRate;
+export default memo(ListRate);

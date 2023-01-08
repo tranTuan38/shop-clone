@@ -1,10 +1,11 @@
 import classNames from 'classnames/bind';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo, Fragment, useRef } from 'react';
 
 import styles from './Review.module.scss';
 import imgs from '~/assets/imgs';
 import { Reviewer, InputBox, BySelected, ListReviewCmt, Rating, Note } from './ReviewItem';
-import { memo } from 'react';
+import ActionLogin from '~/components/ActionLogin';
+import ReportForm from '~/components/Form/ReportForm';
 
 const cx = classNames.bind(styles);
 
@@ -17,6 +18,7 @@ const listSelected = [
 function Review({
     checkTapsIndex,
     data,
+    user,
     listRating,
     userData,
     totalNumberUser,
@@ -24,7 +26,10 @@ function Review({
     setPerson,
     setTime,
     className,
+    isLogin,
 }) {
+    const [updateNum, setUpdateNum] = useState(0);
+
     const [bookData, setBooData] = useState({
         character: 0,
         story: 0,
@@ -32,13 +37,22 @@ function Review({
         totalRate: 0,
     });
 
+    // console.log(user);
+
     const [ratingInput, setRatingInput] = useState({
         character: 0,
         story: 0,
         background: 0,
     });
 
-    // console.log(listRating)
+    // console.log(isLogin);
+
+    let WrapperCom = 'div';
+    const reportRef = useRef();
+
+    if (isLogin) {
+        WrapperCom = Fragment;
+    }
 
     const [textValue, setTextValue] = useState('');
 
@@ -60,17 +74,23 @@ function Review({
 
     const getListReviewCmt = (id, by) => {
         const book = listRating.find((rate) => rate.idBook === id);
+
         if (book) {
             const setListBook = book.rating.map((item) => {
                 const users = userData.find((user) => user.id === item.idUser);
+
                 return {
                     idBook: id,
                     rateLike: item.rateLike,
+                    idUser: users.id,
                     name: users.name,
                     level: users.level,
                     avatar: users.avatar,
                     time: item.time,
                     spoli: item.spoli,
+                    rateCharacter: item.rateCharacter,
+                    rateContent: item.rateContent,
+                    rateBgr: item.rateBgr,
                     userReply: item.userReply,
                     comment: item.comment,
                     totalViewChapter: item.totalViewChapter,
@@ -83,12 +103,20 @@ function Review({
                     const bTime = new Date(b.time);
                     return bTime - aTime;
                 });
+            } else if (by === 'like_count') {
+                setListBook.sort((a, b) => {
+                    const aLikes = a.rateLike(id);
+                    const bLikes = b.rateLike(id);
+                    return bLikes - aLikes;
+                });
             }
             return setListBook;
         } else {
             return [];
         }
     };
+
+    // console.log(123);
 
     const handlerSetReplyCmt = (userReply) => {
         const listRepData = userReply.map((repUser) => {
@@ -106,13 +134,39 @@ function Review({
 
     const totalUser = totalNumberUser(data.idBook);
 
+    const handlerOpen = (e) => {
+        const textDom = document.querySelector('[data-user-rate="false"]');
+        textDom?.focus();
+    };
+
+    const handlerClose = (e) => {
+        const textDom = document.querySelector('[data-user-rate="false"]');
+        textDom?.blur();
+    };
+
     useEffect(() => {
         if (checkTapsIndex) {
+            const dataReview = getListReviewCmt(data.idBook, value);
+
             const listRating = setListRating(data.idBook);
             setBooData(listRating);
-            setListReviewCmt(getListReviewCmt(data.idBook, value));
+            setListReviewCmt(dataReview);
+
+            if (isLogin) {
+                const userRateData = dataReview.find((item) => item.idUser === user.id);
+
+                if (userRateData)
+                    setRatingInput({
+                        character: userRateData.rateCharacter,
+                        story: userRateData.rateContent,
+                        background: userRateData.rateBgr,
+                    });
+            }
         }
-    }, [data.idBook, value, checkTapsIndex]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data.idBook, value, checkTapsIndex, updateNum, isLogin]);
+
+    // console.log(listRating);
 
     return (
         <div className={cx('wrapper', { [className]: !!className })}>
@@ -120,8 +174,26 @@ function Review({
                 <div className="col c-8">
                     <div className={cx('container')}>
                         <div className={cx('content')}>
-                            <Reviewer data={listSelected} bookData={ratingInput} OnChangeInput={handlerOnChangeInput} />
-                            <InputBox data={textValue} OnTextValue={handlerTextValue} />
+                            <Reviewer
+                                isLogin={isLogin}
+                                data={listSelected}
+                                bookData={ratingInput}
+                                OnChangeInput={handlerOnChangeInput}
+                            />
+                            <ActionLogin isLogin={isLogin} onOpen={handlerOpen} onClose={handlerClose}>
+                                <WrapperCom>
+                                    <InputBox
+                                        setUpdateNum={setUpdateNum}
+                                        idBook={data.idBook}
+                                        ratingInput={ratingInput}
+                                        data={textValue}
+                                        OnTextValue={handlerTextValue}
+                                        isLogin={isLogin}
+                                        user={user}
+                                        onSetListReviewCmt={setListReviewCmt}
+                                    />
+                                </WrapperCom>
+                            </ActionLogin>
                         </div>
                         <BySelected imgs={imgs} setValue={setValue} value={value} />
                         {!!listReviewCmt.length && (
@@ -133,6 +205,11 @@ function Review({
                                 Rating={Rating}
                                 setPerson={setPerson}
                                 setTime={setTime}
+                                isLogin={isLogin}
+                                user={user}
+                                idBook={data.idBook}
+                                setUpdateNum={setUpdateNum}
+                                onActionReports={reportRef.current}
                             />
                         )}
                     </div>
@@ -157,7 +234,7 @@ function Review({
                             </div>
                             <div className={cx('info', { ['nav']: true })}>
                                 <Rating
-                                    title={'Nội dung cốt  truyện'}
+                                    title={'Nội dung cốt truyện'}
                                     percent={setPerson(bookData.story)}
                                     totalRate={bookData.story}
                                 />
@@ -177,6 +254,7 @@ function Review({
                     </div>
                 </div>
             </div>
+            <ReportForm ref={reportRef} />
         </div>
     );
 }

@@ -1,4 +1,15 @@
-import { listBookData, listRating, userData } from '~/initdata';
+import {
+    listBookData,
+    listRating,
+    userData,
+    listUserBookMarks,
+    listUserReadBook,
+    listThemes,
+    listFontFamily,
+    listIcons,
+    listUserInteracts,
+} from '~/initdata';
+import { constructors } from '~/constructors';
 import { useGetListSelecter } from '~/hooks';
 
 function handleTime(timeCur, timeItem) {
@@ -67,6 +78,7 @@ function handleCompareTime(data) {
 }
 
 function handleGetUserById(data, userData) {
+    // console.log(data);
     let user = userData.map((item, index) => {
         const rateData = data.reduce((acc, ele) => {
             if (ele.idUser === item.id) {
@@ -81,28 +93,22 @@ function handleGetUserById(data, userData) {
             const bTime = new Date(b.time);
             return aTime - bTime;
         });
-        return { userName: item.name, userAvata: item.avatar, dataRating: rateData };
+        return { userId: item.id, userName: item.name, userAvata: item.avatar, dataRating: rateData };
     });
 
-    const userDataRatingEmty = user.findIndex((item) => !item.dataRating.length);
-
-    if (userDataRatingEmty || userDataRatingEmty === 0) {
-        if (userDataRatingEmty) {
-            user = user.slice(0, userDataRatingEmty);
-        } else {
-            user = user.slice(1);
-        }
-    }
+    user = user.filter((item) => item.dataRating.length);
 
     user.sort((a, b) => {
-        const atime = new Date(a.dataRating[a.dataRating.length - 1].time);
-        const btime = new Date(b.dataRating[b.dataRating.length - 1].time);
+        const atime = new Date(a.dataRating[a.dataRating.length - 1]?.time);
+        const btime = new Date(b.dataRating[b.dataRating.length - 1]?.time);
 
         return btime - atime;
     });
 
     return user;
 }
+
+function handleGetUserById1(data, userData) {}
 
 // ------------------------------------------------------------------------------------------------------
 function handlerSelecedDataWithPath(data, listRequest, listSelecter, location) {
@@ -875,6 +881,16 @@ function removeVietnameseTones(str = '') {
     return str;
 }
 
+function removeSpaceString(str = '', isRemoveSpace = false) {
+    str = str.replace(/\r?\n/g, '');
+
+    if (isRemoveSpace) {
+        str = str.replace(/ + /g, ' ');
+    }
+
+    return str;
+}
+
 function handlerViewBookData(data) {
     let view;
 
@@ -1350,6 +1366,767 @@ function handlerGetUserDataLogin(data) {
     if (user) {
         return user;
     }
+
+    return {};
+}
+
+function handlerSetValueFormGroup(type, data) {
+    const groupIds = ['name', 'birthday', 'sex', 'description', 'email'];
+
+    const indexValue = groupIds.findIndex((item) => type === item);
+    if (Number.isInteger(indexValue)) {
+        if (indexValue === 0) {
+            return data.name;
+        } else if (indexValue === 1) {
+            return data.birthday;
+        } else if (indexValue === 2) {
+            return data.sex;
+        } else if (indexValue === 3) {
+            return data.description;
+        } else if (indexValue === 4) {
+            return data.email;
+        }
+    }
+
+    return '';
+}
+
+function handlerChangeUserData(idUser, key, dataChange) {
+    let isUserName = false;
+    let isName = false;
+    const userIndex = userData.findIndex((user) => user.id === idUser);
+
+    if (key === 'name') {
+        isUserName = userData.some((user) => user.id !== idUser && user.name.trim() === dataChange);
+        if (isUserName) {
+            alert(`${dataChange} đã tồn tại, vui lòng nhập tên khác`);
+            return (isName = true);
+        }
+    }
+
+    if (Number.isInteger(userIndex) && !isUserName) {
+        userData[userIndex][key] = dataChange;
+        // alert('Cập nhật thành công!');
+        // console.log(userData[userIndex][key]);
+    }
+}
+
+function handlerChangePosterName(prevName, curName) {
+    listBookData.forEach((book, index) => {
+        if (book.poster === prevName) {
+            listBookData[index].poster = curName;
+        }
+    });
+}
+
+function handlerGetBookReadData(type, idUser) {
+    let data;
+    if (type === 'reading') {
+        const user = listUserReadBook.find((item) => item.idUser === idUser);
+        if (user) {
+            data = user.read.map((book) => {
+                const bookData = listBookData.find((item) => item.idBook === book.idBook);
+
+                return {
+                    ...book,
+                    bookImg: bookData.bookImg,
+                    bookName: bookData.name,
+                    totalChapter: bookData.totalChapter,
+                };
+            });
+
+            return data;
+        }
+    } else if (type === 'mark') {
+        const user = listUserBookMarks.find((item) => item.idUser === idUser);
+        if (user) {
+            data = user.read.map((book) => {
+                const bookData = listBookData.find((item) => item.idBook === book.idBook);
+
+                return {
+                    ...book,
+                    bookImg: bookData.bookImg,
+                    bookName: bookData.name,
+                    totalChapter: bookData.totalChapter,
+                };
+            });
+
+            return data;
+        }
+    }
+}
+
+function handlerDeleteBookReadData(type, idBook, idUser) {
+    if (type === 'reading') {
+        const user = listUserReadBook.find((item) => item.idUser === idUser);
+        const userIndex = listUserReadBook.findIndex((item) => item.idUser === idUser);
+        if (user) {
+            const bookIndex = user.read.findIndex((item) => item.idBook === idBook);
+            listUserReadBook[userIndex].read.splice(bookIndex, 1);
+        }
+    } else if (type === 'mark') {
+        const user = listUserBookMarks.find((item) => item.idUser === idUser);
+        const userIndex = listUserBookMarks.findIndex((item) => item.idUser === idUser);
+        if (user) {
+            const bookIndex = user.read.findIndex((item) => item.idBook === idBook);
+            listUserBookMarks[userIndex].read.splice(bookIndex, 1);
+        }
+    }
+}
+
+function handlerSetPathNavBar(type, path, location, prevPath) {
+    // console.log('type: ', type);
+    // console.log('path: ', path);
+    // console.log('location: ', location);
+
+    const { pathname } = location;
+
+    if (type === 'class') {
+        const slashIndex = pathname.lastIndexOf('/');
+        const prevClass = pathname.slice(slashIndex + 1);
+        const curPath = pathname.replace(prevClass, path);
+        return curPath;
+    } else if (type === 'time') {
+        const slashIndex = pathname.indexOf('/', 1);
+        const slashIndex2 = pathname.indexOf('/', slashIndex + 2);
+        const prevClass = pathname.slice(slashIndex + 1, slashIndex2);
+        const curPath = pathname.replace(prevClass, path);
+        return curPath;
+    }
+}
+
+function handlerGetDataBxh(type) {
+    let data = [...listBookData];
+
+    const handlerAddRank = (listData) => {
+        listData.forEach((book, index) => {
+            book.rankBxh = index;
+        });
+    };
+
+    if (type === 'popular') {
+        data.sort((a, b) => {
+            return b.rankWeekPrevailing - a.rankWeekPrevailing;
+        });
+        handlerAddRank(data);
+    } else if (type === 'top-read') {
+        data.sort((a, b) => {
+            return b.view - a.view;
+        });
+        handlerAddRank(data);
+    } else if (type === 'bonus') {
+        data.sort((a, b) => {
+            return b.bookmark - a.bookmark;
+        });
+        handlerAddRank(data);
+    } else if (type === 'nomination') {
+        data.sort((a, b) => {
+            return b.rankWeekNomination - a.rankWeekNomination;
+        });
+        handlerAddRank(data);
+    } else if (type === 'like') {
+        data.sort((a, b) => {
+            return b.like - a.like;
+        });
+        handlerAddRank(data);
+    } else if (type === 'discuss') {
+        data.sort((a, b) => {
+            return b.comment - a.comment;
+        });
+        handlerAddRank(data);
+    }
+
+    return data;
+}
+
+function handlerGetDataForIcon(type, item) {
+    let data;
+
+    if (type === 'popular') {
+        data = item.rankWeekPrevailing;
+    } else if (type === 'top-read') {
+        data = item.view;
+    } else if (type === 'bonus') {
+        data = item.bookmark;
+    } else if (type === 'nomination') {
+        data = item.rankWeekNomination;
+    } else if (type === 'like') {
+        data = item.like;
+    } else if (type === 'discuss') {
+        data = item.comment;
+    }
+
+    return data;
+}
+
+function handlerGetChapterData(bookName, chapter, userData) {
+    // console.log('bookName: ', bookName);
+    // console.log('chapter: ', chapter);
+
+    const book = listBookData.find((item) => {
+        const bookNameFind = removeVietnameseTones(item.name);
+
+        return bookNameFind === bookName;
+    });
+
+    if (book) {
+        let result;
+        const listChapterLength = book.listChapter.length;
+        const numberChap = +chapter.slice(chapter.indexOf('-') + 1);
+        const chapterData = book.listChapter.find((item) => item.numberChapter === numberChap);
+        const firstChapter = book.listChapter.some((item, index) => index === 0 && item.numberChapter === numberChap);
+        const lastChapter = book.listChapter.some(
+            (item, index) => index === listChapterLength - 1 && item.numberChapter === numberChap,
+        );
+
+        result = {
+            idBook: book.idBook,
+            idUser: undefined,
+            bookName: book.name,
+            author: book.authorName,
+            poster: book.poster,
+            bookImg: book.bookImg,
+            ...chapterData,
+            firstChapter,
+            lastChapter,
+            listChapter: book.listChapter,
+            getTotalFeel() {
+                const feelValue = Object.values(this.feels);
+                const totalFeel = feelValue.reduce((sum, value) => sum + value, 0);
+
+                return totalFeel;
+            },
+        };
+
+        if (chapterData) {
+            if (Number.isInteger(userData?.id)) {
+                result = { ...result, idUser: userData.id };
+            }
+
+            return result;
+        }
+    }
+}
+
+function handlerGetPostData(userName) {
+    const user = userData.find((item) => item.name === userName);
+
+    if (user) {
+        return user;
+    }
+
+    return 1;
+}
+
+function handlerSetMenuSetting(type, isArray) {
+    let result;
+    if (isArray) {
+        if (type === 'themes') {
+            result = {
+                tagParent: 'div',
+                tagChild: 'button',
+            };
+        } else if (type === 'fontFamily') {
+            result = {
+                tagParent: 'select',
+                tagChild: 'option',
+            };
+        }
+    }
+
+    return result;
+}
+
+function handlerGetSetting(data) {
+    const newData = { ...data };
+    const theme = { ...listThemes.find((item) => newData.themes === item.id) };
+    const fontFamily = { ...listFontFamily.find((item) => newData.fontFamily === item.id) };
+
+    delete theme.id;
+    delete fontFamily.id;
+    delete fontFamily.title;
+    delete newData.themes;
+    delete newData.fontFamily;
+    newData.fontSize = newData.fontSize + 'px';
+    newData.widthContent = newData.widthContent + 'px';
+    newData.paddingWord = newData.paddingWord + '%';
+
+    return { ...theme, ...fontFamily, ...newData };
+}
+
+function handlerSetChangeSettings(prevValue, action, min, max, step) {
+    if (prevValue === min || prevValue === max) {
+        if (prevValue === min && action === 'minus') {
+            return;
+        } else if (prevValue === max && action === 'add') {
+            return;
+        }
+    }
+    if (action === 'add') {
+        return prevValue + step;
+    } else if (action === 'minus') {
+        return prevValue - step;
+    }
+}
+
+function handlerSetIconNavChap(isLogin, bookData, prevIcon) {
+    if (isLogin) {
+        const user = listUserReadBook.find((item) => item.idUser === bookData.idUser);
+        const books = user.read.find((book) => book.idBook === bookData.idBook);
+
+        if (books) {
+            const chapter = books.chapter.find((chap) => chap.number === bookData.numberChapter);
+            const icons = listIcons.find((item) => chapter.feel === item.idIcon);
+            return { idIcon: icons.idIcon, url: `url(${icons.icon})` };
+        }
+
+        return prevIcon;
+    }
+}
+
+function handlerChangeIconData(idIcon, bookData) {
+    const user = listUserReadBook.find((item) => item.idUser === bookData.idUser);
+    const books = user.read.find((book) => book.idBook === bookData.idBook);
+
+    if (books) {
+        const chapter = books.chapter.find((chap) => chap.number === bookData.numberChapter);
+        if (chapter) {
+            chapter.feel = idIcon;
+        }
+    }
+}
+
+function handlerLocalStorage() {
+    const setData = (key, data) => {
+        localStorage.setItem(key, JSON.stringify(data));
+    };
+
+    const getData = (key) => {
+        const result = JSON.parse(localStorage.getItem(key));
+
+        return result;
+    };
+
+    const removeData = (key) => {
+        localStorage.removeItem(key);
+    };
+
+    const clearLocalStorage = () => {
+        localStorage.clear();
+    };
+
+    return { setData, getData, removeData, clearLocalStorage };
+}
+
+function handlerGetLocalData(idBook, action) {
+    const READING = 'reading';
+    const { getData } = action;
+    const curReadings = getData(READING);
+
+    if (curReadings) {
+        return curReadings[idBook];
+    } else {
+        return undefined;
+    }
+}
+
+function handlerChangeBookLink(data) {
+    if (data) {
+        return data.numBerFormat;
+    } else {
+        return 'chuong-1';
+    }
+}
+
+function handlerSaveLocalData(data, localData, action) {
+    const READING = 'reading';
+    const { getData, setData } = action;
+    const { readingData } = constructors;
+    const curReadings = getData(READING);
+    const idBook = data.idBook;
+
+    if (curReadings) {
+        let book;
+        let saveData;
+        const isBook = curReadings[idBook];
+        if (isBook) {
+            if (data.numberChapter === localData.numberChapter && isBook.numberChapter === data.numberChapter) return;
+
+            saveData = { ...curReadings, [idBook]: localData };
+            setData(READING, saveData);
+        } else {
+            book = new readingData(data.idChapter, data.numberChapter, data);
+            saveData = { ...curReadings, [idBook]: book };
+            setData(READING, saveData);
+        }
+    } else {
+        const chapter = new readingData(data.idChapter, data.numberChapter, data);
+        const results = { [idBook]: chapter };
+        setData(READING, results);
+    }
+}
+
+function handlerGetRatingLength(idBook) {
+    const bookRating = listRating.find((item) => item.idBook === idBook);
+
+    if (bookRating) {
+        const userRatingLength = bookRating.rating.length;
+        return userRatingLength || 0;
+    }
+
+    return 0;
+}
+
+function handlerCheckRatingCmt(idBook, idUser) {
+    // console.log('idBook: ', idBook);
+
+    // console.log('idUser: ', bookRating);
+    const bookRating = listRating.find((item) => item.idBook === idBook);
+
+    if (bookRating) {
+        const userRating = bookRating.rating.find((user) => user.idUser === idUser);
+        return userRating ? true : false;
+    }
+
+    return false;
+}
+
+function handlerCheckLike(type, idBook, idUser, idUserLogin, scope) {
+    const listType = ['rate', 'comment', 'navRate', 'navComment'];
+
+    const userData = listUserInteracts.find((user) => user.idUser === idUserLogin);
+
+    if (userData) {
+        const dataType = userData.interacts[listType[type]];
+
+        if (dataType) {
+            let isCheck;
+            const result = dataType.find((value) => value.idBook === idBook);
+            if (Number.isInteger(scope)) {
+                isCheck = result?.data?.some((data) => data.id === idUser && data.scope === scope);
+            } else {
+                isCheck = result?.data?.some((data) => data.id === idUser);
+            }
+
+            return isCheck ? isCheck : false;
+        }
+    }
+
+    return false;
+}
+
+function handlerGetlistUserInteracts(type, idBook, idUser, idRepIndex, scope) {
+    const listType = ['rate', 'comment', 'navRate', 'navComment'];
+    if (Number.isInteger(type)) {
+        const bookFind = listUserInteracts.filter((data) => {
+            const dataType = data.interacts[listType[type]];
+            const isData = dataType.find((book) => book.idBook === idBook);
+
+            return isData;
+        });
+        if (type === 0) {
+            if (bookFind.length) {
+                const results = bookFind.reduce((acc, data) => {
+                    const dataType = data.interacts[listType[type]];
+                    const books = dataType.find((book) => book.idBook === idBook);
+                    const isRate = books?.data.some((user) => user.id === idUser);
+
+                    if (isRate) {
+                        return acc + 1;
+                    }
+
+                    return acc;
+                }, 0);
+
+                return results;
+            }
+
+            return 0;
+        } else if (type === 1) {
+        } else if (type === 2) {
+            if (bookFind.length) {
+                const results = bookFind.reduce((acc, data) => {
+                    const dataType = data.interacts[listType[type]];
+                    const books = dataType.find((book) => book.idBook === idBook);
+                    const isRate = books?.data.some(
+                        (user) => user.id === idUser && user.idIndex === idRepIndex && user.scope === scope,
+                    );
+
+                    if (isRate) {
+                        return acc + 1;
+                    }
+
+                    return acc;
+                }, 0);
+
+                return results;
+            }
+
+            return 0;
+        } else if (type === 3) {
+        }
+    }
+
+    return 0;
+}
+
+function handlerPustData(type, idBook, idUser, content = {}) {
+    const listType = ['rate', 'comment', 'navRate', 'navComment'];
+
+    const { UserRating, UserNavRate } = constructors;
+
+    // console.log(listUserInteracts);
+
+    if (type === 0) {
+        const rating = new UserRating({
+            idUser,
+            totalViewChapter: 1,
+            rateCharacter: content.rateCharacter || 0,
+            rateContent: content.rateContent || 0,
+            rateBgr: content.rateBgr || 0,
+            spoli: content.spoli,
+            comment: content.comment,
+        });
+
+        const bookRating = listRating.find((item) => item.idBook === idBook);
+        if (bookRating) {
+            const userRating = bookRating.rating.find((user) => user.idUser === idUser);
+            if (userRating) {
+                return;
+            }
+            bookRating.rating.push({ ...rating });
+            return { ...rating };
+        } else {
+            listRating.push({ idBook, rating: [{ ...rating }] });
+            return { ...rating };
+        }
+    } else if (type === 1) {
+    } else if (type === 2) {
+        const navRates = {
+            ...new UserNavRate({
+                id: content.id,
+                idReplyIndex: content.idReplyIndex,
+                time: content.time,
+                repCmt: content.repCmt,
+            }),
+        };
+
+        const bookRating = listRating.find((item) => item.idBook === idBook);
+        const userRating = bookRating?.rating.find((user) => user.idUser === idUser);
+
+        // console.log(userRating);
+
+        if (userRating) {
+            userRating.userReply.push(navRates);
+            // console.log(userRating);
+            return navRates;
+        }
+    } else if (type === 3) {
+    }
+}
+
+function handlerDeleteUserInteracts(type, idBook, idUser) {
+    const listType = ['rate', 'comment'];
+
+    // console.log(listUserInteracts);
+
+    if (Number.isInteger(type)) {
+        if (type === 0) {
+            const bookFind = listUserInteracts.filter((data) => {
+                const dataType = data.interacts[listType[type]];
+                const isData = dataType.find((book) => book.idBook === idBook);
+
+                return isData && data.idUser !== idUser;
+            });
+
+            // console.log(bookFind);
+
+            if (bookFind.length) {
+                bookFind.forEach((book) => {
+                    const bookType = book.interacts[listType[type]];
+                    const bookData = bookType.find((book) => book.idBook === idBook);
+                    const deleteIndex = bookData.data.findIndex((user) => user.id === idUser);
+                    if (Number.isInteger(deleteIndex)) {
+                        bookData.data.splice(deleteIndex, 1);
+                    }
+                    // console.log(bookData);
+                });
+            }
+
+            return;
+        }
+    }
+}
+
+function handlerDeleteData(type, idBook, idUser) {
+    if (type === 'rating') {
+        const bookRating = listRating.find((item) => item.idBook === idBook);
+        let ListRatingLengthPrev = bookRating?.rating.length;
+        let listRatingLengthCur;
+
+        // console.log('bookRating: ', bookRating);
+
+        if (bookRating) {
+            const userIndex = bookRating.rating.findIndex((user) => user.idUser === idUser);
+
+            if (Number.isInteger(userIndex)) {
+                // console.log('ListRatingLengthPrev: ', ListRatingLengthPrev);
+                // console.log('listRating: ', listRating);
+                // console.log('bookRating: ', bookRating);
+                if (ListRatingLengthPrev === 1) {
+                    const bookRatingIndex = listRating.findIndex((book) => book.idBook === idBook);
+
+                    // console.log(bookRatingIndex);
+                    listRating.splice(bookRatingIndex, 1);
+                    listRatingLengthCur = 0;
+                } else {
+                    bookRating.rating.splice(userIndex, 1);
+                    listRatingLengthCur = bookRating.rating.length;
+                }
+                handlerDeleteUserInteracts(0, idBook, idUser);
+
+                // console.log('ratingCur: ', ratingCur);
+            }
+
+            if (ListRatingLengthPrev !== listRatingLengthCur) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+}
+
+function handlerInteractData(type, idBook, idUser, idUserLogin, action, repIndex, scope) {
+    const listType = ['rate', 'comment', 'navRate', 'navComment'];
+    const listInteract = ['like', 'disLike', 'reply'];
+    const { UserInteract } = constructors;
+    const userData = listUserInteracts.find((user) => user.idUser === idUserLogin);
+
+    let payLoad = { message: '', isResult: false };
+    // 1. khi bạn đã like cmt này -> false
+    // 2. khi bạn chưa like cmt này -> ...
+
+    // console.log(userData);
+
+    if (idUser === idUserLogin) return { ...payLoad, message: 'Bạn không thể thực hiện hành đông này với bản thân.' };
+
+    if (userData) {
+        const interactData = userData.interacts[listType[type]];
+        const bookData = interactData.find((book) => book.idBook === idBook);
+
+        // console.log('idUserLogin: ', idUserLogin);
+        // console.log('idUser: ', idUser);
+        // console.log('bookData: ', bookData);
+        // console.log(listType[type], ':', interactData);
+
+        if (bookData) {
+            // console.log(listUserInteracts);
+
+            if (type === 0) {
+                if (action === 0) {
+                    bookData.data.push({ id: idUser, time: +new Date() });
+                    return { ...payLoad, isResult: true };
+                } else if (action === 1) {
+                    const dataIndex = bookData.data.findIndex((item) => item.id === idUser);
+
+                    if (Number.isInteger(dataIndex) && dataIndex >= 0) {
+                        bookData.data.splice(dataIndex, 1);
+                        return { ...payLoad, isResult: true };
+                    }
+                    return { message: 'Có lỗi xảy ra. Thao tác không thành công', isResult: false };
+                }
+            } else if (type === 1) {
+            } else if (type === 2) {
+                // Không có hành động thứ 3
+                // console.group('action: ', listInteract[action]);
+                // console.log('repIndex: ', repIndex);
+                // console.log('idUserLogin: ', idUserLogin);
+                // console.log('idUser: ', idUser);
+                // console.log('bookData: ', bookData);
+                // console.log(listType[type], ':', interactData);
+                // console.groupEnd();
+
+                if (action === 0) {
+                    bookData.data.push({ id: idUser, idIndex: repIndex, time: +new Date(), scope });
+                    // console.log('bookData.data: ', bookData.data);
+                    return { ...payLoad, isResult: true };
+                } else if (action === 1) {
+                    const deleteIndex = bookData.data.findIndex(
+                        (item) => item.id === idUser && item.idIndex === repIndex && item.scope === scope,
+                    );
+
+                    if (Number.isInteger(deleteIndex) && deleteIndex >= 0) {
+                        bookData.data.splice(deleteIndex, 1);
+                        // console.log('bookData.data: ', bookData.data);
+                        return { ...payLoad, isResult: true };
+                    }
+
+                    return { message: 'Có lỗi xảy ra. Thao tác không thành công', isResult: false };
+                }
+            }
+
+            return payLoad;
+        } else {
+            // Khi không có bookData
+            if (type === 0) {
+                const newBook = {
+                    idBook,
+                    data: [{ id: idUser, time: +new Date() }],
+                };
+
+                interactData.push(newBook);
+                return { ...payLoad, isResult: true };
+            } else if (type === 1) {
+            } else if (type === 2) {
+                const newBook = {
+                    idBook,
+                    data: [{ id: idUser, idIndex: repIndex, time: +new Date(), scope }],
+                };
+
+                interactData.push(newBook);
+            } else if (type === 3) {
+            }
+        }
+    } else {
+        // Khi không có userData
+        let rateData = [];
+        let commentData = [];
+        let navRateData = [];
+        let navCommentData = [];
+
+        if (type === 0) {
+            rateData = [
+                {
+                    idBook,
+                    data: [{ id: idUser, time: +new Date() }],
+                },
+            ];
+        } else if (type === 1) {
+        } else if (type === 2) {
+            navRateData = [
+                {
+                    idBook,
+                    data: [{ id: idUser, idIndex: repIndex, time: +new Date(), scope }],
+                },
+            ];
+        } else if (type === 3) {
+        }
+
+        const userInteractData = {
+            idUser: idUserLogin,
+            rate: rateData,
+            comment: commentData,
+            navRate: navRateData,
+            navComment: navCommentData,
+        };
+        const interactDatas = { ...new UserInteract(userInteractData) };
+        listUserInteracts.push(interactDatas);
+
+        // console.log(listUserInteracts);
+
+        return { ...payLoad, isResult: true };
+    }
 }
 
 export {
@@ -1372,6 +2149,7 @@ export {
     handlerSetpathWitPagination,
     checkPath,
     removeVietnameseTones,
+    removeSpaceString,
     handlerViewBookData,
     handlerGetBookMediaData,
     handlerSetLink,
@@ -1385,4 +2163,30 @@ export {
     handlerGetListUserRead,
     handlerSetUserLogin,
     handlerGetUserDataLogin,
+    handlerSetValueFormGroup,
+    handlerChangeUserData,
+    handlerChangePosterName,
+    handlerGetBookReadData,
+    handlerDeleteBookReadData,
+    handlerSetPathNavBar,
+    handlerGetDataBxh,
+    handlerGetDataForIcon,
+    handlerGetChapterData,
+    handlerGetPostData,
+    handlerSetMenuSetting,
+    handlerGetSetting,
+    handlerSetChangeSettings,
+    handlerSetIconNavChap,
+    handlerChangeIconData,
+    handlerSaveLocalData,
+    handlerLocalStorage,
+    handlerChangeBookLink,
+    handlerGetLocalData,
+    handlerCheckRatingCmt,
+    handlerDeleteData,
+    handlerPustData,
+    handlerGetRatingLength,
+    handlerInteractData,
+    handlerCheckLike,
+    handlerGetlistUserInteracts,
 };

@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
-import styles from './Form.module.scss';
 
+import styles from './Form.module.scss';
 import { CheckIcon } from '~/components/Icons';
 import { memo, useEffect, useState, useRef } from 'react';
 import { useStore } from '~/hooks';
@@ -30,8 +30,6 @@ function Form({ formName, close }) {
             setTypeForm(type);
         }
     };
-
-    useEffect(() => {}, []);
 
     return (
         <div className={cx('wrapper')}>

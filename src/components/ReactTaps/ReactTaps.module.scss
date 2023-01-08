@@ -1,0 +1,107 @@
+.wrapper {
+    font-size: 1.8rem;
+    color: #333;
+
+    .content {
+        display: block;
+    }
+
+    .list-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 24px;
+        border-bottom: 1px solid #e6e6e6;
+
+        .icon {
+            display: block;
+            padding-bottom: 10px;
+            cursor: pointer;
+
+            &:hover {
+                color: var(--text-primary);
+            }
+        }
+
+        i {
+            font-size: 1.5rem;
+        }
+    }
+
+    .once {
+        margin-bottom: 16px;
+    }
+    
+    .list {
+        display: flex;
+        align-items: center;
+        
+        
+        .item {
+            cursor: pointer;
+            position: relative;
+            display: block;
+            padding-bottom: 12px;
+            font-weight: 600;
+            margin-right: 24px;
+            border: 1px solid transparent;
+
+        }
+        
+        :not(.active):hover {
+            color: var(--text-primary);
+        }
+
+        .active {
+            color: #b78a28;
+            background-color: transparent;
+            border-color: transparent;
+        }
+
+        .active::before {
+            content: "";
+            height: 3px;
+            width: 100%;
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            background-color: #b78a28;
+        }
+
+    }
+    
+    .panel {
+        opacity : 0;
+        transition: opacity .45s linear;
+        
+        .item-content {
+            display: none;
+        }
+    }
+
+    .panel.active {
+        opacity: 1;
+
+        .item-content {
+            display: block;
+        }
+
+    }
+
+    .no-active {
+        color: #333!important;
+        cursor: default!important;
+
+        &::before {
+            display: none;
+        }
+    }
+
+    .none {
+        display: none;
+    }
+}
+
+
+

@@ -16,7 +16,7 @@ const listTaps = {
     components: [Intro, Review, Chap, Comment, Fan],
 };
 
-function TapsBook({ data, listBookData, nameSearch, rating, userData, listComment }) {
+function TapsBook({ data, isLogin, user, listBookData, nameSearch, rating, userData, listComment }) {
     const [firstRender, setFirstRender] = useState(0);
     const [num, setNum] = useState(0);
     const [curBook, setCurBook] = useState();
@@ -27,6 +27,8 @@ function TapsBook({ data, listBookData, nameSearch, rating, userData, listCommen
         listComment,
         userData,
     );
+
+    // console.log(user);
 
     const handlerSetSubItem = (type) => {
         if (type === 1) {
@@ -53,6 +55,8 @@ function TapsBook({ data, listBookData, nameSearch, rating, userData, listCommen
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [nameSearch, curBook]);
 
+    // console.log(123);
+
     return (
         <div className={cx('taps-book')}>
             <Tabs
@@ -70,7 +74,9 @@ function TapsBook({ data, listBookData, nameSearch, rating, userData, listCommen
                                 <Tab key={index} className={cx('item', { ['active']: index === num })}>
                                     {title}
                                     {!!index && index !== 4 && (
-                                        <span className={cx('sub-item')}>{handlerSetSubItem(index) || 0}</span>
+                                        <span data-sub-tap={listTaps.tapKeys[index]} className={cx('sub-item')}>
+                                            {handlerSetSubItem(index) || 0}
+                                        </span>
                                     )}
                                 </Tab>
                             );
@@ -87,6 +93,7 @@ function TapsBook({ data, listBookData, nameSearch, rating, userData, listCommen
                                     ...props,
                                     listRating: rating,
                                     userData,
+                                    user,
                                     setRating,
                                     setRate,
                                     totalNumberUser,
@@ -97,7 +104,12 @@ function TapsBook({ data, listBookData, nameSearch, rating, userData, listCommen
                             } else if (index === 2) {
                                 props = { ...props };
                             } else if (index === 3) {
-                                props = { ...props, listDataCmt: getCommentById(data.idBook), c4Data: imgs.imgAdver };
+                                props = {
+                                    ...props,
+                                    listDataCmt: getCommentById(data.idBook),
+                                    c4Data: imgs.imgAdver,
+                                    user,
+                                };
                             }
                             return (
                                 <TabPanel
@@ -109,6 +121,7 @@ function TapsBook({ data, listBookData, nameSearch, rating, userData, listCommen
                                 >
                                     <TabContent
                                         data={data}
+                                        isLogin={isLogin}
                                         nameSearch={nameSearch}
                                         listBookData={listBookData}
                                         {...props}

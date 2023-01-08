@@ -9,7 +9,7 @@ import { useRef } from 'react';
 
 const cx = classNames.bind(styles);
 
-function Pagination({ data, listNav, limit }) {
+function Pagination({ data, user, idBook, listNav, limit, isLogin, setUpdateNum = () => {}, onActionReports = {} }) {
     const [listData, setListData] = useState(null);
     const [pageCur, setPageCur] = useState(1);
     const [pageCount, setPageCount] = useState(pageCur);
@@ -80,7 +80,16 @@ function Pagination({ data, listNav, limit }) {
 
     return (
         <div className={cx('wrapper')} ref={paginationRef}>
-            <Item data={listData} navActiveData={listNav} pageCur={pageCur} />
+            <Item
+                data={listData}
+                navActiveData={listNav}
+                pageCur={pageCur}
+                user={user}
+                isLogin={isLogin}
+                idBook={idBook}
+                setUpdateNum={setUpdateNum}
+                onActionReports={onActionReports}
+            />
             <div className={cx('container')}>
                 <ReactPaginate
                     breakLabel="..."

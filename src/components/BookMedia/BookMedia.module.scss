@@ -221,9 +221,35 @@
                 border-color: #b78a28;
                 background-color: var(--text-primary);
 
+                .btn {
+                    border-color: inherit;
+                }
+
                 & .btn:hover {
                     background-color: #987221;
                     border-color: #8d6a1f;
+                }
+
+                .btn:focus {
+                    box-shadow: 0 0 0 3.2px rgb(194 156 72 / 50%);
+                }
+            }
+
+            .read-action {
+                background-color: #bf2c24;
+                border-color: #bf2c24;
+
+                .btn {
+                    border-color: inherit;
+                }
+
+                .btn:hover {
+                    background-color: #9f251e;
+                    border-color: #94221c;
+                }
+
+                .btn:focus {
+                    box-shadow: 0 0 0 3.2px rgb(201 76 69 / 50%);
                 }
             }
 
@@ -234,6 +260,10 @@
                     color: #fff;
                     background-color: #666;
                     border-color: #666;
+                }
+
+                .btn:focus {
+                    box-shadow: 0 0 0 3.2px hsl(0deg 0% 40% / 50%);
                 }
             }
 
@@ -250,6 +280,10 @@
 
                 & .btn:hover .action-title{
                     filter: brightness(70%)
+                }
+
+                .btn:focus {
+                    box-shadow: 0 0 0 3.2px rgb(194 156 72 / 50%);
                 }
             }
 

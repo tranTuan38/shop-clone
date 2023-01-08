@@ -2,12 +2,17 @@ import classNames from 'classnames/bind';
 
 import styles from './NotFound.module.scss';
 import imgs from '~/assets/imgs';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 
 const cx = classNames.bind(styles);
 
 function NotFound() {
+    const location = useLocation();
+    const title = location?.state?.title;
+
+    // console.log(location);
+
     const handlerReload = (event) => {
         event.view.location.reload();
     };
@@ -24,16 +29,17 @@ function NotFound() {
                 <img src={imgs.notFound} alt="Not Found" className={cx('err-img')} />
                 <h3 className={cx('title')}>Rất tiếc!</h3>
                 <div className={cx('info')}>
-                    Bạn chưa đăng nhập hoặc đăng nhập đã hết hạn. Nếu bạn thấy đây là sự nhầm lẫn, vui lòng tải lại
-                    trang hoặc trở về trang chủ
+                    {title ||
+                        `Bạn chưa đăng nhập hoặc đăng nhập đã hết hạn. Nếu bạn thấy đây là sự nhầm lẫn, vui lòng tải lại
+                    trang hoặc trở về trang chủ`}
                 </div>
                 <div className={cx('control')}>
                     <Link to="/" className={cx('back-home')}>
-                        <strong>Trở về trang chủ</strong>
+                        Trở về trang chủ
                     </Link>
                     <span className={cx('space')}>-</span>
                     <button onClick={handlerReload} className={cx('reload')}>
-                        <strong>Tải lại trang</strong>
+                        Tải lại trang
                     </button>
                 </div>
             </div>

@@ -8,6 +8,13 @@ import listAuthors from './authorData';
 import listUserReadBook from './listUserReadBook';
 import listDataPath from './listDataPath';
 import listRank from './listRank';
+import listTapsData from './listTapsData';
+import userApi from './userApi';
+import listUserBookMarks from './listUserBookMark';
+import listThemes from './listThemes';
+import listFontFamily from './listFontFamily';
+import listIcons from './listIcons';
+import listUserInteracts from './listUserInteracts';
 
 export {
     listBookData,
@@ -20,4 +27,11 @@ export {
     listUserReadBook,
     listDataPath,
     listRank,
+    listTapsData,
+    userApi,
+    listUserBookMarks,
+    listThemes,
+    listFontFamily,
+    listIcons,
+    listUserInteracts,
 };

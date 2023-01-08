@@ -17,7 +17,6 @@ const listIcons = [
     { name: 'sad', icon: iconFeel.sad },
     { name: 'angry', icon: iconFeel.angry },
     { name: 'attack', icon: iconFeel.attack },
-    // { name: 'flower', icon: iconFeel.flower },
 ];
 
 const listRank = ['Đồng', 'Bạc', 'Vàng', 'Bạch Kim', 'Kim Cương'];

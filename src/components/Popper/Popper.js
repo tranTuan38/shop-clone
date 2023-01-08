@@ -4,13 +4,14 @@ import Tippy from '@tippyjs/react/headless';
 import 'tippy.js/dist/tippy.css';
 
 import styles from './Popper.module.scss';
-import { memo } from 'react';
+import { memo, useRef } from 'react';
 
 const cx = classNames.bind(styles);
 
 function Popper({
     data,
     genre,
+    visible,
     name,
     navName,
     navItem,
@@ -30,6 +31,7 @@ function Popper({
     onSetPath,
     listRequest,
     prevListRequest,
+    hideOnClick = true,
     prevSearch,
     onSetSearch,
     location,
@@ -39,12 +41,16 @@ function Popper({
     onShow,
     onHide,
 }) {
+    const arrowRef = useRef();
+
     return (
         <div className={cx('content')}>
             <Tippy
+                visible={visible}
                 onHide={onHide}
                 onShow={onShow}
-                arrow={isArrow}
+                arrow
+                hideOnClick={hideOnClick}
                 trigger={trigger}
                 interactive={interactive}
                 placement={placement}
@@ -52,6 +58,7 @@ function Popper({
                 render={(attrs) => (
                     <div
                         id="tooltip"
+                        role="tooltip"
                         className={cx(name, {
                             [navName]: navName,
                         })}
@@ -78,7 +85,13 @@ function Popper({
                             onSetActive={onSetActive}
                             funcEmpty={funcEmpty}
                         />
-                        {isArrow && <div id="arrow" className={`${cx('arror')} ${arrow}`} data-popper-arrow></div>}
+                        {/* {isArrow && (
+                        <div
+                            id="arrow"
+                            data-popper-arrow
+                            className={`${cx('arrow')} ${arrow}`}
+                        ></div>
+                        )} */}
                     </div>
                 )}
             >

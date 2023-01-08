@@ -8,18 +8,32 @@ import { memo } from 'react';
 
 const cx = classNames.bind(styles);
 
-function NavPopup({ className, formName, item, closeOnDocumentClick = false, overlayStyle, contentStyle }) {
+function NavPopup({
+    className,
+    formName,
+    content,
+    item,
+    closeOnDocumentClick = false,
+    overlayStyle,
+    contentStyle,
+    children,
+    style = {},
+    onOpen,
+    onClose,
+}) {
     return (
-        <div className={`${className} ${cx('nav-right')} `}>
+        <div className={`${className} ${cx('nav-right')} `} style={{ ...style }}>
             <Popup
                 nested
                 modal
                 closeOnDocumentClick={closeOnDocumentClick}
                 overlayStyle={overlayStyle}
                 contentStyle={contentStyle}
-                trigger={item}
+                trigger={item || children}
+                onOpen={onOpen}
+                onClose={onClose}
             >
-                {(close) => <ModalContainer formName={formName} close={close} />}
+                {(close) => <ModalContainer formName={formName} content={content} close={close} />}
             </Popup>
         </div>
     );

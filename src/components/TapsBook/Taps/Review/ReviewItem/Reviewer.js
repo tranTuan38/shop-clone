@@ -7,12 +7,13 @@ import imgs from '~/assets/imgs';
 const cx = classNames.bind(styles);
 
 function Reviewer({ data, bookData, OnChangeInput }) {
+    // console.log(bookData);
     return (
         <div className={cx('reviewer')}>
             {data.map((item, index) => {
                 return (
                     <div className={cx('content-item')} key={index}>
-                        <div className="row align-center" key={index}>
+                        <div className="row align-center">
                             <div className="col c-3">
                                 <div className={cx('title')}>{item.title}</div>
                             </div>

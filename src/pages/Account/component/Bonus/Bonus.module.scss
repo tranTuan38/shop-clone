@@ -1,0 +1,112 @@
+.wrapper {
+    font-size: 1.5rem;
+    color: #333;
+
+    .container {
+
+        .content {
+
+        }
+
+        .content .list {
+            display: flex;
+            flex-direction: column;
+
+            .item {
+                display: flex;
+                align-items: flex-start;
+                justify-content: space-between;
+                padding: 16px 0;
+            }
+
+            .item .info {
+                margin-right: 16px;
+
+                .title {
+                    font-weight: 600;
+                }
+
+                .exp {
+                    font-size: 1.4rem;
+                    color: #6c757d;
+                }
+            }
+
+            .item .btn {
+                padding: 4px 8px;
+                font-size: 1.4rem;
+                color: #fff;
+                line-height: 1.5;
+                width: 128px;
+                border-radius: 3.2px;
+                border: 1px solid transparent;
+                user-select: none;
+                transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out,-moz-box-shadow .15s ease-in-out;
+                
+            }
+            
+            .btn.primary {
+                background-color: #b78a28;
+                border-color: #b78a28;
+                
+                &:hover {
+                    background-color: #987221;
+                    border-color: #8d6a1f;
+                }
+
+                &:focus {
+                    box-shadow: 0 0 0 3.2px rgb(194 156 72 / 50%);
+                }
+            }
+
+            .btn.danger {
+                background-color: #bf2c24;
+                border-color: #bf2c24;
+
+                &:hover {
+                    background-color: #9f251e;
+                    border-color: #94221c;
+                }
+
+                &:focus {
+                    box-shadow: 0 0 0 3.2px rgb(201 76 69 / 50%);
+                }
+            }
+
+            .btn.success  {
+                background-color: #088860;
+                border-color: #088860;
+                opacity: .65;
+            }
+
+            .none {
+                color: transparent!important;
+                overflow: hidden;
+                white-space: nowrap;
+                position: relative;
+                user-select: none;
+                cursor: default;
+
+                &::before {
+                    display: block;
+                    position: absolute;
+                    color: #fff;
+                    padding-left: 50%;
+                    transform: translateX(-15%);
+                    content: "✓";
+                }
+            }
+        }
+
+        .p {
+            font-size: 1.4rem;
+            font-style: italic;
+            margin: 16px 0;
+    
+            span {
+                font-weight: 600;
+            }
+        }
+    }
+
+}

@@ -5,7 +5,7 @@ function ScrollToTop() {
     const { pathname } = useLocation();
 
     useEffect(() => {
-        window.scrollTo({ top: 0 });
+        if (!pathname.includes('bxh')) window.scrollTo({ top: 0 });
     }, [pathname]);
 
     return null;

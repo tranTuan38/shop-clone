@@ -7,7 +7,7 @@
         height: 24px;
         vertical-align: text-bottom;
         background-color: currentColor;
-        color: var(--text-primary);
+        color: inherit;
         border-radius: 50%;
         -webkit-animation: spinner-grow .75s linear infinite;
         animation: spinner-grow .75s linear infinite;

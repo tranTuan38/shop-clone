@@ -6,13 +6,15 @@ import styles from './UserComment.module.scss';
 import Comment from './Comment';
 import Reply from './Reply';
 import imgs from '~/assets/imgs';
-import { handleTime } from '~/handler';
+import { handleTime, handlerGetPostData } from '~/handler';
 import { listBookData, listRating, userData } from '~/initdata';
 
 const cx = classNames.bind(styles);
 
-function UserComment({ data }) {
+function UserComment({ data, classActive, isLogin, ActionLogin, user, src }) {
     const [listUserData, setListUserData] = useState([]);
+
+    // console.log(listUserData);
 
     const handlerSetComment = (comment, limit = 400) => {
         let cmtSlice;
@@ -54,7 +56,15 @@ function UserComment({ data }) {
                                 <span className={cx('level')}>{`Cấp ${item.level}`}</span>
                             </div>
                             <div className={cx('body')}>
-                                <Link className={cx('name', { ['item-hover']: true })}>{item.name}</Link>
+                                <Link
+                                    to={`/profile/${handlerGetPostData(item.name).id}`}
+                                    className={cx('name', {
+                                        ['item-hover']: !classActive,
+                                        ['white-color']: classActive,
+                                    })}
+                                >
+                                    {item.name}
+                                </Link>
                                 <div className={cx('nav-info')}>
                                     <span className={cx('info')}>
                                         <i className="nh-icon icon-clock"></i>
@@ -66,10 +76,15 @@ function UserComment({ data }) {
                                     </span>
                                 </div>
                                 <div className={cx('comment')}>
-                                    <Comment data={item.comment} limitStrings={303} />
+                                    <Comment data={item.comment} limitStrings={303} classActive={classActive} />
                                 </div>
                                 <Reply
+                                    user={user}
+                                    src={src}
                                     data={item}
+                                    isLogin={isLogin}
+                                    ActionLogin={ActionLogin}
+                                    classActive={classActive}
                                     listDataCmt={handlerSetReplyCmt(item.userReply)}
                                     navActiveData={{ setTime: handleTime, setCmtUser: handlerSetComment }}
                                 />

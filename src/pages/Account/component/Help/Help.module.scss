@@ -1,0 +1,32 @@
+.wrapper {
+    font-size: 1.5rem;
+
+    .help {
+
+        p {
+            margin-bottom: 16px;
+        }
+
+        a {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        span {
+            font-weight: 600;
+        }
+    }
+
+    .list-question {
+        margin-top: 48px;
+        margin-bottom: 16px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #eee;
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+    }
+}

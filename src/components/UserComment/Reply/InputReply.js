@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { memo, useEffect, useRef, useState } from 'react';
+import { forwardRef, memo, useEffect, useRef, useState, useImperativeHandle } from 'react';
 import { Link } from 'react-router-dom';
 
 import styles from './Reply.module.scss';
@@ -10,12 +10,23 @@ import imgs from '~/assets/imgs';
 
 const cx = classNames.bind(styles);
 
-function InputReply({ src = imgs.avatarImg.userNoIn, styleAvatar, styleForm }) {
+function InputReply({ src = imgs.avatarImg.userNoIn, styleAvatar, styleForm }, ref) {
     const [value, setValue] = useState('');
 
     const handlerOnChange = (e) => {
         setValue(e.target.value);
     };
+
+    const textAreaRef = useRef();
+
+    useImperativeHandle(ref, () => ({
+        focus() {
+            textAreaRef.current.focus();
+        },
+        blur() {
+            textAreaRef.current.blur();
+        },
+    }));
 
     return (
         <div className={cx('form')} style={styleForm}>
@@ -24,6 +35,7 @@ function InputReply({ src = imgs.avatarImg.userNoIn, styleAvatar, styleForm }) {
             </div>
             <div className={cx('form-body')}>
                 <textarea
+                    ref={textAreaRef}
                     placeholder="Nội dung trả lời"
                     className={cx('form-control')}
                     value={value}
@@ -38,4 +50,4 @@ function InputReply({ src = imgs.avatarImg.userNoIn, styleAvatar, styleForm }) {
     );
 }
 
-export default memo(InputReply);
+export default memo(forwardRef(InputReply));

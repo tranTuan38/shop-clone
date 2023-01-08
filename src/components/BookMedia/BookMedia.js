@@ -31,7 +31,7 @@ function BookMedia({ data }) {
                             <ListRate
                                 data={{ idBook: book.idBook, rating: setRating, rate: setRate, user: rateUser }}
                             />
-                            <ListAction />
+                            <ListAction data={book} />
                         </div>
                     </div>
                 </div>

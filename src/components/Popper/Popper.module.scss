@@ -14,11 +14,42 @@
         width: 500px;
         max-width: 500px;
         padding: 12px 24px;
+
+        &::before, &::after {
+            left: 10%;
+        }
     }
 
     .menu.rank-menu {
         width: 160px;
         max-width: 160px;
         padding: 12px 0;
+
+        &::before, &::after {
+            left: 40%;
+        }
+    }
+
+    .menu.notice-menu {
+
+        &::before, &::after {
+            display: none;
+        }
+    }
+
+    .menu.user-menu {
+        
+        &::before, &::after {
+            display: none;
+        }
+    }
+
+    .menu.bxh-menu {
+        width: 160px;
+        max-width: 160px;
+        padding: 12px 0;
+        margin: 8px 0;
+        border: 1px solid #eee;
+        border-radius: 8px;
     }
 }

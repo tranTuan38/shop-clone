@@ -6,11 +6,6 @@
     color: #333;
     line-height: 1.5;
 
-    .active {
-        color: #111!important;
-        font-weight: 700;
-    }
-
     .action {
         display: flex;
         align-items: center;
@@ -52,6 +47,15 @@
                     -moz-box-shadow: 0 0 0 3.2px rgba(183,138,40,.25);
                     box-shadow: 0 0 0 3.2px rgb(183 138 40 / 25%);
                 }
+            }
+
+            .btn.active {
+                color: #111;
+                font-weight: 700;
+            }
+
+            .btn.btn-classActive {
+                color: #fff;
             }
 
             .btn:last-child {
@@ -175,9 +179,6 @@
                     }
                     
                 }
-
-                
-
             }
         }
 
@@ -192,6 +193,10 @@
             }
         }
 
+    }
+
+    .white-color {
+        color: #fff;
     }
 }
 
@@ -284,4 +289,16 @@
 
     }
 
+}
+
+.classActive {
+    color: #fff;
+
+    .all-reply, .list, .media-name, .media-description {
+        color: inherit;
+    }
+
+    .hide-rep, .media-cmt, .media-btn {
+        color: #fff!important;
+    }
 }

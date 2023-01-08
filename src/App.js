@@ -5,12 +5,12 @@ import DefaultLayout from '~/layouts';
 import PrivateRoute from '~/components/PrivateRoute';
 import { useStore } from '~/hooks';
 import ScrollToTop from './components/ScrollToTop';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
     const [state, dispatch] = useStore();
     const isLogin = state.login;
-
-    console.log(123);
 
     return (
         <Router>
@@ -78,6 +78,7 @@ function App() {
                         }
                     ></Route>
                 </Routes>
+                <ToastContainer hideProgressBar={true} className="toast-react-container" limit={5} />
             </div>
         </Router>
     );

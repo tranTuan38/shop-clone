@@ -14,7 +14,6 @@ const cx = classNames.bind(styles);
 
 function Read({ data }) {
     const [readData, setReadData] = useState([]);
-    console.log(readData);
 
     const navigationPrevRef = useRef(null);
     const navigationNextRef = useRef(null);

@@ -5,6 +5,7 @@ import avatarImg from './avatar';
 import selectedArrow from './Selected';
 import imgAdver from './advertisement';
 import imgsGuide from './guide';
+import imgSupport from './support';
 
 const imgs = {
     logo: logo,
@@ -16,6 +17,7 @@ const imgs = {
     arrow: selectedArrow,
     imgAdver: imgAdver,
     imgsGuide: imgsGuide,
+    imgSupport: imgSupport,
 };
 
 export default imgs;

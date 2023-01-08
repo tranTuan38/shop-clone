@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 // import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -9,6 +9,8 @@ import { listBookData, listRating, userData, listComment } from '~/initdata';
 import styles from './Book.module.scss';
 import BookMedia from '~/components/BookMedia';
 import { removeVietnameseTones } from '~/handler';
+import { useStore } from '~/hooks';
+
 // import { getState, saveState } from '~/components/StateSaver';
 
 const cx = classNames.bind(styles);
@@ -16,6 +18,7 @@ const cx = classNames.bind(styles);
 function Book() {
     const { name } = useParams();
     const [data, setData] = useState({});
+    const [state] = useStore();
 
     useEffect(() => {
         const bookData = (bookName) => {
@@ -51,6 +54,8 @@ function Book() {
                             rating={listRating}
                             userData={userData}
                             listComment={listComment}
+                            isLogin={state.login}
+                            user={state.userData()}
                         />
                     )}
                 </div>

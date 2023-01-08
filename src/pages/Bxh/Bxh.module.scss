@@ -1,0 +1,199 @@
+.wrapper {
+    padding: 20px;
+    
+    .container {
+        padding-top: 8px;
+
+        .content {
+
+        }
+
+        .content .selected {
+            margin-bottom: 8px;
+
+            .btn {
+                display: block;
+                margin-left: auto;
+                padding-right: 24px;
+                white-space: nowrap;
+                font-size: 1.5rem;
+                line-height: 1.5;
+
+                &::after {
+                    display: inline-block;
+                    margin-left: 6.825px;
+                    vertical-align: 3.825px;
+                    content: "";
+                    border-top: 5px solid;
+                    border-right: 4px solid transparent;
+                    border-bottom: 0;
+                    border-left: 4px solid transparent;
+                }
+
+                &:hover {
+                    color: var(--text-primary);
+                }
+            }
+
+            .btn .time {
+                margin-left: 8px;
+                font-weight: 600;
+            }
+        }
+
+        .content .media-wrapper {
+            margin-bottom: 16px;
+        }
+
+        .content .media {
+            padding: 24px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+
+
+            .img {
+                display: inline-block;
+                width: 90px;
+                height: 100%;
+                margin-right: 16px;
+                overflow: hidden;
+                position: relative;
+                box-shadow: 2px 3px 2px 0 rgba(0,0,0,.15);
+
+                &::before {
+                    padding-top: 133.333333%;
+                    content: "";
+                    display: block;
+                }
+
+                img {
+                    width: 100%;
+                    height: auto;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    margin: auto;
+                    max-width: 100%;
+                    min-height: 100%;
+                }
+
+                .ribbon {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    font-weight: 600;
+                    font-size: 1.6rem;
+                    width: 24px;
+                    color: #fff;
+                    text-align: center;
+                    background-color: #999;
+
+                    &::after {
+                        content: "";
+                        border-bottom: 8px solid transparent;
+                        border-left: 12px solid #999;
+                        border-right: 12px solid #999;
+                        bottom: -8px;
+                        right: 0;
+                        position: absolute;
+                        left: 0;
+                    }
+                }
+
+                .ribbon.ribbon-one {
+                    background-color: #ffc100;
+
+                    &::after {
+                        border-left-color: #ffc100;
+                        border-right-color: #ffc100;
+                    }
+                }
+
+                .ribbon.ribbon-two {
+                    background-color: #f9973a;
+
+                    &::after {
+                        border-left-color: #f9973a;
+                        border-right-color: #f9973a;
+                    }
+                }
+
+                .ribbon.ribbon-three {
+                    background-color: #fa683d;
+
+                    &::after {
+                        border-left-color: #fa683d;
+                        border-right-color: #fa683d;
+                    }
+                }
+
+                &:hover {
+                    opacity: .9;
+                }
+            }
+
+            .media-body {
+                flex: 1;
+
+                .book-name {
+                    display: block;
+                    font-size: 1.5rem;
+                    font-weight: 600;
+                    margin-bottom: 8px;
+
+                    &:hover {
+                        color: var(--text-primary);
+                    }
+                }
+
+                .book-description {
+                    font-size: 1.4rem;
+                    color: #666;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    -o-text-overflow: ellipsis;
+                    text-overflow: ellipsis;
+                    -webkit-line-clamp: 3;
+                    word-break: break-word;
+                }
+
+                .book-nav {
+                    margin-top: 16px;
+                    font-size: 1.3rem;
+                    color: #666;
+                    display: flex;
+
+                    span {
+                        display: flex;
+                        align-items: center;
+                    }
+                    
+                }
+                
+                .book-author, .book-selected {
+                    margin-right: 24px;
+
+                    i {
+                        margin-right: 8px;
+                        font-size: 1.3rem;
+                    }
+                }
+
+
+                .book-category {
+                    padding: 4px 16px;
+                    font-size: 80%;
+                    border: 1px solid #eee;
+                    border-color: #b78a28;
+                    display: block;
+                    color: #b78a28;
+                    cursor: pointer;
+                }
+
+            }
+        }
+    }
+}

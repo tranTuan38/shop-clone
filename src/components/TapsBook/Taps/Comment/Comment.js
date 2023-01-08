@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 
 import { handlerCheckSelected } from '~/handler';
 import styles from './Comment.module.scss';
@@ -10,6 +10,8 @@ import { requestData } from '~/services';
 import Loading from '~/components/Loading';
 import { Link } from 'react-router-dom';
 import { Fragment } from 'react';
+import ActionLogin from '~/components/ActionLogin';
+import imgs from '~/assets/imgs';
 
 const cx = classNames.bind(styles);
 
@@ -19,7 +21,7 @@ const listOption = [
     { value: 'oldest', title: 'Cũ nhất' },
 ];
 
-function Comment({ listDataCmt, checkTapsIndex, data, c4Data, className }) {
+function Comment({ listDataCmt, isLogin, user, checkTapsIndex, data, c4Data, className, classActive = false }) {
     const [id, setId] = useState(data.idBook);
     const [value, setValue] = useState('id');
     const [prevValue, setPrevValue] = useState(value);
@@ -31,13 +33,24 @@ function Comment({ listDataCmt, checkTapsIndex, data, c4Data, className }) {
     const [ratio, setRatio] = useState(0);
     const [loading, setLoading] = useState(false);
     const [add, setAdd] = useState(false);
+    let WrapperCom = 'div';
+    let imgSrc = imgs.avatarImg.userNoIn;
+
+    const userCmtRef = useRef();
+
+    if (isLogin) {
+        WrapperCom = Fragment;
+        imgSrc = user.avatar;
+    }
+
+    // console.log(listDataCmt);
+    // console.log(user);
 
     const limit = 2;
 
     const { checkData } = handlerCheckSelected();
 
     useEffect(() => {
-        // console.log(listData);
         let dataList = [...listDataCmt];
         const dataListLength = dataList.length;
         if (checkTapsIndex && !firstRender && !add) {
@@ -64,15 +77,17 @@ function Comment({ listDataCmt, checkTapsIndex, data, c4Data, className }) {
 
         if (checkTapsIndex && add && value === prevValue) {
             const dataAsync = async () => {
+                dataList = checkData(value, dataList);
                 dataList = dataList.slice(curLengthData, curLengthData + limit);
                 dataList = [...listData, ...dataList];
                 setCurLengthData(dataList.length);
-                await requestData({ dataList, setLoading, setListData: setListData, type: 'comment' });
+                await requestData({ dataList, setLoading, setListData, type: 'comment' });
                 setRatio(dataList.length / dataListLength);
                 setAdd(false);
             };
 
             dataAsync();
+            return;
         }
 
         if (checkTapsIndex && value !== prevValue) {
@@ -83,7 +98,6 @@ function Comment({ listDataCmt, checkTapsIndex, data, c4Data, className }) {
                     dataList = dataList.slice(0, limit);
                 }
                 await requestData({ dataList, setLoading, setListData: setListData, type: 'comment' });
-                // setListDataLength(dataList.length);
                 setCurLengthData(dataList.length);
                 setPrevValue(value);
                 setRatio(dataList.length / dataListLength);
@@ -115,6 +129,16 @@ function Comment({ listDataCmt, checkTapsIndex, data, c4Data, className }) {
         setAdd(true);
     };
 
+    const handlerOpen = () => {
+        userCmtRef.current.focus();
+    };
+
+    const handlerClose = () => {
+        userCmtRef.current.blur();
+    };
+
+    // console.log(isLogin);
+
     return (
         <div className={cx('wrapper', { [className]: !!className })}>
             <div className="row">
@@ -123,18 +147,40 @@ function Comment({ listDataCmt, checkTapsIndex, data, c4Data, className }) {
                         <div className={cx('h4')}>{`${listDataLength} bình luận`}</div>
                         <BySelectData value={value} setValue={setValue} data={listOption} />
                     </div>
-                    <InputReply
-                        styleAvatar={{ width: '45px', marginTop: '0', marginRight: '16px', alignSelf: 'center' }}
-                        styleForm={{ marginTop: '16px', padding: '0' }}
-                    />
+                    <ActionLogin isLogin={isLogin} onOpen={() => handlerOpen()} onClose={() => handlerClose()}>
+                        <WrapperCom>
+                            <InputReply
+                                src={imgSrc}
+                                ref={userCmtRef}
+                                isLogin={isLogin}
+                                ActionLogin={ActionLogin}
+                                styleAvatar={{
+                                    width: '45px',
+                                    marginTop: '0',
+                                    marginRight: '16px',
+                                    alignSelf: 'center',
+                                }}
+                                styleForm={{ marginTop: '16px', padding: '0' }}
+                            />
+                        </WrapperCom>
+                    </ActionLogin>
                     <div className={cx('list-media')}>
-                        {!!listDataCmt.length && loading && !add && <Loading style={{ marginTop: '24px' }} />}
-                        {!!listData.length && <UserComment data={listData} />}
+                        {!!listDataCmt.length && loading && !add && <Loading wrapperStyle={{ marginTop: '24px' }} />}
+                        {!!listData.length && (
+                            <UserComment
+                                user={user}
+                                src={imgSrc}
+                                data={listData}
+                                classActive={classActive}
+                                isLogin={isLogin}
+                                ActionLogin={ActionLogin}
+                            />
+                        )}
                     </div>
-                    <div className={cx('add-media')}>
+                    <div className={cx('add-media', { classActive: classActive })}>
                         {ratio !== 1 && !!listData.length && (
                             <button className={cx('add-button')} onClick={handlerAddCmt}>
-                                {!add ? 'Xem thêm bình luận' : <Loading style={{ marginTop: '0' }} />}
+                                {!add ? 'Xem thêm bình luận' : <Loading wrapperStyle={{ marginTop: '0' }} />}
                             </button>
                         )}
                     </div>

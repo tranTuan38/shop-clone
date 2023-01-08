@@ -11,6 +11,10 @@ const cx = classNames.bind(styles);
 function NoticeMenu({ navItem, data }) {
     const [listNotice, setListNotice] = useState([]);
 
+    const handlerHidePopper = (e) => {
+        e.target.offsetParent.parentNode._tippy.hide();
+    };
+
     useEffect(() => {
         setListNotice(data);
     }, [data]);
@@ -24,7 +28,7 @@ function NoticeMenu({ navItem, data }) {
                 </div>
             </div>
             <div className={cx('all')}>
-                <Link to="/" className={cx('link-view')}>
+                <Link to="/account/#notice" className={cx('link-view')} onClick={handlerHidePopper}>
                     Xem tất cả
                 </Link>
             </div>

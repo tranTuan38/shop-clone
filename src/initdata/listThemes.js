@@ -1,0 +1,60 @@
+const listThemes = [
+    {
+        id: 0,
+        headerColor: '#e0cfcd',
+        containerColor: '#e9d8d8',
+        contentColor: '#f5e4e4',
+        textColor: '#333',
+        borderColorTheme: '#ebcaca',
+    },
+    {
+        id: 1,
+        headerColor: '#e1d7b9',
+        containerColor: '#eae0c3',
+        contentColor: '#f5ebcd',
+        textColor: '#333',
+        borderColorTheme: '#efdfaf',
+    },
+    {
+        id: 2,
+        headerColor: '#c5cfc2',
+        containerColor: '#ccd8cc',
+        contentColor: '#e2eee2',
+        textColor: '#333',
+        borderColorTheme: '#cbe1cb',
+    },
+    {
+        id: 3,
+        headerColor: '#c7d0ce',
+        containerColor: '#ced9d9',
+        contentColor: '#e1e8e8',
+        textColor: '#333',
+        borderColorTheme: '#cdd9d9',
+    },
+    {
+        id: 4,
+        headerColor: '#dbd5c3',
+        containerColor: '#e4dece',
+        contentColor: '#eae4d3',
+        textColor: '#333',
+        borderColorTheme: '#ded5bb',
+    },
+    {
+        id: 5,
+        headerColor: '#cfcbc3',
+        containerColor: '#d7d4ce',
+        contentColor: '#e5e3df',
+        textColor: '#333',
+        borderColorTheme: '#d5d2cb',
+    },
+    {
+        id: 6,
+        headerColor: '#131210',
+        containerColor: '#111111',
+        contentColor: '#222',
+        textColor: '#ccc',
+        borderColorTheme: '#101010',
+    },
+];
+
+export default listThemes;

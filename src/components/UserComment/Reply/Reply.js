@@ -1,24 +1,30 @@
 import classNames from 'classnames/bind';
-import { memo, useEffect, useRef, useState } from 'react';
+import { Fragment, memo, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import styles from './Reply.module.scss';
 import InputReply from './InputReply';
 import SpinnerGrow from '~/components/SpinnerGrow';
-import { handleTime } from '~/handler';
+import { handleTime, handlerGetPostData } from '~/handler';
 import { requestData } from '~/services';
 
 const cx = classNames.bind(styles);
 
-function Reply({ data, listDataCmt, navActiveData }) {
+function Reply({ data, listDataCmt, navActiveData, classActive, isLogin, ActionLogin, user, src }) {
     const [checkView, setCheckView] = useState(false);
     const [firstAll, setFirstAll] = useState(false);
     const [listReply, setListReply] = useState([]);
     const [checkRep, setCheckRep] = useState({});
     const [notIn, setNotIn] = useState(false);
+    const InputReplyRef = useRef();
+    let WrapperCom = 'div';
 
-    // console.log('listDataCmt: ', listDataCmt);
-    // console.log('data: ', data);
+    if (isLogin) {
+        WrapperCom = Fragment;
+    }
+
+    // console.log(data);
+    // console.log('classActive: ', listReply);
 
     const { setTime, setCmtUser } = navActiveData;
 
@@ -35,6 +41,10 @@ function Reply({ data, listDataCmt, navActiveData }) {
 
     const handlerCheckRep = (id) => {
         setCheckRep((prev) => ({ ...prev, [id]: !prev.id }));
+    };
+
+    const handlerBtn = () => {
+        setFirstAll(true);
     };
 
     // console.log('pageCur :', pageCur);
@@ -60,27 +70,72 @@ function Reply({ data, listDataCmt, navActiveData }) {
             };
             asyncListData();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [notIn]);
 
+    const handlerCmtReplyOpen = (type) => {
+        const btnDom = document.querySelector(`[data-cmt-reply=${type}-${data?.idCmt}]`);
+        btnDom?.focus();
+        InputReplyRef.current?.focus();
+    };
+
+    const handlerCmtReplyClose = (type) => {
+        const btnDom = document.querySelector(`[data-cmt-reply=${type}-${data?.idCmt}]`);
+        btnDom?.blur();
+        InputReplyRef.current?.blur();
+    };
+
     return (
-        <div className={cx('wrapper')}>
+        <div className={cx('wrapper', { classActive })}>
             <div className={cx('action')}>
                 <div className={cx('all-reply')} onClick={handlerViewAll}>
                     {!!data.userReply.length && !notIn && `Xem ${data.userReply.length} trả lời`}
                 </div>
-                <div className={cx('action-btn')}>
-                    <button className={cx('btn', { active: false })}>
-                        <i className="nh-icon icon-like"></i>
-                        {data.cmtLike}
-                    </button>
-                    <button className={cx('btn', { active: notIn || firstAll })}>
-                        <i className="nh-icon icon-reply"></i>
-                        Trả lời
-                    </button>
-                    <button className={cx('btn', { active: false })}>
-                        <i className="nh-icon icon-flag"></i>
-                        Báo xấu
-                    </button>
+                <div className={cx('action-btn')} style={{ display: 'flex' }}>
+                    <ActionLogin
+                        isLogin={isLogin}
+                        onOpen={() => handlerCmtReplyOpen('like')}
+                        onClose={() => handlerCmtReplyClose('like')}
+                    >
+                        <button data-cmt-reply={`like-${data?.idCmt}`} className={cx('btn', { active: false })}>
+                            <i className="nh-icon icon-like"></i>
+                            {data.cmtLike}
+                        </button>
+                    </ActionLogin>
+                    <ActionLogin
+                        isLogin={isLogin}
+                        onOpen={() => handlerCmtReplyOpen('reply')}
+                        onClose={() => handlerCmtReplyClose('reply')}
+                    >
+                        <button
+                            data-cmt-reply={`reply-${data?.idCmt}`}
+                            className={cx('btn', {
+                                active: notIn || firstAll,
+                                [`btn-classActive`]: (notIn || firstAll) && classActive,
+                            })}
+                            onClick={handlerBtn}
+                        >
+                            <i className="nh-icon icon-reply"></i>
+                            Trả lời
+                        </button>
+                    </ActionLogin>
+                    <ActionLogin
+                        isLogin={isLogin}
+                        onOpen={() => handlerCmtReplyOpen('flag')}
+                        onClose={() => handlerCmtReplyClose('flag')}
+                    >
+                        {user?.id === data?.idUser ? (
+                            <button data-cmt-reply={`flag-${data?.idCmt}`} className={cx('btn', { active: false })}>
+                                <i className="nh-icon icon-trash"></i>
+                                Xóa
+                            </button>
+                        ) : (
+                            <button data-cmt-reply={`flag-${data?.idCmt}`} className={cx('btn', { active: false })}>
+                                <i className="nh-icon icon-flag"></i>
+                                Báo xấu
+                            </button>
+                        )}
+                    </ActionLogin>
                 </div>
             </div>
             <div className={cx('list')}>
@@ -96,7 +151,10 @@ function Reply({ data, listDataCmt, navActiveData }) {
                                                 <span className={cx('level')}>{`Cấp ${item.level}`}</span>
                                             </div>
                                             <div className={cx('media-body')}>
-                                                <Link to="" className={cx('media-name')}>
+                                                <Link
+                                                    to={`/profile/${handlerGetPostData(item.name).id}`}
+                                                    className={cx('media-name')}
+                                                >
                                                     {item.name}
                                                 </Link>
                                                 <div className={cx('media-cmt')}>
@@ -113,7 +171,11 @@ function Reply({ data, listDataCmt, navActiveData }) {
                                                     </span>
                                                 </div>
                                                 <div className={cx('media-info')}>
-                                                    <button className={cx('btn', { active: false })}>
+                                                    <button
+                                                        className={cx('btn', {
+                                                            active: false,
+                                                        })}
+                                                    >
                                                         <i className="nh-icon icon-like-alt"></i>
                                                         {item.like}
                                                     </button>
@@ -132,7 +194,17 @@ function Reply({ data, listDataCmt, navActiveData }) {
                         </button>
                     </>
                 )}
-                {firstAll && <InputReply />}
+                {firstAll && (
+                    <ActionLogin
+                        isLogin={isLogin}
+                        onOpen={() => handlerCmtReplyOpen()}
+                        onClose={() => handlerCmtReplyClose()}
+                    >
+                        <WrapperCom>
+                            <InputReply ref={InputReplyRef} src={src} />
+                        </WrapperCom>
+                    </ActionLogin>
+                )}
                 {/* <InputReply /> */}
             </div>
         </div>

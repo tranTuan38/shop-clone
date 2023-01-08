@@ -10,8 +10,7 @@ function AuthorItem({ type, data }) {
     const [bookDatas, setBookDatas] = useState([]);
 
     useEffect(() => {
-        const listBook = data.books;
-        setBookDatas(listBook);
+        setBookDatas(data);
     }, [data]);
 
     return (

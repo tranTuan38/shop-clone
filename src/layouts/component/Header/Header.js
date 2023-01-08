@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 import { useSearchParams, useLocation } from 'react-router-dom';
@@ -16,17 +16,17 @@ import { NoticeMenu, UserMenu } from '~/components/Popper';
 import Search from '../Search';
 import NavPopup from '~/components/NavPopup';
 import { useStore } from '~/hooks';
-import { handlerGetUserDataLogin } from '~/handler';
 import { memo } from 'react';
+import Form from '~/components/Form';
 
 const cx = classNames.bind(styles);
 
-function Header() {
+function Header({ headerProps = {}, headerClass }) {
     const [userData, setUserData] = useState({});
     const [state, dispatch] = useStore();
-    const { userEmail, userPassword, login } = state;
-    const [category, setCategory] = useGetCategory();
-    let [searchParams, setSearchParams] = useSearchParams();
+    const { login } = state;
+    const [category] = useGetCategory();
+    let [searchParams] = useSearchParams();
     const { pathname, search } = useLocation();
 
     let genreId;
@@ -40,32 +40,25 @@ function Header() {
 
     const { logo, noImg } = imgs;
 
-    // console.log(123);
-
-    const handlerOnShowMenu = (show) => {
-        show.reference.classList.add(cx('show'));
+    const handlerOnShowMenu = (instance) => {
+        instance.reference.classList.add(cx('show'));
     };
 
-    const handlerOnHideMenu = (hide) => {
-        hide.clearDelayTimeouts();
-        hide.reference.classList.remove(cx('show'));
+    const handlerOnHideMenu = (instance) => {
+        instance.reference.classList.remove(cx('show'));
     };
 
-    const handlerOnMount = (mount) => {
-        console.log(mount);
-    };
-
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (login) {
-            const loginData = handlerGetUserDataLogin({ userEmail, userPassword });
+            const loginData = state.userData();
             setUserData(loginData);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [login]);
+    }, [state]);
 
     return (
-        <div className={cx('wrapper')}>
-            <header className={cx('header')}>
+        <div className={cx('wrapper', { [headerClass]: headerClass })}>
+            <header className={cx('header')} {...headerProps}>
                 <div className="grid wide height-100">
                     <div className={cx('container')}>
                         <Img href="/" src={logo} alt={noImg} className={'logo'} />
@@ -83,9 +76,10 @@ function Header() {
                                 pathname={pathname}
                                 search={search}
                                 TypeMenu={CategoryMenu}
+                                hideOnClick={false}
                                 isArrow={true}
                             >
-                                <div className={cx('nav-item', { ['nav-left']: true })}>
+                                <div className={cx('nav-item', { ['nav-left']: true })} style={{ userSelect: 'none' }}>
                                     <span className={cx('icon')}>
                                         <i className="nh-icon icon-menu"></i>
                                     </span>
@@ -132,6 +126,7 @@ function Header() {
                             {!login && (
                                 <>
                                     <NavPopup
+                                        content={Form}
                                         className={cx('nav-item')}
                                         closeOnDocumentClick={false}
                                         formName={'login'}
@@ -146,6 +141,7 @@ function Header() {
                                     />
 
                                     <NavPopup
+                                        content={Form}
                                         className={cx('nav-item')}
                                         closeOnDocumentClick={false}
                                         formName={'regis'}

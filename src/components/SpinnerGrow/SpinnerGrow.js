@@ -5,9 +5,9 @@ import styles from './SpinnerGrow.module.scss';
 
 const cx = classNames.bind(styles);
 
-function SpinnerGrow(props) {
+function SpinnerGrow({ style = {} }) {
     return (
-        <div className={cx('wrapper')} {...props}>
+        <div className={cx('wrapper')} {...style}>
             <span className={cx('spinner-grow')}></span>
         </div>
     );

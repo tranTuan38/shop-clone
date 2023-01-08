@@ -32,7 +32,7 @@ function UserInfo({ data, pageCur }) {
             )}
             {!!listData.length && (
                 <div className="row">
-                    {loading && <Loading style={{ margin: 'auto' }} />}
+                    {loading && <Loading wrapperStyle={{ margin: 'auto' }} />}
 
                     {!!listData.length &&
                         !loading &&

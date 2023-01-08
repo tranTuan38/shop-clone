@@ -9,10 +9,20 @@ import { actions } from '~/components/store';
 
 const cx = classNames.bind(styles);
 
-function UserMenu({ navItem, data, onClick }) {
+function UserMenu({ data, onClick }) {
     const [userData, listPath] = data;
     const navigate = useNavigate();
     const location = useLocation();
+
+    const handlerHidePopper = (e, link, type) => {
+        e.preventDefault();
+        e.target.offsetParent.parentNode._tippy.hide();
+        if (type) {
+            navigate(link, { state: { name: type } });
+        } else {
+            navigate(link);
+        }
+    };
 
     return (
         <div className={cx('wrapper')}>
@@ -26,11 +36,21 @@ function UserMenu({ navItem, data, onClick }) {
                         <div className={cx('list-icon')}>
                             <span className={cx('icon')}>
                                 <i style={{ backgroundImage: `url(${iconFeel.flower})` }}></i>
-                                <Link to="/account/asset">0</Link>
+                                <Link
+                                    to="/account/#asset"
+                                    onClick={(e) => handlerHidePopper(e, '/account/#asset', 'flower')}
+                                >
+                                    0
+                                </Link>
                             </span>
                             <span className={cx('icon')}>
                                 <i style={{ backgroundImage: `url(${iconFeel.candy})` }}></i>
-                                <Link to="/account/asset">0</Link>
+                                <Link
+                                    to="/account/#asset"
+                                    onClick={(e) => handlerHidePopper(e, '/account/#asset', 'candy')}
+                                >
+                                    0
+                                </Link>
                             </span>
                         </div>
                     </div>
@@ -44,7 +64,11 @@ function UserMenu({ navItem, data, onClick }) {
 
                         return (
                             <div className={cx('item')} key={index}>
-                                <Link to={pathItem} className={cx('item-link')}>
+                                <Link
+                                    to={pathItem}
+                                    className={cx('item-link')}
+                                    onClick={(e) => handlerHidePopper(e, pathItem)}
+                                >
                                     {item.key}
                                 </Link>
                             </div>
@@ -54,6 +78,7 @@ function UserMenu({ navItem, data, onClick }) {
 
                     <div className={cx('item')}>
                         <span
+                            id="out"
                             className={cx('item-link')}
                             onClick={() => {
                                 onClick(actions.setUserLogout());

@@ -5,6 +5,7 @@ import styles from '../BookMedia.module.scss';
 import { useGetListSelecter } from '~/hooks';
 import { handlerSetLink } from '~/handler';
 import { listAuthors } from '~/initdata';
+import { memo } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -76,4 +77,4 @@ function ListTag({ data }) {
     );
 }
 
-export default ListTag;
+export default memo(ListTag);

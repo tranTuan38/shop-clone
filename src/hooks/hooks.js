@@ -1,5 +1,8 @@
 import { useEffect, useState, useContext } from 'react';
+import { toast } from 'react-toastify';
+
 import { listBookData, listRating, userData, listAuthors, listUserReadBook } from '~/initdata';
+import { handlerGetUserDataLogin } from '~/handler';
 import imgs from '~/assets/imgs';
 import {
     handleGetRankWeekRead,
@@ -181,28 +184,40 @@ export const useGetBookRating = (list) => {
 };
 
 export const useGetComment = () => {
-    const [data, setData] = useState(() => {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
         let results;
-        const datas = listRating.map((rate) => {
+        // console.log(listRating);
+        const datas = listRating.map((rate, i) => {
             const book = handleGetBookById(listBookData, rate.idBook);
             const user = handleGetUserById(rate.rating, userData);
+
+            // console.group(i);
+            // console.log('Book :', book.name);
+            // console.log('User :', user);
+            // console.groupEnd();
 
             return { user, bookName: book.name };
         });
 
+        // console.log(datas);
+
         datas.sort((a, b) => {
             const aEle = a.user[0].dataRating;
             const bEle = b.user[0].dataRating;
-            const aTime = new Date(aEle[aEle.length - 1].time);
-            const bTime = new Date(bEle[bEle.length - 1].time);
+            const aTime = new Date(aEle[aEle.length - 1]?.time);
+            const bTime = new Date(bEle[bEle.length - 1]?.time);
 
             return bTime - aTime;
         });
 
         results = datas.slice(0, 3);
 
-        return results;
-    });
+        setData(results);
+    }, []);
+
+    // console.log(data);
 
     return data;
 };
@@ -348,4 +363,21 @@ export const useStore = () => {
     const [state, dispatch] = useContext(StoreContext);
 
     return [state, dispatch];
+};
+
+export const useUserData = () => {
+    const [data, setData] = useState({});
+    const [state] = useContext(StoreContext);
+    const { userEmail, userPassword, login } = state;
+
+    useEffect(() => {
+        if (login) {
+            const loginData = handlerGetUserDataLogin({ userEmail, userPassword });
+            setData(loginData);
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state]);
+
+    return [data];
 };

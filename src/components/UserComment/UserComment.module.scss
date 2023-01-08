@@ -1,12 +1,13 @@
-.wrapper {
-}
-
 .list-media {
     margin-top: 16px;
     margin-bottom: 24px;
 
     .media:last-child {
         border-bottom: 1px solid #eee;
+    }
+
+    .white-color {
+        color: #fff!important;
     }
 }
 
@@ -50,7 +51,7 @@
             -webkit-border-radius: 50%;
             -moz-border-radius: 50%;
             border-radius: 50%;
-            object-fit: fill;
+            object-fit: cover;
         }
         
         .level {
@@ -71,13 +72,14 @@
     .body {
         flex: 1;
         font-size: 1.6rem;
-        color: #333;
+        color: inherit;
 
         .name {
             display: inline-block;
             font-size: 1.8rem;
             font-weight: 600;
             margin-bottom: 4px;
+            color: inherit;
         }
 
         .nav-info {

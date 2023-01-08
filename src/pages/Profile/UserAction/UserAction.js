@@ -22,7 +22,7 @@ function UserAction({ data }) {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('container')}>
-                {loading && <Loading style={{ marginTop: '46px' }} />}
+                {loading && <Loading wrapperStyle={{ marginTop: '46px' }} />}
                 {!loading && !userRead && !userPost?.length && <span className={cx('no-data')}>Chưa có hoạt động</span>}
                 {!loading && userRead && <Read data={listData[0]} />}
                 {!loading && !!userPost?.length && <Post data={listData[1]} />}

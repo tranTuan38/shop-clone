@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 
 import styles from '../BookMedia.module.scss';
+import { memo } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -20,4 +21,4 @@ function Title({ data }) {
     );
 }
 
-export default Title;
+export default memo(Title);

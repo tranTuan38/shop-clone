@@ -1,0 +1,52 @@
+.wrapper {
+    color: #333;
+
+    .container {
+        display: flex;
+        flex-direction: column;
+
+        .item {
+            padding: 12px 20px;
+            background-color: #fcfcfa;
+            border: 0 solid rgba(0,0,0,.125);
+
+            &:not(.active) .btn:hover {
+                color: var(--text-primary);
+            }
+        }
+
+        // .item.account {
+
+        // }
+
+        .item.bxh {
+            color: #495057;
+
+            i {
+                font-size: 1.5rem;
+                vertical-align: middle;
+            }
+
+            &.active {
+                color: #fff!important;
+            }
+        }
+
+        .active {
+            background-color: var(--text-primary);
+        }
+
+        .btn {
+            display: block;
+            color: inherit;
+            font-size: 1.5rem;
+            width: 100%;
+            text-align: left;
+            line-height: 1.5;
+
+            i {
+                margin-right: 8px;
+            }
+        }
+    }
+}

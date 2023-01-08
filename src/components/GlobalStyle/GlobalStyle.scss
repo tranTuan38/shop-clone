@@ -31,6 +31,10 @@ body {
 
     .App {
         min-width: 1200px;
+
+        .toast-react-container {
+            min-width: 384px;
+        }
     }
 }
 
@@ -56,84 +60,84 @@ a {
 // Font emmbeded
 
 @font-face {
-    font-family: 6xK3dSBYKcSV;
+    font-family: Source Sans Pro;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 100;
     font-display: swap;
     src: url('/assets/fonts/6xK3dSBYKcSV-LCoeQqfX1RYOo3qN67lqDY.woff2');
   }
 
   @font-face {
-    font-family: 6xK3dSBYKcSV;
+    font-family: Source Sans Pro;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 200;
     font-display: swap;
     src: url('/assets/fonts/6xK3dSBYKcSV-LCoeQqfX1RYOo3qNa7lqDY.woff2');
   }
 
   @font-face {
-    font-family: 6xK3dSBYKcSV;
+    font-family: Source Sans Pro;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 300;
     font-display: swap;
     src: url('/assets/fonts/6xK3dSBYKcSV-LCoeQqfX1RYOo3qNq7lqDY.woff2');
   }
 
 
   @font-face {
-    font-family: 6xK3dSBYKcSV;
+    font-family: Source Sans Pro;
     font-style: normal;
-    font-weight: 700;
+    font-weight: 400;
     font-display: swap;
     src: url('/assets/fonts/6xK3dSBYKcSV-LCoeQqfX1RYOo3qO67lqDY.woff2');
   }
 
 
   @font-face {
-    font-family: 6xK3dSBYKcSV;
+    font-family: Source Sans Pro;
     font-style: normal;
-    font-weight: 800;
+    font-weight: 500;
     font-display: swap;
     src: url('/assets/fonts/6xK3dSBYKcSV-LCoeQqfX1RYOo3qOK7l.woff2');
   }
 
 
   @font-face {
-    font-family: 6xK3dSBYKcSV;
+    font-family: Source Sans Pro;
     font-style: normal;
-    font-weight: 900;
+    font-weight: 700;
     font-display: swap;
     src: url('/assets/fonts/6xK3dSBYKcSV-LCoeQqfX1RYOo3qPK7lqDY.woff2');
   }
 
   @font-face {
-    font-family: 6xKydSBYKcSV;
+    font-family: Source Sans Pro;
     font-style: normal;
-    font-weight: 400;
+    font-weight: 600;
     font-display: swap;
     src: url('/assets/fonts/6xKydSBYKcSV-LCoeQqfX1RYOo3i54rwkxduz8A.woff2') format('woff2');
   }
 
   @font-face {
-    font-family: 6xKydSBYKcSV;
+    font-family: Source Sans Pro;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 800;
     font-display: swap;
     src: url('/assets/fonts/6xKydSBYKcSV-LCoeQqfX1RYOo3i54rwlxdu.woff2') format('woff2');
   }
 
   @font-face {
-    font-family: 6xKydSBYKcSV;
+    font-family: Source Sans Pro;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 900;
     font-display: swap;
     src: url('/assets/fonts/6xKydSBYKcSV-LCoeQqfX1RYOo3i54rwmBduz8A.woff2') format('woff2');
   }
 
   @font-face {
-    font-family: 6xKydSBYKcSV;
+    font-family: Source Sans Pro;
     font-style: normal;
-    font-weight: 700;
+    font-weight: bold;
     font-display: swap;
     src: url('/assets/fonts/6xKydSBYKcSV-LCoeQqfX1RYOo3i54rwmRduz8A.woff2') format('woff2'); 
   }
@@ -143,6 +147,48 @@ a {
     font-family: 'nh-icon';
     src: url(../Icons/nh-icon.woff2) format('woff2');
     font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: Patrick Hand;
+    src: url('/assets/fonts/LDI1apSQOAYtSuYWp8ZhfYe8UcLLq7s.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: Patrick Hand;
+    src: url('/assets/fonts/LDI1apSQOAYtSuYWp8ZhfYe8UMLLq7s.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: Patrick Hand;
+    src: url('/assets/fonts/LDI1apSQOAYtSuYWp8ZhfYe8XsLL.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: Noticia Text;
+    src: url('/assets/fonts/VuJ2dNDF2Yv9qppOePKYRP12aDtYh0o.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: Noticia Text;
+    src: url('/assets/fonts/VuJ2dNDF2Yv9qppOePKYRP12aTtYh0o.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: Noticia Text;
+    src: url('/assets/fonts/VuJ2dNDF2Yv9qppOePKYRP12ZjtY.woff2') format('woff2');
+    font-weight: 400;
     font-style: normal;
   }
 
@@ -315,6 +361,102 @@ a {
         content: "\EA10";
     }
 
+    &.icon-setting::before {
+        content: "\EA15";
+    }
+
+    &.icon-gift::before {
+        content: "\EA50";
+    }
+
+    &.icon-chat::before {
+        content: "\EA11";
+    }
+
+    &.icon-check::before {
+        content: "\EA51";
+    }
+
+    &.icon-trash::before {
+        content: "\EA44";
+    }
+
+    &.icon-comment::before {
+        content: "\EA14";
+    }
+
+    &.icon-candy::before {
+        content: "\EA0F";
+    }
+
+    &.icon-sound-waves::before {
+        content: "\EA41";
+    }   
+
+    &.icon-next-2::before {
+        content: "\EA32";
+    } 
+
+    &.icon-prev-2::before {
+        content: "\EA31";
+    } 
+
+    &.icon-file-edit::before {
+        content: "\EA33";
+    } 
+
+    &.icon-text::before {
+        content: "\EA35";
+    } 
+
+    &.icon-heart::before {
+        content: "\EA1A";
+    } 
+
+    &.icon-alert::before {
+        content: "\EA25";
+    } 
+
+    &.icon-arrow-left::before {
+        content: "\EA3B";
+    } 
+
+    &.icon-info::before {
+        content: "\EA17";
+    } 
+
+    &.icon-comments::before {
+        content: "\EA1C";
+    } 
+
+    &.icon-color::before {
+        content: "\EA26";
+    } 
+
+    &.icon-font::before {
+        content: "\EA28";
+    } 
+
+    &.icon-size::before {
+        content: "\EA38";
+    } 
+
+    &.icon-width-resize::before {
+        content: "\EA37";
+    } 
+
+    &.icon-line-height::before {
+        content: "\EA29";
+    } 
+
+    &.icon-minus::before {
+        content: "\EA36";
+    } 
+
+    &.icon-plus::before {
+        content: "\EA39";
+    } 
+
 }
 
 .fs-80 {
@@ -350,14 +492,114 @@ a {
 }
 
 
-#arrow {
-    top: -16px;
-    border: 8px solid;
-    border-bottom-color: #fff;
-    border-top-color: transparent;
-    border-left-color: transparent;
-    border-right-color: transparent;
+// #arrow {
+//     top: -16px;
+//     border: 8px solid;
+//     border-bottom-color: #fff;
+//     border-top-color: transparent;
+//     border-left-color: transparent;
+//     border-right-color: transparent;
+// }
+
+// #arrow,
+// #arrow::before {
+//   position: absolute;
+//   width: 12px;
+//   height: 12px;
+//   background-color: #eee;
+// }
+
+// #arrow,
+// #arrow::after {
+//     position: absolute;
+//     width: 12px;
+//     height: 12px;
+//     background-color: inherit;
+//   }
+
+// #arrow {
+//   visibility: hidden;
+// }
+
+// #arrow::before {
+//   visibility: visible;
+//   content: '';
+//   transform: rotate(45deg);
+// }
+
+// #arrow::after {
+//     visibility: visible;
+//     content: '';
+//     transform: rotate(45deg);
+// }
+
+// #tooltip[data-placement^='top'] > #arrow {
+//     bottom: -6px;
+// }
+  
+// #tooltip[data-placement^='bottom'] > #arrow {
+//     top: -6px;
+// }
+  
+// #tooltip[data-placement^='left'] > #arrow {
+//     right: -6px;
+// }
+  
+// #tooltip[data-placement^='right'] > #arrow {
+//     left: -6px;
+// }
+
+#tooltip {
+    position: relative;
 }
+
+#tooltip[data-placement^='top']::before,
+#tooltip[data-placement^='bottom']::before {
+    content: "";
+    position: absolute;
+    right: 16px;
+    width: 1px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+}
+
+#tooltip[data-placement^='top']::before {
+    border-bottom: 0;
+    border-top: 10px solid #eee;
+    bottom: -10px;
+}
+
+#tooltip[data-placement^='bottom']::before {
+    border-top: 0;
+    border-bottom: 10px solid #eee;
+    top: -10px;
+}
+
+#tooltip[data-placement^='top']::after,
+#tooltip[data-placement^='bottom']::after {
+    content: "";
+    position: absolute;
+    right: 16px;
+    width: 1px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    margin-right: 2px;
+}
+
+#tooltip[data-placement^='top']::after {
+    border-bottom: 0;
+    border-top: 8px solid #fff;
+    bottom: -10px;
+    margin-bottom: 2px;
+}
+
+#tooltip[data-placement^='bottom']::after {
+    border-top: 0;
+    border-bottom: 8px solid #fff;  
+    top: -10px;
+    margin-top: 2px;
+}
+
 
 footer {
     position: relative;

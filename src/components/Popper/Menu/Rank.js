@@ -18,7 +18,7 @@ function Rank({ navItem, data }) {
                                     active: nav.isActive,
                                 });
                             }}
-                            to={`/bxh/tuan/${item.path}`}
+                            to={`/bxh/week/${item.path}`}
                         >
                             <span>{item.title}</span>
                         </NavLink>

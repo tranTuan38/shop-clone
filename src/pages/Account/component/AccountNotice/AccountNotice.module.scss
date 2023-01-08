@@ -1,0 +1,32 @@
+.wrapper {
+
+    .content {
+
+    }
+
+    .btn {
+        display: block;
+        margin-top: 16px;
+        text-align: center;
+        padding: 8px 24px;
+        color: #fff;
+        background-color: var(--text-primary);
+        width: 100%;
+        border: 1px solid transparent;
+        border-color: var(--text-primary);
+        font-size: 1.6rem;
+        border-radius: 20px;
+        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out,-moz-box-shadow .15s ease-in-out;
+    
+        &:hover {
+            color: #fff;
+            background-color: #987221;
+            border-color: #8d6a1f;
+        }
+
+        &:focus {
+            outline: none;
+            box-shadow: 0 0 0 3.2px rgb(194 156 72 / 50%);
+        }
+    }
+}

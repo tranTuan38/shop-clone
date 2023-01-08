@@ -1,0 +1,23 @@
+.wrapper {
+    
+    .content {
+        
+        .btn {
+            display: block;
+            width: 100%;
+            font-size: 1.6rem;
+            padding: 6px 20px;
+            text-align: left;
+            color: #212529;
+
+            &:not(.active):hover {
+                color: var(--text-primary);
+            }
+        }
+
+        .active {
+            background-color: var(--text-primary);
+            color: #fff;
+        }
+    }
+}

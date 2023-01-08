@@ -169,7 +169,7 @@
         .nav-side-bar {
             min-width: 160px;
             padding: 12px 0;
-            margin-top: 8px;
+            margin: 8px 0;
             box-shadow: 0 10px 15px 0 rgb(0 0 0 / 9%);
             border: 1px solid #eee;
             border-radius: 8px;
@@ -208,31 +208,31 @@
 
             }
 
-            &::before {
-                content: "";
-                position: absolute;
-                border-top: 0;
-                top: -1px;
-                right: 16px;
-                width: 1px;
-                border-left: 10px solid transparent;
-                border-right: 10px solid transparent;
-                border-bottom: 10px solid #eee;
-            }
+            // &::before {
+            //     content: "";
+            //     position: absolute;
+            //     border-top: 0;
+            //     top: -1px;
+            //     right: 16px;
+            //     width: 1px;
+            //     border-left: 10px solid transparent;
+            //     border-right: 10px solid transparent;
+            //     border-bottom: 10px solid #eee;
+            // }
 
-            &::after {
-                content: "";
-                position: absolute;
-                border-top: 0;
-                top: -1px;
-                right: 16px;
-                width: 1px;
-                border-left: 8px solid transparent;
-                border-right: 8px solid transparent;
-                border-bottom: 8px solid #fff;
-                margin-right: 2px;
-                margin-top: 2px;
-            }
+            // &::after {
+            //     content: "";
+            //     position: absolute;
+            //     border-top: 0;
+            //     top: -1px;
+            //     right: 16px;
+            //     width: 1px;
+            //     border-left: 8px solid transparent;
+            //     border-right: 8px solid transparent;
+            //     border-bottom: 8px solid #fff;
+            //     margin-right: 2px;
+            //     margin-top: 2px;
+            // }
 
         }
     }

@@ -1,0 +1,28 @@
+.container {
+    width: 384px;
+    top: 100px;
+    right: 20px;
+
+    .title {
+        display: flex;
+        align-items: center;
+        line-height: 1.2;
+        font-size: 1.6rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    .body {
+     
+        .message {
+            font-size: 1.4rem;
+            margin-bottom: 2px;
+            line-height: 1.1;
+        }
+    }
+
+    .title, .message {
+        user-select: none;
+    }
+
+}

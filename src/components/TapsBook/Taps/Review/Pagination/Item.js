@@ -3,10 +3,11 @@ import classNames from 'classnames/bind';
 import styles from '../Review.module.scss';
 import { Link } from 'react-router-dom';
 import Reply from '../../Reply';
+import { handlerGetPostData } from '~/handler';
 
 const cx = classNames.bind(styles);
 
-function Item({ data, navActiveData, pageCur }) {
+function Item({ data, user, idBook, navActiveData, pageCur, isLogin, setUpdateNum, onActionReports }) {
     const {
         checkBtn,
         checkSpoliBtn,
@@ -30,7 +31,7 @@ function Item({ data, navActiveData, pageCur }) {
                                 <span className={cx('review-level')}>{`Cấp ${item.level}`}</span>
                             </div>
                             <div className={cx('review-body')}>
-                                <Link to="" className={cx('review-name')}>
+                                <Link to={`/profile/${handlerGetPostData(item.name).id}`} className={cx('review-name')}>
                                     {item.name}
                                 </Link>
                                 <div className={cx('review-rate')}>
@@ -84,7 +85,12 @@ function Item({ data, navActiveData, pageCur }) {
                                     </span>
                                 </div>
                                 <Reply
+                                    isLogin={isLogin}
                                     data={item}
+                                    onActionReports={onActionReports}
+                                    user={user}
+                                    setUpdateNum={setUpdateNum}
+                                    idBook={idBook}
                                     navActiveData={{ setRepData, setTime, setCmtUser }}
                                     pageCur={pageCur}
                                 />

@@ -1,0 +1,91 @@
+.wrapper {
+    font-size: 1.5rem;
+    color: #333;
+
+    .container {
+
+        .content {
+            display: flex;
+            align-items: center;
+
+            .icon {
+                display: flex;
+                margin-right: 16px;
+
+                i {
+                    width: 20px;
+                    height: 20px;
+                    display: inline-block;
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                }
+            }
+
+            .user-data {
+                span {
+                    font-weight: 600;
+                }
+            }
+
+            .one {
+                padding-bottom: 8px;
+                margin-bottom: 8px;
+                border-bottom: 1px solid #eee;
+
+                span {
+                    color: #bf2c24;
+                }
+            }
+
+            .two {
+                color: #6c757d;
+            }
+
+            .change {
+                flex: 1;
+                text-align: right;
+
+                h6 {
+                    margin-bottom: 0;
+                }
+
+                button {
+                    display: inline-block;
+                    border-radius: 3.2px;
+                    padding: 4px 8px;
+                    font-size: 1.4rem;
+                    color: #212529;
+                    background-color: #cc9e14;
+                    line-height: 1.5;
+                    border: 1px solid #cc9e14;
+                    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out,-moz-box-shadow .15s ease-in-out;
+                
+                    &:hover {
+                        color: #fff;
+                        background-color: #a98311;
+                        border-color: #9e7a0f;
+                    }
+
+                    &:focus {
+                        outline: none;
+                        box-shadow: 0 0 0 3.2px rgb(194 156 72 / 50%);
+                    }
+                }
+            }
+        }
+
+        .history {
+        }
+    }
+    
+    h6 {
+        font-size: 1.6rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    hr {
+        margin: 24px 0;
+        border-top: 1px solid #eee;
+    }
+}

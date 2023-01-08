@@ -1,16 +1,14 @@
 import classNames from 'classnames/bind';
 import styles from './ModalContainer.module.scss';
 
-import { Check } from '~/components/Icons';
-import Form from '~/components/Form';
-
 const cx = classNames.bind(styles);
 
-function ModalContainer({ formName, close }) {
+function ModalContainer({ formName, content, close }) {
+    const Component = content;
     return (
         <div className={cx('modal')}>
             <div className={cx('inner')}>
-                <Form formName={formName} close={close} />
+                <Component formName={formName} close={close} />
             </div>
         </div>
     );

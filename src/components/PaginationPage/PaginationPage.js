@@ -3,11 +3,10 @@ import styles from './PaginationPage.module.scss';
 import { memo, useRef } from 'react';
 import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import { handlerSetChangePagination } from '~/handler';
 
 const cx = classNames.bind(styles);
 
-function PaginationPage({ type, data, limit, nameSearch, PageItem }) {
+function PaginationPage({ type, data, limit, nameSearch, PageItem, pageItemProps = {}, scrollType = 'smooth' }) {
     const [prevSearch, setPrevSearch] = useState(nameSearch);
     const [listData, setListData] = useState([]);
     const [pageCur, setPageCur] = useState(1);
@@ -42,7 +41,7 @@ function PaginationPage({ type, data, limit, nameSearch, PageItem }) {
         setPageOffset(newOffset);
         setPageCur(event.selected + 1);
         setValue(event.selected + 1);
-        window.scrollTo({ top: wrapperRefOffSetHeight + 290, behavior: 'smooth' });
+        window.scrollTo({ top: wrapperRefOffSetHeight + 290, behavior: scrollType });
     };
 
     const handlerOnChange = (e) => {
@@ -67,16 +66,16 @@ function PaginationPage({ type, data, limit, nameSearch, PageItem }) {
             const wrapperRefOffSetHeight = wrapperRef.current.offsetTop;
             setPageOffset(newOffset);
             setPageCur(pageNumber);
-            window.scrollTo({ top: wrapperRefOffSetHeight + 290, behavior: 'smooth' });
+            window.scrollTo({ top: wrapperRefOffSetHeight + 290, behavior: scrollType });
         }
     };
 
     return (
         <div className={cx('wrapper')} ref={wrapperRef}>
             {data.length >= limit ? (
-                <PageItem data={listData} pageCur={pageCur} type={type} />
+                <PageItem data={listData} pageCur={pageCur} type={type} {...pageItemProps} />
             ) : (
-                <PageItem data={data} type={type} />
+                <PageItem data={data} type={type} {...pageItemProps} />
             )}
             <div className={cx('container')}>
                 {!!listData.length && data.length >= limit && (

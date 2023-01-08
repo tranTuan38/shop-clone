@@ -1,0 +1,39 @@
+.wrapper {
+    font-size: 1.5rem;
+    color: #333;
+
+    .content {
+        margin-bottom: 16px;
+
+        p {
+            font-size: inherit;
+            color: inherit;
+        }
+    }
+
+    .btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 8px 24px;
+        color: #fff;
+        background-color: #b78a28;
+        border-color: #b78a28;
+        border: 1px solid transparent;
+        font-size: 1.6rem;
+        border-radius: 20px;
+        line-height: 1.5;
+        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out,-moz-box-shadow .15s ease-in-out;
+    
+        &:hover {
+            color: #fff;
+            background-color: #987221;
+            border-color: #8d6a1f;
+        }
+
+        &:focus {
+            outline: none;
+            box-shadow: 0 0 0 3.2px rgb(194 156 72 / 50%);
+        }
+    }
+}

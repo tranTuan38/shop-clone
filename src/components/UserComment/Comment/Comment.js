@@ -4,7 +4,7 @@ import styles from './Comment.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Comment({ data = 'Chưa có gì', limitStrings = 400 }) {
+function Comment({ data = 'Chưa có gì', limitStrings = 400, classActive }) {
     const [checkValue, setCheckValue] = useState(data.length);
 
     const handlerSetComment = (comment) => {
@@ -21,7 +21,7 @@ function Comment({ data = 'Chưa có gì', limitStrings = 400 }) {
         <>
             <span className={cx('content')}>{handlerSetComment(data)}</span>
             <span className={cx('check')} onClick={() => setCheckValue(!checkValue)}>
-                <button className={cx('btn')}>{checkValue && `đọc tiếp`}</button>
+                <button className={cx('btn', { classActive: classActive })}>{checkValue && `đọc tiếp`}</button>
             </span>
         </>
     );

@@ -78,7 +78,7 @@ function Chap({ data, checkTapsIndex, className }) {
             </div>
 
             {loading ? (
-                <Loading style={{ margin: 'auto' }} />
+                <Loading wrapperStyle={{ margin: 'auto' }} />
             ) : (
                 <div className={cx('content')}>
                     <div className="row mt-2">

@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import Loading from '~/components/Loading';
@@ -7,16 +7,30 @@ import Reply from '~/components/TapsBook/Taps/Reply';
 import { requestData } from '~/services';
 import styles from '../Review.module.scss';
 import Pagination from '~/components/TapsBook/Taps/Review/Pagination';
+import { handlerGetPostData, handlerDeleteData } from '~/handler';
 
 const cx = classNames.bind(styles);
 
-function ListReviewCmt({ data, Rating, setPerson, setRepData, setTime, checkTapsIndex }) {
+function ListReviewCmt({
+    data,
+    idBook,
+    isLogin,
+    user,
+    Rating,
+    setPerson,
+    setRepData,
+    setTime,
+    checkTapsIndex,
+    setUpdateNum,
+    onActionReports,
+}) {
     const [listData, setListData] = useState([]);
     const [checkBtn, setCheckBtn] = useState({});
     const [checkSpoliBtn, setCheckSpoliBtn] = useState({});
     const [loading, setLoading] = useState(false);
 
-    // console.log(listData);
+    // console.log(isLogin);
+    // console.log(user);
 
     useEffect(() => {
         const checkSpoli = data.reduce((acc, item, index) => {
@@ -59,7 +73,7 @@ function ListReviewCmt({ data, Rating, setPerson, setRepData, setTime, checkTaps
 
     return (
         <div className={cx('list-review-cmt')}>
-            {loading && <Loading style={{ marginTop: '50px' }} />}
+            {loading && <Loading wrapperStyle={{ marginTop: '50px' }} />}
             {listData.length <= 10 &&
                 !loading &&
                 listData.map((item, index) => {
@@ -70,7 +84,7 @@ function ListReviewCmt({ data, Rating, setPerson, setRepData, setTime, checkTaps
                                 <span className={cx('review-level')}>{`Cấp ${item.level}`}</span>
                             </div>
                             <div className={cx('review-body')}>
-                                <Link to="" className={cx('review-name')}>
+                                <Link to={`/profile/${handlerGetPostData(item.name).id}`} className={cx('review-name')}>
                                     {item.name}
                                 </Link>
                                 <div className={cx('review-rate')}>
@@ -123,7 +137,15 @@ function ListReviewCmt({ data, Rating, setPerson, setRepData, setTime, checkTaps
                                         )}
                                     </span>
                                 </div>
-                                <Reply data={item} navActiveData={{ setRepData, setTime, setCmtUser }} />
+                                <Reply
+                                    user={user}
+                                    onActionReports={onActionReports}
+                                    isLogin={isLogin}
+                                    data={item}
+                                    idBook={idBook}
+                                    setUpdateNum={setUpdateNum}
+                                    navActiveData={{ setRepData, setTime, setCmtUser }}
+                                />
                             </div>
                         </div>
                     );
@@ -131,7 +153,12 @@ function ListReviewCmt({ data, Rating, setPerson, setRepData, setTime, checkTaps
 
             {listData.length > 10 && !loading && (
                 <Pagination
+                    onActionReports={onActionReports}
+                    isLogin={isLogin}
                     data={listData}
+                    idBook={idBook}
+                    user={user}
+                    setUpdateNum={setUpdateNum}
                     limit={10}
                     listNav={{
                         checkBtn,
