@@ -109,6 +109,7 @@ function TapsBook({ data, isLogin, user, listBookData, nameSearch, rating, userD
                                     listDataCmt: getCommentById(data.idBook),
                                     c4Data: imgs.imgAdver,
                                     user,
+                                    getCommentById,
                                 };
                             }
                             return (

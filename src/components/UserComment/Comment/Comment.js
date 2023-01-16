@@ -5,17 +5,25 @@ import styles from './Comment.module.scss';
 const cx = classNames.bind(styles);
 
 function Comment({ data = 'Chưa có gì', limitStrings = 400, classActive }) {
-    const [checkValue, setCheckValue] = useState(data.length);
+    const [checkValue, setCheckValue] = useState(false);
 
     const handlerSetComment = (comment) => {
         let cmtSlice;
-        if (checkValue) {
+        if (data.length > limitStrings) {
             cmtSlice = `${comment.slice(0, limitStrings + 1).trim()}... `;
             return cmtSlice;
         }
 
         return comment;
     };
+
+    useEffect(() => {
+        if (data.length > limitStrings) {
+            setCheckValue(true);
+            // console.log(checkValue);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data, limitStrings]);
 
     return (
         <>

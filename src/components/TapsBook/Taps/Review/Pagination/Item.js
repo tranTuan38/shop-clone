@@ -20,11 +20,13 @@ function Item({ data, user, idBook, navActiveData, pageCur, isLogin, setUpdateNu
         setCheckSpoliBtn,
     } = navActiveData;
 
+    // console.log(data);
+
     return (
         <>
             {data &&
                 data.map((item, index) => (
-                    <div key={index} className={cx('item-wrapper')}>
+                    <div key={item.idUser} className={cx('item-wrapper')}>
                         <div key={index} className={cx('review-cmt-item')}>
                             <div className={cx('review-avata')}>
                                 <img src={item.avatar} alt={item.name} />

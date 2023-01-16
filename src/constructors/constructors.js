@@ -20,7 +20,7 @@ export const UserRating = function (rate) {
     this.idUser = rate.idUser;
     this.totalViewChapter = rate.totalViewChapter;
     this.rateLike = function (idBook) {
-        const data = handlerGetlistUserInteracts('rate', idBook, this.idUser);
+        const data = handlerGetlistUserInteracts(0, idBook, this.idUser);
         return data;
     };
     this.time = time;
@@ -37,11 +37,36 @@ export const UserRating = function (rate) {
     this.comment = rate.comment;
 };
 
+export const UserComment = function (data) {
+    this.idUser = data.idUser;
+    this.idCmt = data.idCmt;
+    this.cmtLike = function (idBook) {
+        const datas = handlerGetlistUserInteracts(1, idBook, this.idUser, undefined, this.idCmt);
+        return datas;
+    };
+    this.cmtInChap = data.cmtInChap;
+    this.cmtOutChap = data.cmtOutChap;
+    this.time = data.time;
+    this.userReply = data.userReply;
+    this.comment = data.comment;
+};
+
 export const UserNavRate = function (data) {
     this.id = data.id;
     this.idReplyIndex = data.idReplyIndex;
     this.like = function (idBook, scope) {
         const data = handlerGetlistUserInteracts(2, idBook, this.id, this.idReplyIndex, scope);
+        return data;
+    };
+    this.time = data.time;
+    this.repCmt = data.repCmt;
+};
+
+export const UserNavComment = function (data) {
+    this.idUserRep = data.idUserRep;
+    this.idUserIndex = data.idUserIndex;
+    this.like = function (idBook, scope) {
+        const data = handlerGetlistUserInteracts(3, idBook, this.idUserRep, this.idUserIndex, scope);
         return data;
     };
     this.time = data.time;

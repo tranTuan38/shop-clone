@@ -33,6 +33,16 @@ const listRating = [
                         time: '2022-10-31T10:45:36',
                         repCmt: 'Cảm ơn bạn đã trả lời mình!',
                     },
+                    {
+                        id: 3,
+                        idReplyIndex: 2,
+                        like(idBook, scope) {
+                            const data = handlerGetlistUserInteracts(2, idBook, this.id, this.idReplyIndex, scope);
+                            return data;
+                        },
+                        time: '2022-10-31T11:45:36',
+                        repCmt: 'Cảm ơn bạn đã trả lời mình-p2!',
+                    },
                 ],
                 rateCharacter: 5,
                 rateContent: 5,

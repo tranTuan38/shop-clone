@@ -8,6 +8,7 @@ import {
     listFontFamily,
     listIcons,
     listUserInteracts,
+    listComment,
 } from '~/initdata';
 import { constructors } from '~/constructors';
 import { useGetListSelecter } from '~/hooks';
@@ -1209,7 +1210,7 @@ function SetPersonRatingForBook(rateNum) {
     }
 }
 
-function handlerCheckSelected() {
+function handlerCheckSelected(idBook) {
     const setDataByValue = (data, type) => {
         if (type) {
             if (type === 'oldest') {
@@ -1228,7 +1229,7 @@ function handlerCheckSelected() {
                 });
             }
         } else {
-            return data.sort((a, b) => b.cmtLike - a.cmtLike);
+            return data.sort((a, b) => b.cmtLike(idBook) - a.cmtLike(idBook));
         }
     };
 
@@ -1420,7 +1421,7 @@ function handlerChangePosterName(prevName, curName) {
 }
 
 function handlerGetBookReadData(type, idUser) {
-    let data;
+    let data = [];
     if (type === 'reading') {
         const user = listUserReadBook.find((item) => item.idUser === idUser);
         if (user) {
@@ -1454,6 +1455,8 @@ function handlerGetBookReadData(type, idUser) {
             return data;
         }
     }
+
+    return data;
 }
 
 function handlerDeleteBookReadData(type, idBook, idUser) {
@@ -1777,6 +1780,17 @@ function handlerGetRatingLength(idBook) {
     return 0;
 }
 
+function handlerGetCommentLength(idBook) {
+    const bookComment = listComment.find((item) => item.idBook === idBook);
+
+    if (bookComment) {
+        const userCommentLength = bookComment.listComment.length;
+        return userCommentLength || 0;
+    }
+
+    return 0;
+}
+
 function handlerCheckRatingCmt(idBook, idUser) {
     // console.log('idBook: ', idBook);
 
@@ -1791,7 +1805,7 @@ function handlerCheckRatingCmt(idBook, idUser) {
     return false;
 }
 
-function handlerCheckLike(type, idBook, idUser, idUserLogin, scope) {
+function handlerCheckLike(type, idBook, idUser, idUserLogin, scope, idRepCmt) {
     const listType = ['rate', 'comment', 'navRate', 'navComment'];
 
     const userData = listUserInteracts.find((user) => user.idUser === idUserLogin);
@@ -1802,11 +1816,27 @@ function handlerCheckLike(type, idBook, idUser, idUserLogin, scope) {
         if (dataType) {
             let isCheck;
             const result = dataType.find((value) => value.idBook === idBook);
-            if (Number.isInteger(scope)) {
+            if (type === 0 || type === 2) {
+                if (Number.isInteger(scope) && Number.isInteger(idRepCmt)) {
+                    isCheck = result?.data?.some(
+                        (data) => data.id === idUser && data.scope === scope && data.idIndex === idRepCmt,
+                    );
+                } else {
+                    isCheck = result?.data?.some((data) => data.id === idUser);
+                }
+            } else if (type === 1 || type === 3) {
                 isCheck = result?.data?.some((data) => data.id === idUser && data.scope === scope);
-            } else {
-                isCheck = result?.data?.some((data) => data.id === idUser);
+
+                if (Number.isInteger(scope) && Number.isInteger(idRepCmt)) {
+                    isCheck = result?.data?.some(
+                        (data) => data.id === idUser && data.scope === scope && data.idIndex === idRepCmt,
+                    );
+                }
             }
+
+            // if (type === 3) {
+            //     console.log(isCheck);
+            // }
 
             return isCheck ? isCheck : false;
         }
@@ -1817,6 +1847,7 @@ function handlerCheckLike(type, idBook, idUser, idUserLogin, scope) {
 
 function handlerGetlistUserInteracts(type, idBook, idUser, idRepIndex, scope) {
     const listType = ['rate', 'comment', 'navRate', 'navComment'];
+
     if (Number.isInteger(type)) {
         const bookFind = listUserInteracts.filter((data) => {
             const dataType = data.interacts[listType[type]];
@@ -1843,6 +1874,22 @@ function handlerGetlistUserInteracts(type, idBook, idUser, idRepIndex, scope) {
 
             return 0;
         } else if (type === 1) {
+            if (bookFind.length) {
+                // console.log(bookFind);
+                // console.log(scope);
+                const results = bookFind.reduce((acc, data) => {
+                    const dataType = data.interacts[listType[type]];
+                    const books = dataType.find((book) => book.idBook === idBook);
+                    const isRate = books?.data.some((user) => user.id === idUser && user.scope === scope);
+                    if (isRate) {
+                        return acc + 1;
+                    }
+                    return acc;
+                }, 0);
+                return results;
+            }
+
+            return 0;
         } else if (type === 2) {
             if (bookFind.length) {
                 const results = bookFind.reduce((acc, data) => {
@@ -1864,18 +1911,42 @@ function handlerGetlistUserInteracts(type, idBook, idUser, idRepIndex, scope) {
 
             return 0;
         } else if (type === 3) {
+            if (bookFind.length) {
+                const results = bookFind.reduce((acc, data) => {
+                    const dataType = data.interacts[listType[type]];
+                    const books = dataType.find((book) => book.idBook === idBook);
+                    const isRate = books?.data.some(
+                        (user) => user.id === idUser && user.idIndex === idRepIndex && user.scope === scope,
+                    );
+
+                    if (isRate) {
+                        return acc + 1;
+                    }
+
+                    return acc;
+                }, 0);
+
+                return results;
+            }
+
+            return 0;
         }
     }
 
     return 0;
 }
 
-function handlerPustData(type, idBook, idUser, content = {}) {
+function handlerPustData(type, idBook, idUser, content = {}, scope) {
     const listType = ['rate', 'comment', 'navRate', 'navComment'];
 
-    const { UserRating, UserNavRate } = constructors;
+    const { UserRating, UserNavRate, UserComment, UserNavComment } = constructors;
 
-    // console.log(listUserInteracts);
+    // console.log(type);
+    if (!Number.isInteger(type) && !type) {
+        return false;
+    }
+
+    // console.log(type);
 
     if (type === 0) {
         const rating = new UserRating({
@@ -1889,6 +1960,8 @@ function handlerPustData(type, idBook, idUser, content = {}) {
         });
 
         const bookRating = listRating.find((item) => item.idBook === idBook);
+
+        // console.log(bookRating);
         if (bookRating) {
             const userRating = bookRating.rating.find((user) => user.idUser === idUser);
             if (userRating) {
@@ -1901,6 +1974,41 @@ function handlerPustData(type, idBook, idUser, content = {}) {
             return { ...rating };
         }
     } else if (type === 1) {
+        const books = listComment.find((book) => book.idBook === idBook);
+
+        if (books) {
+            const commentData = books.listComment;
+            const lastIdCmt = commentData[commentData.length - 1]?.idCmt;
+            let pushData;
+            let creataData;
+
+            if (Number.isInteger(lastIdCmt)) {
+                pushData = { idUser, idCmt: lastIdCmt + 1, ...content };
+                creataData = { ...new UserComment(pushData) };
+            } else {
+                pushData = { idUser, idCmt: 0, ...content };
+                creataData = { ...new UserComment(pushData) };
+            }
+
+            // console.group(listType[type]);
+            // console.log('idBook: ', idBook);
+            // console.log('idUser: ', idUser);
+            // console.log('content: ', creataData);
+            // console.groupEnd();
+            commentData.push(creataData);
+            // console.log('commentData: ', commentData);
+
+            return creataData;
+        } else {
+            const pushData = { idUser, idCmt: 0, ...content };
+            const creataData = { ...new UserComment(pushData) };
+            const listCommentData = [creataData];
+            const bookData = { idBook, listComment: listCommentData };
+            listComment.push(bookData);
+            // console.log('listComment: ', listComment);
+
+            return creataData;
+        }
     } else if (type === 2) {
         const navRates = {
             ...new UserNavRate({
@@ -1922,43 +2030,138 @@ function handlerPustData(type, idBook, idUser, content = {}) {
             return navRates;
         }
     } else if (type === 3) {
+        const books = listComment.find((book) => book.idBook === idBook);
+
+        if (books) {
+            let pushData;
+            let creataData;
+            const users = books.listComment.find((user) => user.idUser === idUser && user.idCmt === scope);
+            const navCommentData = users?.userReply;
+            // console.log(users);
+
+            if (users) {
+                const lastIdUserIndex = navCommentData[navCommentData.length - 1]?.idUserIndex;
+
+                if (Number.isInteger(lastIdUserIndex)) {
+                    pushData = { ...content, idUserIndex: lastIdUserIndex + 1 };
+                    creataData = { ...new UserNavComment(pushData) };
+                } else {
+                    pushData = { ...content, idUserIndex: 0 };
+                    creataData = { ...new UserNavComment(pushData) };
+                }
+                // console.log('creataData: ', creataData);
+
+                navCommentData.push(creataData);
+
+                // console.group(listType[type]);
+                // console.log('idBook: ', idBook);
+                // console.log('idUser: ', idUser);
+                // console.log('content: ', creataData);
+                // console.groupEnd();
+
+                // console.log('commentData: ', 3);
+
+                return creataData;
+            }
+            // const lastIdUserIndex = navCommentData[navCommentData.length - 1]?.idUserIndex;
+
+            // if (Number.isInteger(lastIdCmt)) {
+            //     pushData = { idUser, idCmt: lastIdCmt + 1, ...content };
+            //     creataData = { ...new UserComment(pushData) };
+            // } else {
+            //     pushData = { idUser, idCmt: 0, ...content };
+            //     creataData = { ...new UserComment(pushData) };
+            // }
+        }
     }
 }
 
-function handlerDeleteUserInteracts(type, idBook, idUser) {
+function handlerDeleteUserInteracts(type, idBook, idUser, scope) {
     const listType = ['rate', 'comment'];
 
     // console.log(listUserInteracts);
 
     if (Number.isInteger(type)) {
         if (type === 0) {
+            // Không có scope
             const bookFind = listUserInteracts.filter((data) => {
                 const dataType = data.interacts[listType[type]];
+                const navData = data.interacts.navRate;
                 const isData = dataType.find((book) => book.idBook === idBook);
+                const isNavData = navData.find((navBook) => navBook.idBook === idBook);
 
-                return isData && data.idUser !== idUser;
+                return (isData || isNavData) && data.idUser !== idUser;
             });
 
             // console.log(bookFind);
 
             if (bookFind.length) {
                 bookFind.forEach((book) => {
-                    const bookType = book.interacts[listType[type]];
+                    const bookInteracts = book.interacts;
+                    const bookType = bookInteracts[listType[type]];
+                    const navBooks = bookInteracts.navRate;
                     const bookData = bookType.find((book) => book.idBook === idBook);
-                    const deleteIndex = bookData.data.findIndex((user) => user.id === idUser);
+                    const navBookData = navBooks.find((book) => book.idBook === idBook);
+
+                    const deleteIndex = bookData?.data.findIndex((user) => user.id === idUser);
+                    const listDeleteNavItem = navBookData?.data?.filter((item) => item.scope === idUser);
+
                     if (Number.isInteger(deleteIndex)) {
                         bookData.data.splice(deleteIndex, 1);
                     }
-                    // console.log(bookData);
+
+                    if (listDeleteNavItem) {
+                        listDeleteNavItem.forEach((ele) => {
+                            const deleteNavIndex = navBookData.data.findIndex((item) => item === ele);
+                            navBookData.data.splice(deleteNavIndex, 1);
+                        });
+                    }
                 });
             }
 
             return;
+        } else if (type === 1) {
+            // Có scope
+
+            const bookFind = listUserInteracts.filter((data) => {
+                const dataType = data.interacts[listType[type]];
+                const navData = data.interacts.navComment;
+                const isData = dataType.find((book) => book.idBook === idBook);
+                const isNavData = navData.find((navBook) => navBook.idBook === idBook);
+
+                return (isData || isNavData) && data.idUser !== idUser;
+            });
+
+            if (bookFind.length) {
+                bookFind.forEach((book) => {
+                    const bookInteracts = book.interacts;
+                    const bookType = bookInteracts[listType[type]];
+                    const navBooks = bookInteracts.navComment;
+                    const bookData = bookType.find((book) => book.idBook === idBook);
+                    const navBookData = navBooks.find((book) => book.idBook === idBook);
+
+                    const deleteIndex = bookData?.data.findIndex((user) => user.id === idUser && user.scope === scope);
+                    const listDeleteNavItem = navBookData?.data?.filter((item) => item.scope === scope);
+
+                    if (Number.isInteger(deleteIndex)) {
+                        bookData.data.splice(deleteIndex, 1);
+                    }
+
+                    if (listDeleteNavItem) {
+                        listDeleteNavItem.forEach((ele) => {
+                            const deleteNavIndex = navBookData.data.findIndex((item) => item === ele);
+                            navBookData.data.splice(deleteNavIndex, 1);
+                        });
+                    }
+                });
+
+                // console.log(bookFind);
+            }
         }
     }
 }
 
-function handlerDeleteData(type, idBook, idUser) {
+function handlerDeleteData(type, idBook, idUser, repIndex) {
     if (type === 'rating') {
         const bookRating = listRating.find((item) => item.idBook === idBook);
         let ListRatingLengthPrev = bookRating?.rating.length;
@@ -1969,7 +2172,7 @@ function handlerDeleteData(type, idBook, idUser) {
         if (bookRating) {
             const userIndex = bookRating.rating.findIndex((user) => user.idUser === idUser);
 
-            if (Number.isInteger(userIndex)) {
+            if (Number.isInteger(userIndex) && userIndex >= 0) {
                 // console.log('ListRatingLengthPrev: ', ListRatingLengthPrev);
                 // console.log('listRating: ', listRating);
                 // console.log('bookRating: ', bookRating);
@@ -1983,7 +2186,7 @@ function handlerDeleteData(type, idBook, idUser) {
                     bookRating.rating.splice(userIndex, 1);
                     listRatingLengthCur = bookRating.rating.length;
                 }
-                handlerDeleteUserInteracts(0, idBook, idUser);
+                handlerDeleteUserInteracts(0, idBook, idUser, repIndex);
 
                 // console.log('ratingCur: ', ratingCur);
             }
@@ -1992,6 +2195,44 @@ function handlerDeleteData(type, idBook, idUser) {
                 return true;
             } else {
                 return false;
+            }
+        }
+    } else if (type === 'comment') {
+        const books = listComment.find((book) => book.idBook === idBook);
+        let ListCommentLengthPrev = books?.listComment.length;
+        let listCommentLengthCur;
+
+        // console.log('listComment: ', listComment);
+
+        if (books) {
+            const userIndex = books.listComment.findIndex((book) => book.idCmt === repIndex && book.idUser === idUser);
+
+            if (Number.isInteger(userIndex) && userIndex >= 0) {
+                if (ListCommentLengthPrev === 1) {
+                    const bookRatingIndex = listComment.findIndex((book) => book.idBook === idBook);
+
+                    // console.log(bookRatingIndex);
+                    listComment.splice(bookRatingIndex, 1);
+                    listCommentLengthCur = 0;
+                } else {
+                    books.listComment.splice(userIndex, 1);
+                    listCommentLengthCur = books.listComment.length;
+                }
+
+                handlerDeleteUserInteracts(1, idBook, idUser);
+                // console.log(books)
+                // console.group(type);
+                // console.log('idBook: ', idBook);
+                // console.log('idUser: ', idUser);
+                // console.log('repIndex: ', repIndex);
+                // console.log('listComment: ', listComment);
+                // console.groupEnd();
+
+                if (ListCommentLengthPrev !== listCommentLengthCur) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         }
     }
@@ -2006,6 +2247,8 @@ function handlerInteractData(type, idBook, idUser, idUserLogin, action, repIndex
     let payLoad = { message: '', isResult: false };
     // 1. khi bạn đã like cmt này -> false
     // 2. khi bạn chưa like cmt này -> ...
+
+    // console.log('action: ', action, ' - ', listInteract[action]);
 
     // console.log(userData);
 
@@ -2024,6 +2267,13 @@ function handlerInteractData(type, idBook, idUser, idUserLogin, action, repIndex
             // console.log(listUserInteracts);
 
             if (type === 0) {
+                // console.group('action: ', listInteract[action]);
+                // console.log('repIndex: ', repIndex);
+                // console.log('idUserLogin: ', idUserLogin);
+                // console.log('idUser: ', idUser);
+                // console.log('bookData: ', bookData);
+                // console.log(listType[type], ':', interactData);
+                // console.groupEnd();
                 if (action === 0) {
                     bookData.data.push({ id: idUser, time: +new Date() });
                     return { ...payLoad, isResult: true };
@@ -2036,7 +2286,31 @@ function handlerInteractData(type, idBook, idUser, idUserLogin, action, repIndex
                     }
                     return { message: 'Có lỗi xảy ra. Thao tác không thành công', isResult: false };
                 }
+                // console.log('bookDataCur: ', bookData);
             } else if (type === 1) {
+                // console.group('action: ', action, ' - ', listInteract[action]);
+                // console.log('idUserLogin: ', idUserLogin);
+                // console.log('idUser: ', idUser);
+                // console.log('idBook: ', idBook);
+                // console.log('repIndex: ', repIndex);
+                // console.log('scope: ', scope);
+                // console.log('bookData: ', bookData);
+                // console.log(listType[type], ':', interactData);
+                // console.groupEnd();
+                if (action === 0) {
+                    const userActions = { id: idUser, time: +new Date(), scope };
+                    bookData.data.push(userActions);
+                    return { ...payLoad, isResult: true };
+
+                    // bookData.data.push
+                } else if (action === 1) {
+                    const dataIndex = bookData.data.findIndex((item) => item.id === idUser && item.scope === scope);
+                    if (Number.isInteger(dataIndex) && dataIndex >= 0) {
+                        bookData.data.splice(dataIndex, 1);
+                        return { ...payLoad, isResult: true };
+                    }
+                    return { message: 'Có lỗi xảy ra. Thao tác không thành công', isResult: false };
+                }
             } else if (type === 2) {
                 // Không có hành động thứ 3
                 // console.group('action: ', listInteract[action]);
@@ -2050,6 +2324,8 @@ function handlerInteractData(type, idBook, idUser, idUserLogin, action, repIndex
                 if (action === 0) {
                     bookData.data.push({ id: idUser, idIndex: repIndex, time: +new Date(), scope });
                     // console.log('bookData.data: ', bookData.data);
+                    // console.log('bookDataCur: ', bookData.data);
+
                     return { ...payLoad, isResult: true };
                 } else if (action === 1) {
                     const deleteIndex = bookData.data.findIndex(
@@ -2058,7 +2334,34 @@ function handlerInteractData(type, idBook, idUser, idUserLogin, action, repIndex
 
                     if (Number.isInteger(deleteIndex) && deleteIndex >= 0) {
                         bookData.data.splice(deleteIndex, 1);
-                        // console.log('bookData.data: ', bookData.data);
+                        // console.log('bookDataCur: ', bookData.data);
+                        return { ...payLoad, isResult: true };
+                    }
+
+                    return { message: 'Có lỗi xảy ra. Thao tác không thành công', isResult: false };
+                }
+            } else if (type === 3) {
+                // console.group('action: ', action, ' - ', listInteract[action]);
+                // console.log('idUserLogin: ', idUserLogin);
+                // console.log('idUser: ', idUser);
+                // console.log('idBook: ', idBook);
+                // console.log('repIndex: ', repIndex);
+                // console.log('scope: ', scope);
+                // console.log('bookData: ', bookData);
+                // console.log(listType[type], ':', interactData);
+                // console.groupEnd();
+
+                if (action === 0) {
+                    bookData.data.push({ id: idUser, idIndex: repIndex, time: +new Date(), scope });
+                    return { ...payLoad, isResult: true };
+                } else if (action === 1) {
+                    const deleteIndex = bookData.data.findIndex(
+                        (item) => item.id === idUser && item.idIndex === repIndex && item.scope === scope,
+                    );
+
+                    if (Number.isInteger(deleteIndex) && deleteIndex >= 0) {
+                        bookData.data.splice(deleteIndex, 1);
+                        // console.log('bookDataCur: ', bookData.data);
                         return { ...payLoad, isResult: true };
                     }
 
@@ -2078,6 +2381,14 @@ function handlerInteractData(type, idBook, idUser, idUserLogin, action, repIndex
                 interactData.push(newBook);
                 return { ...payLoad, isResult: true };
             } else if (type === 1) {
+                const newBook = {
+                    idBook,
+                    data: [{ id: idUser, time: +new Date(), scope }],
+                };
+
+                interactData.push(newBook);
+                // console.log(interactData);
+                return { ...payLoad, isResult: true };
             } else if (type === 2) {
                 const newBook = {
                     idBook,
@@ -2085,7 +2396,15 @@ function handlerInteractData(type, idBook, idUser, idUserLogin, action, repIndex
                 };
 
                 interactData.push(newBook);
+                return { ...payLoad, isResult: true };
             } else if (type === 3) {
+                const newBook = {
+                    idBook,
+                    data: [{ id: idUser, idIndex: repIndex, time: +new Date(), scope }],
+                };
+
+                interactData.push(newBook);
+                return { ...payLoad, isResult: true };
             }
         }
     } else {
@@ -2103,6 +2422,12 @@ function handlerInteractData(type, idBook, idUser, idUserLogin, action, repIndex
                 },
             ];
         } else if (type === 1) {
+            commentData = [
+                {
+                    idBook,
+                    data: [{ id: idUser, time: +new Date(), scope }],
+                },
+            ];
         } else if (type === 2) {
             navRateData = [
                 {
@@ -2111,6 +2436,12 @@ function handlerInteractData(type, idBook, idUser, idUserLogin, action, repIndex
                 },
             ];
         } else if (type === 3) {
+            navCommentData = [
+                {
+                    idBook,
+                    data: [{ id: idUser, idIndex: repIndex, time: +new Date(), scope }],
+                },
+            ];
         }
 
         const userInteractData = {
@@ -2122,6 +2453,7 @@ function handlerInteractData(type, idBook, idUser, idUserLogin, action, repIndex
         };
         const interactDatas = { ...new UserInteract(userInteractData) };
         listUserInteracts.push(interactDatas);
+        // console.log(listUserInteracts);
 
         // console.log(listUserInteracts);
 
@@ -2189,4 +2521,5 @@ export {
     handlerInteractData,
     handlerCheckLike,
     handlerGetlistUserInteracts,
+    handlerGetCommentLength,
 };

@@ -69,8 +69,6 @@ function ListReviewCmt({
         return cmt;
     };
 
-    // console.log('re-render');
-
     return (
         <div className={cx('list-review-cmt')}>
             {loading && <Loading wrapperStyle={{ marginTop: '50px' }} />}
@@ -78,7 +76,7 @@ function ListReviewCmt({
                 !loading &&
                 listData.map((item, index) => {
                     return (
-                        <div key={index} className={cx('review-cmt-item')}>
+                        <div key={item.idUser} className={cx('review-cmt-item')}>
                             <div className={cx('review-avata')}>
                                 <img src={item.avatar} alt={item.name} />
                                 <span className={cx('review-level')}>{`Cấp ${item.level}`}</span>

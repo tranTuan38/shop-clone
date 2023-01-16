@@ -11,10 +11,10 @@ import { listBookData, listRating, userData } from '~/initdata';
 
 const cx = classNames.bind(styles);
 
-function UserComment({ data, classActive, isLogin, ActionLogin, user, src }) {
+function UserComment({ data, idBook, classActive, isLogin, ActionLogin, user, src, onActionReports, setDeleteData }) {
     const [listUserData, setListUserData] = useState([]);
 
-    // console.log(listUserData);
+    // console.log(data);
 
     const handlerSetComment = (comment, limit = 400) => {
         let cmtSlice;
@@ -45,12 +45,14 @@ function UserComment({ data, classActive, isLogin, ActionLogin, user, src }) {
         setListUserData(data);
     }, [data]);
 
+    // console.log(listUserData);
+
     return (
         <div className={cx('list-media')}>
             {!!listUserData &&
                 listUserData.map((item, index) => {
                     return (
-                        <div className={cx('media')} key={index}>
+                        <div className={cx('media')} key={item.idCmt}>
                             <div className={cx('avatar')}>
                                 <img src={item.avatar} alt={item.name} />
                                 <span className={cx('level')}>{`Cấp ${item.level}`}</span>
@@ -79,6 +81,7 @@ function UserComment({ data, classActive, isLogin, ActionLogin, user, src }) {
                                     <Comment data={item.comment} limitStrings={303} classActive={classActive} />
                                 </div>
                                 <Reply
+                                    idBook={idBook}
                                     user={user}
                                     src={src}
                                     data={item}
@@ -86,7 +89,11 @@ function UserComment({ data, classActive, isLogin, ActionLogin, user, src }) {
                                     ActionLogin={ActionLogin}
                                     classActive={classActive}
                                     listDataCmt={handlerSetReplyCmt(item.userReply)}
+                                    getListDataCmt={handlerSetReplyCmt}
+                                    scopeItem={item.userReply}
                                     navActiveData={{ setTime: handleTime, setCmtUser: handlerSetComment }}
+                                    onActionReports={onActionReports}
+                                    setDeleteData={setDeleteData}
                                 />
                             </div>
                         </div>

@@ -6,6 +6,11 @@
     color: #333;
     line-height: 1.5;
 
+    .active {
+        color: #111!important;
+        font-weight: 700;
+    }
+
     .action {
         display: flex;
         align-items: center;
@@ -300,5 +305,12 @@
 
     .hide-rep, .media-cmt, .media-btn {
         color: #fff!important;
+    }
+}
+
+.page-comment {
+    .active {
+        color: inherit!important;
+        font-weight: 700;
     }
 }

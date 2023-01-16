@@ -89,7 +89,7 @@ function Reply({ data, idBook, isLogin, navActiveData, user, pageCur, setUpdateN
 
     useLayoutEffect(() => {
         // console.dir(allBtnRef.current);
-        if (listReply.length) {
+        if (isLogin && listReply.length) {
             const listCheck = data.userReply.reduce((acc, user, index) => {
                 return { ...acc, [`${index}`]: user.repCmt.length < 400 };
             }, {});
@@ -119,7 +119,7 @@ function Reply({ data, idBook, isLogin, navActiveData, user, pageCur, setUpdateN
         // console.log(scope);
         if (isLogin) {
             const idCur = Number.isInteger(navUserId) ? navUserId : data.idUser;
-            const isCheck = handlerCheckLike(type, idBook, idCur, user.id, scope);
+            const isCheck = handlerCheckLike(type, idBook, idCur, user.id, scope, repIndex);
             const btnLikeDom = document.querySelector(dataSetValue);
 
             // console.log(isCheck);
@@ -127,7 +127,7 @@ function Reply({ data, idBook, isLogin, navActiveData, user, pageCur, setUpdateN
             // toastReact(3, 'Lỗi', messages.message);
             if (isCheck) {
                 const interactData = handlerInteractData(type, idBook, idCur, user?.id, 1, repIndex, scope);
-                // console.log(interactData);
+                // console.log('IsCheck: ', interactData);
 
                 if (!interactData.isResult) {
                     toastReact(3, 'Lỗi', interactData.message);
@@ -139,23 +139,26 @@ function Reply({ data, idBook, isLogin, navActiveData, user, pageCur, setUpdateN
                         const userDatas = data.userReply.find(
                             (item) => item.id === navUserId && item.idReplyIndex === repIndex,
                         );
+
                         if (userDatas) {
+                            // console.log('btnLikeDom: ', btnLikeDom);
                             btnLikeDom?.classList.remove(cx('active'));
                             btnLikeDom.lastChild.textContent = userDatas.like(idBook, data.idUser);
                             return;
                         }
                         return;
                     }
-
+                    // console.log('data-remove: ', data);
                     btnLikeDom?.classList.remove(cx('active'));
                     btnLikeDom.lastChild.textContent = data.rateLike(idBook);
                 }
             } else {
                 const interactData = handlerInteractData(type, idBook, idCur, user?.id, 0, repIndex, scope);
-                // console.log('repIndex: ', repIndex);
+                // console.log('interactData: ', interactData);
+                // console.log('NotIsCheck: ', interactData);
 
-                if (!interactData.isResult) {
-                    toastReact(3, 'Lỗi', interactData.message);
+                if (!interactData?.isResult) {
+                    toastReact(3, 'Lỗi', interactData?.message);
                     return;
                 }
 
@@ -172,6 +175,7 @@ function Reply({ data, idBook, isLogin, navActiveData, user, pageCur, setUpdateN
                         }
                         return;
                     }
+                    // console.log('data-add: ', data);
                     btnLikeDom?.classList.add(cx('active'));
                     btnLikeDom.lastChild.textContent = data.rateLike(idBook);
                 }
@@ -301,7 +305,8 @@ function Reply({ data, idBook, isLogin, navActiveData, user, pageCur, setUpdateN
                                                 </div>
                                                 <div className={cx('media-info')}>
                                                     <button
-                                                        data-nav-user-likes={`user-${item.id}`}
+                                                        // data-nav-user-likes = userId - scope - idRepIndex
+                                                        data-nav-user-likes={`user-${item.id}-${data.idUser}-${item.idReplyIndex}`}
                                                         className={cx('btn', {
                                                             active:
                                                                 isLogin &&
@@ -311,11 +316,12 @@ function Reply({ data, idBook, isLogin, navActiveData, user, pageCur, setUpdateN
                                                                     item.id,
                                                                     user?.id,
                                                                     data.idUser,
+                                                                    item.idReplyIndex,
                                                                 ),
                                                         })}
                                                         onClick={() =>
                                                             handlerBtnLike(
-                                                                `[data-nav-user-likes=user-${item.id}]`,
+                                                                `[data-nav-user-likes=user-${item.id}-${data.idUser}-${item.idReplyIndex}]`,
                                                                 item.id,
                                                                 2,
                                                                 item.idReplyIndex,

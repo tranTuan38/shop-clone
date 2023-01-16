@@ -240,9 +240,9 @@ function Chapter() {
 
     return (
         <div className={cx('wrapper')}>
-            <div className={cx('modal-container')}>
+            {/* <div className={cx('modal-container')}>
                 <div className={cx('modal-content')}></div>
-            </div>
+            </div> */}
             {chapterData && (
                 <>
                     <div
@@ -319,12 +319,15 @@ function Chapter() {
                         }}
                     >
                         <Comment
+                            isLogin={state.login}
+                            user={state.userData()}
                             data={chapterData}
                             listDataCmt={getCommentById(chapterData.idBook)}
                             checkTapsIndex={true}
                             c4Data={imgs.imgAdver}
                             className={cx('comment')}
                             classActive={state.defaults.themes === 6}
+                            getCommentById={getCommentById}
                         />
                     </div>
                 </>

@@ -125,6 +125,7 @@ function InputBox({ isLogin, data, idBook, user, ratingInput, OnTextValue, setUp
                 };
                 isSuccess = await successFnc(1, 'Thành công', 'Đánh giá thành công.');
                 if (isSuccess) {
+                    // console.log(123);
                     handlerPustData(0, idBook, user.id, datas);
                     spanDom.innerText = handlerGetRatingLength(idBook);
                     OnTextValue('');
