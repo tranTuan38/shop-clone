@@ -22,6 +22,8 @@ function Intro({ data, nameSearch, checkTapsIndex, className }) {
     const user = getUserData();
     const listTotal = userTotalPost();
 
+    // console.log(data);
+
     useEffect(() => {
         if (curBook && nameSearch !== curBook) {
             setListBookAuthor([]);

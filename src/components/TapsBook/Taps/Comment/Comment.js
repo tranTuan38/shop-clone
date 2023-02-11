@@ -275,7 +275,7 @@ function Comment({
     return (
         <div className={cx('wrapper', { [className]: !!className })}>
             <div className="row">
-                <div className="col c-8">
+                <div className="col l-8 m-12 c-12">
                     <div className={cx('nav')}>
                         <div className={cx('h4')}>{`${listDataLength} bình luận`}</div>
                         <BySelectData value={value} setValue={setValue} data={listOption} />
@@ -326,7 +326,7 @@ function Comment({
                         )}
                     </div>
                 </div>
-                <div className="col c-4">
+                <div className="col l-4 m-0 c-0">
                     {!!listC4Data.length &&
                         listC4Data.map((item, index) => {
                             return (

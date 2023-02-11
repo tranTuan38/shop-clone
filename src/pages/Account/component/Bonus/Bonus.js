@@ -2,6 +2,7 @@ import classNames from 'classnames/bind';
 import { memo, useEffect, useState } from 'react';
 
 import styles from './Bonus.module.scss';
+import toastReact from '~/components/ToastMessages';
 
 const cx = classNames.bind(styles);
 
@@ -42,7 +43,7 @@ function Bonus({ type }) {
     }, []);
 
     const handlerClick = (e) => {
-        alert('Chức năng chưa được hỗ trợ, vui lòng thông cảm!');
+        toastReact(3, 'Lỗi', 'Chức năng chưa được hỗ trợ, vui lòng thông cảm!');
     };
 
     return (

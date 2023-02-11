@@ -9,7 +9,7 @@ function Comment({ data = 'Chưa có gì', limitStrings = 400, classActive }) {
 
     const handlerSetComment = (comment) => {
         let cmtSlice;
-        if (data.length > limitStrings) {
+        if (data.length > limitStrings && checkValue) {
             cmtSlice = `${comment.slice(0, limitStrings + 1).trim()}... `;
             return cmtSlice;
         }

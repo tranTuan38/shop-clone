@@ -1,12 +1,15 @@
-import { handlerGetDataWithRequest, handlerSelecedDataWithPath } from '~/handler';
+import { handlerGetDataWithRequest, handlerSelecedDataWithPath, handlerSetDataWithKeyword } from '~/handler';
 import { getListBookServices } from './getListBookServices';
 
-export const requestData = async (req, listRequest, location, listSelecter) => {
+export const requestData = async (req, listRequest, location, listSelecter, keyword) => {
     const { dataList, type, delay, setLoading, setListData } = req;
     setLoading(true);
     if (!dataList) {
         const data = handlerGetDataWithRequest({ listRequest, location, listSelecter });
-        const result = await getListBookServices(data);
+        let result = await getListBookServices(data);
+        if (keyword) {
+            result = handlerSetDataWithKeyword(result, keyword);
+        }
         const listDataSelect = handlerSelecedDataWithPath(result, listRequest, listSelecter, location);
         setListData(listDataSelect);
     } else {

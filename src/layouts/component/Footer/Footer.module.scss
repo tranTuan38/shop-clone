@@ -28,9 +28,21 @@
 
     .app-down {
         display: flex;
+        flex-direction: column;
         justify-content: center;
         margin-top: 24px;
         padding: 4px 0;
+
+        .down-title {
+            display: none;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .logo-wrapper {
+            display: flex;
+            justify-content: center;
+        }
     }
 
     .app-down .logo-down {
@@ -54,5 +66,75 @@
 
     .unstyled-item:hover {
         color: var(--text-primary)
+    }
+}
+
+@media (max-width: 1024px) {
+    .hide-on-mobile-tablet {
+        display: none;
+    }
+
+    footer {
+        background: none!important;
+    }
+
+    .container {
+        padding: 0 12px;
+
+        .content .logo {
+            width: 54px;
+            height: auto;
+
+            img {
+                width: 100%!important;
+                height: 100%!important;
+            }
+        }
+
+        .for-me {
+            font-size: 1.4rem;
+            margin: 0;
+            width: 100%;
+            margin-bottom: 24px;
+        }
+
+        .app-down {
+            width: 100%;
+            margin-top: 0;
+            margin-bottom: 24px;
+
+            .down-title {
+                display: block;
+            }
+        }
+
+        .list-unstyled {
+            flex-direction: column;
+            width: 100%;
+
+            .unstyled-item {
+                display: block;
+                padding: 8px 0;
+                width: 100%;
+                margin-top: 0;
+                font-size: 1.4rem;
+                border-bottom: 1px solid #ddd;
+            }
+        }
+    }
+
+}
+
+// Tablet
+@media (min-width: 740px ) and (max-width: 1024px) {
+    .hide-on-tablet {
+        display: none;
+    }
+}
+
+// Mobile
+@media (max-width: 739px) {
+    .hide-on-mobile {
+        display: none;
     }
 }

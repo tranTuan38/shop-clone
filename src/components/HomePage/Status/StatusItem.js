@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { useEffect, useLayoutEffect, useState, useRef } from 'react';
+import { useEffect, useLayoutEffect, useState, useRef, memo } from 'react';
 import SwiperCore, { Navigation, Thumbs, EffectCoverflow, Pagination, EffectFade, Controller } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import styles from './Status.module.scss';
@@ -109,4 +109,4 @@ function StatusItem({ data }) {
     );
 }
 
-export default StatusItem;
+export default memo(StatusItem);

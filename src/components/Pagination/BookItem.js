@@ -10,7 +10,7 @@ const cx = classNames.bind(styles);
 function Item({ data }) {
     return (
         <>
-            {data &&
+            {!!data?.length &&
                 data.map((item) => (
                     <div className="col c-6" key={item.idBook}>
                         <MediaItem data={item} type="listBook" />

@@ -4,11 +4,40 @@
     display: none;
     color: var(--text-primary);
 
+    &::before {
+        display: none;
+    }
+
     & > span {
         display: block;
     }
 
     &:hover {
         color: #785b1a;
+    }
+}
+
+@media (max-width: 1024px) {
+    .hide-on-mobile-tablet {
+        display: none;
+    }
+    
+    .all-view {
+        display: block;
+    }
+    
+}
+
+// Tablet
+@media (min-width: 740px ) and (max-width: 1024px) {
+    .hide-on-tablet {
+        display: none;
+    }
+}
+
+// Mobile
+@media (max-width: 739px) {
+    .hide-on-mobile {
+        display: none;
     }
 }

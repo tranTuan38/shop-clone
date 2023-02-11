@@ -6,6 +6,7 @@ import styles from './UserMenu.module.scss';
 import { memo, useEffect } from 'react';
 import { iconFeel } from '~/assets/Icon-feels';
 import { actions } from '~/components/store';
+import toastReact from '~/components/ToastMessages';
 
 const cx = classNames.bind(styles);
 
@@ -82,6 +83,7 @@ function UserMenu({ data, onClick }) {
                             className={cx('item-link')}
                             onClick={() => {
                                 onClick(actions.setUserLogout());
+                                toastReact(1, 'Thành công', 'Đăng xuất thành công.');
                                 if (location.pathname !== '/') navigate('/');
                             }}
                         >

@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { forwardRef, memo, useRef, useState, useImperativeHandle } from 'react';
+import { forwardRef, memo, useRef, useState, useImperativeHandle, useEffect } from 'react';
 
 import styles from './ReportForm.module.scss';
 import toastReact from '~/components/ToastMessages';
@@ -15,19 +15,37 @@ const listReport = [
     { id: 5, title: 'Vấn đề khác' },
 ];
 
-function ReportForm({}, ref) {
+const listReportChapter = [
+    { id: 0, title: 'Nội dung khiêu dâm' },
+    { id: 1, title: 'Nội dung liên quan tới chính trị, tôn giáo' },
+    { id: 2, title: 'Nội dung đã đăng, bị trùng' },
+    { id: 3, title: 'Vấn đề khác' },
+];
+
+function ReportForm({ type }, ref) {
     const valueDefault = 4;
     const [formCheck, setFormCheck] = useState(false);
     const [value, setValue] = useState(valueDefault);
     const [textValue, setTextValue] = useState('');
     const [ids, setIds] = useState({});
+    const [data, setData] = useState([]);
 
     const wrapperRef = useRef();
     const containerRef = useRef();
     const textRef = useRef();
 
+    useEffect(() => {
+        if (type) {
+            setData(listReportChapter);
+            return;
+        }
+
+        setData(listReport);
+    }, []);
+
     useImperativeHandle(ref, () => ({
         openReport(id, idReport) {
+            // userLoginId, userReportId || idBookChapter
             setFormCheck(true);
             setIds({ id, idReport });
         },
@@ -94,7 +112,7 @@ function ReportForm({}, ref) {
                             </div>
                             <div className={cx('body')}>
                                 <div className={cx('list-report')}>
-                                    {listReport.map((report) => {
+                                    {data.map((report) => {
                                         const itemId = `report-${report.id}`;
                                         const itemName = 'reportItem';
 

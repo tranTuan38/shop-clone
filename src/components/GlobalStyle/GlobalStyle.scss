@@ -23,7 +23,7 @@ body {
     font-size: 1.6rem;
     line-height: 1.5;
     font-weight: 400;
-    font-family: Source Sans Pro,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial, sans-serif;
+    font-family: Source Sans Pro,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif;
     text-rendering: optimizeSpeed;
     // text-rendering: optimizeLegibility !important;
     // -webkit-font-smoothing: antialiased !important;
@@ -222,6 +222,14 @@ a {
 .text-center {
     text-align: center;
 }
+
+.toast-react-container {
+    width: 384px;
+    top: 100px;
+    right: 20px;
+}
+
+// Icon css
   
 .nh-icon {
     font-size: 1.3rem;
@@ -457,6 +465,25 @@ a {
         content: "\EA39";
     } 
 
+    &.icon-chart::before {
+        content: "\EA23";
+    } 
+
+    &.icon-grid::before {
+        content: "\EA21";
+    } 
+
+    &.icon-caret::before {
+        content: "\EA2A";
+    } 
+
+    &.icon-upload::before {
+        content: "\EA0D";
+    } 
+
+    &.icon-filter::before {
+        content: "\EA3C";
+    }
 }
 
 .fs-80 {
@@ -642,5 +669,64 @@ hr {
 
     & > a {
         pointer-events: none;
+    }
+}
+
+
+@media (max-width: 1024px) {
+    .hide-on-mobile-tablet {
+        display: none;
+    }
+
+    body {
+        font-size: 1.4rem;
+        background-color: #ebecf0;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .App {
+        min-width: auto!important;
+
+        .toast-react-container {
+            top: 80px;
+            width: 90%!important;
+            min-width: 90%!important;
+        }
+    }
+}
+
+// Tablet
+@media (min-width: 740px ) and (max-width: 1024px) {
+    .hide-on-tablet {
+        display: none;
+    }
+
+    .toast-react-container {
+        right: 50%;
+        transform: translateX(50%);
+    }
+}
+
+// Mobile
+@media (max-width: 739px) {
+    .hide-on-mobile {
+        display: none;
+    }
+
+    .toast-react-container {
+        right: 50%;
+        transform: translateX(50%);
+    }
+}
+
+// Mobile - small
+@media (max-width: 480px) {
+    .hide-on-mobile {
+        display: none;
+    }
+
+    .toast-react-container {
+        left: 50%;
+        transform: translateX(-50%)!important;
     }
 }

@@ -4,7 +4,7 @@ import { memo } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import styles from '../Chapter.module.scss';
-import { removeVietnameseTones, handlerSetIconNavChap } from '~/handler';
+import { removeVietnameseTones, handlerSetIconNavChap, handlerSaveBookMark } from '~/handler';
 import ActionLogin from '~/components/ActionLogin';
 import Loading from '~/components/Loading';
 
@@ -12,6 +12,7 @@ const cx = classNames.bind(styles);
 
 function NavBar({ data, dataChaps, isLogin, settings }, ref) {
     const [icon, setIcon] = useState('');
+    const [iconMark, setIconMark] = useState('');
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
@@ -22,6 +23,7 @@ function NavBar({ data, dataChaps, isLogin, settings }, ref) {
 
     useEffect(() => {
         setIcon('');
+        setIconMark('');
     }, [name, chapter]);
 
     const navBarRef = useRef();
@@ -80,6 +82,23 @@ function NavBar({ data, dataChaps, isLogin, settings }, ref) {
             navFeelRef.current.remove();
         } else {
             navFeelRef.current.change();
+        }
+    };
+
+    const handlerSetBookMark = () => {
+        if (isLogin) {
+            const listActions = { true: 1, false: 0 };
+            const loginIcon = handlerSetIconNavChap(isLogin, 'save', dataChaps, 'icon-save');
+            const typeAction = loginIcon?.isCheckMark;
+            const action = listActions[typeAction];
+            // console.log(action);
+            const icons = handlerSaveBookMark(action, dataChaps);
+
+            setLoading(true);
+            setTimeout(() => {
+                setIconMark(icons);
+                setLoading(false);
+            }, 400);
         }
     };
 
@@ -161,7 +180,7 @@ function NavBar({ data, dataChaps, isLogin, settings }, ref) {
 
                             if (isLogin) {
                                 props = { onClick: handlerChangeState };
-                                const loginIcon = handlerSetIconNavChap(isLogin, dataChaps, iconName);
+                                const loginIcon = handlerSetIconNavChap(isLogin, 'heart', dataChaps, iconName);
 
                                 if (loginIcon !== iconName) {
                                     iconName = '';
@@ -197,13 +216,23 @@ function NavBar({ data, dataChaps, isLogin, settings }, ref) {
                         } else if (item.type === 'save') {
                             isLoading = true;
                             ActionComponent = ActionLogin;
+                            const loginIcon = handlerSetIconNavChap(isLogin, 'save', dataChaps, iconName);
+
+                            if (loginIcon?.isCheckMark) {
+                                iconName = loginIcon.icon;
+                            }
 
                             if (!isLogin) {
                                 ModalComponent = 'div';
                                 isNavComponent = isLogin;
                             }
 
+                            if (iconMark) {
+                                iconName = iconMark;
+                            }
+
                             actionProps = { isLogin: isLogin, style: { flex: '1', color: 'inherit' } };
+                            props = { onClick: handlerSetBookMark };
                         } else if (item.type === 'comments') {
                             props = { onClick: handlerSetPosition };
                         }

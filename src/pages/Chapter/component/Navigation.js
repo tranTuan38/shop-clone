@@ -8,9 +8,20 @@ import ActionLogin from '~/components/ActionLogin';
 
 const cx = classNames.bind(styles);
 
-function Navigation({ data, isLogin, className, chapterData, buttonClass, navClass, style = {} }) {
+function Navigation({
+    data,
+    isLogin,
+    className,
+    chapterData,
+    buttonClass,
+    navClass,
+    style = {},
+    onOpenReportForm = () => {},
+}) {
     const location = useLocation();
     const navigate = useNavigate();
+
+    // console.log(chapterData);
 
     const handlerNavigate = (e, type, action) => {
         if (!chapterData[type]) {
@@ -22,6 +33,10 @@ function Navigation({ data, isLogin, className, chapterData, buttonClass, navCla
         }
     };
 
+    const hanlderOpenForm = () => {
+        onOpenReportForm(chapterData.idUser, { idBook: chapterData.idBook, idChapter: chapterData.idChapter });
+    };
+
     return (
         <div className={cx(className)} style={{ ...style }}>
             {data.map((item) => {
@@ -29,6 +44,9 @@ function Navigation({ data, isLogin, className, chapterData, buttonClass, navCla
                 let props = {};
                 let Component = Fragment;
                 let propsCom = { key: item.id };
+                let propsBtn = {
+                    onClick: (e) => handlerNavigate(e, item.type, chapterData.numberChapter + item.action),
+                };
 
                 if (item.action < 0) {
                     props = { style: { marginRight: '8px' } };
@@ -36,6 +54,10 @@ function Navigation({ data, isLogin, className, chapterData, buttonClass, navCla
                     classBtn = navClass;
                     Component = ActionLogin;
                     propsCom = { ...propsCom, isLogin: isLogin };
+                    propsBtn = {};
+                    if (isLogin) {
+                        propsBtn = { onClick: hanlderOpenForm };
+                    }
                 } else if (item.action > 0) {
                     props = { style: { marginLeft: '8px' } };
                 }
@@ -44,7 +66,7 @@ function Navigation({ data, isLogin, className, chapterData, buttonClass, navCla
                         <button
                             key={item.id}
                             className={cx(classBtn, { disabled: chapterData[item.type] })}
-                            onClick={(e) => handlerNavigate(e, item.type, chapterData.numberChapter + item.action)}
+                            {...propsBtn}
                         >
                             {item.action > 0 && item.title}
                             <i className={`nh-icon ${item.icon}`} {...props}></i>

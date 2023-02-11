@@ -3,6 +3,10 @@
     .group {
         margin-bottom: 16px;
 
+        .formFalse {
+            border: 1px solid #f00 !important;
+        }
+
         .title {
             display: inline-block;
             margin-bottom: 8px;

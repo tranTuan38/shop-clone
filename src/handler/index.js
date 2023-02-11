@@ -12,6 +12,13 @@ import {
 } from '~/initdata';
 import { constructors } from '~/constructors';
 import { useGetListSelecter } from '~/hooks';
+import toastReact from '~/components/ToastMessages';
+
+function detectDeviceType() {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+    return /Android|webOS|iPhone|iPad|iPod|Opera Mini/i.test(userAgent) ? true : false;
+}
 
 function handleTime(timeCur, timeItem) {
     const second = Math.floor((timeCur - timeItem) / 1000);
@@ -36,6 +43,89 @@ function handleTime(timeCur, timeItem) {
     } else {
         result = `${year} năm trước`;
     }
+
+    return result;
+}
+
+function validateForm(type, payLoad = {}) {
+    let results = { isCheck: false, message: '' };
+    let isValid;
+
+    switch (type) {
+        case 'email':
+            const emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+            isValid = payLoad.value.length && emailRegExp.test(payLoad.value);
+
+            if (!isValid) {
+                return { ...results, message: 'Email không hợp lệ.' };
+            }
+
+            return { ...results, isCheck: true };
+        case 'password':
+            isValid = payLoad.value.length >= 6;
+
+            if (!isValid) {
+                return { ...results, message: 'Mật khẩu tối thiểu phải có 6 ký tự.' };
+            }
+            return { ...results, isCheck: true };
+        case 're-password':
+            isValid = payLoad.value === payLoad.data.userPassword;
+
+            if (!isValid) {
+                return { ...results, message: 'Mật khẩu nhập lại không chính xác.' };
+            }
+
+            return { ...results, isCheck: true };
+
+        default:
+            return { ...results, message: 'Có lỗi xảy ra.' };
+    }
+}
+
+function handlerEnCodeURI(str = '') {
+    const result = encodeURIComponent(str);
+
+    return result;
+}
+
+function handlerDecodeURI(str = '') {
+    const result = decodeURIComponent(str);
+}
+
+function handlerSetUserName() {
+    const userCreateName = randomStrings(10);
+    const isName = userData.some((user) => user.name === userCreateName);
+
+    if (!isName) return userCreateName;
+
+    return handlerSetUserName();
+}
+
+function handlerRegister(data = {}) {
+    const result = { check: true, message: '' };
+    const { Users } = constructors;
+    let idUser = 0;
+    const newName = handlerSetUserName();
+    const email = data.email;
+    const password = data.password;
+
+    const latsIdUser = userData[userData.length - 1]?.id;
+
+    if (Number.isInteger(latsIdUser)) {
+        idUser = latsIdUser + 1;
+    }
+
+    const isEmail = userData.some((user) => user.email === email);
+
+    if (isEmail) {
+        return { check: false, message: 'Email đã tồn tại trong hệ thống.' };
+    }
+
+    const payLoads = { id: idUser, name: newName, password, email };
+
+    const createUsers = { ...new Users(payLoads) };
+
+    userData.push(createUsers);
 
     return result;
 }
@@ -421,6 +511,19 @@ function handlerGetDataWithRequest(req) {
     return data;
 }
 
+function handlerSetDataWithKeyword(data, keyword) {
+    const results = data.filter((item) => {
+        const formatKeyword = formartStrings(keyword);
+        const isBookName = formartStrings(item.name).includes(formatKeyword);
+        const isDescription = formartStrings(item.description).includes(formatKeyword);
+        const isAuthorName = formartStrings(item.authorName).includes(formatKeyword);
+
+        return isBookName || isDescription || isAuthorName;
+    });
+
+    return results;
+}
+
 function handleCheckActive(type, itemSearch, data, listRequest, location, indexCur) {
     // if (type === 'update') {
     //     console.group('type: ', type);
@@ -467,11 +570,11 @@ function handleCheckActive(type, itemSearch, data, listRequest, location, indexC
 function handlerSetDataLeftBar(idType, itemValue, data, dataKeys, listRequest) {
     let results;
     results = dataKeys.reduce((acc, item, index) => {
-        if (idType == index) {
+        if (idType === index) {
             if (idType <= 2) {
                 if (data[item]) {
                     const checkType = typeof data[item];
-                    if (checkType == 'object') {
+                    if (checkType === 'object') {
                         acc = {
                             ...data,
                             selected: [...data.selected, itemValue],
@@ -510,9 +613,10 @@ function handlerSetDataLeftBar(idType, itemValue, data, dataKeys, listRequest) {
     return results;
 }
 
-function handlerSetDataWithPath(initData, listData, listRequest, listTags) {
+function handlerSetDataWithPath(initData, listData, listRequest, listTags, searchLocation, keyword) {
     const requestKeys = Object.keys(listRequest);
     let results;
+    let keywords = {};
 
     results = requestKeys.reduce((acc, key) => {
         let dataNumber;
@@ -552,6 +656,10 @@ function handlerSetDataWithPath(initData, listData, listRequest, listTags) {
 
         return (acc = initData);
     }, {});
+
+    if (keyword) {
+        results = { ...results, selected: [`Đang tìm: ${keyword}`, ...results.selected] };
+    }
 
     return results;
 }
@@ -597,7 +705,10 @@ function handleLeftSideBarPath(
     itemIndex,
     itemValue,
     setSearchParams,
+    keyword,
 ) {
+    // console.group('keyword: ', keyword);
+
     // console.group('idType: ', idType);
     // console.log('dataValues: ', dataValues);
     // console.log('location: ', location);
@@ -607,6 +718,12 @@ function handleLeftSideBarPath(
     // console.groupEnd();
 
     let results = {};
+    let keywords = {};
+
+    if (keyword) {
+        keywords = { keyword };
+    }
+
     if (!location.search) {
         if (idType < 3) {
             const keyRequest = dataValues[idType];
@@ -616,13 +733,10 @@ function handleLeftSideBarPath(
             results = { sort_by: 'new_chap_at', tag: tagIndex.toString() };
         }
 
-        // if (idType === 'pagination') {
-        //     results = { sort_by: 'new_chap_at', limit: 10, page: itemIndex + 1 };
-        // }
         setSearchParams(results);
     } else {
         if (!listRequest.sort_by) {
-            if (idType == 0) {
+            if (idType === 0) {
                 let newArr;
                 if (listRequest.genre) {
                     const spiltArr = listRequest.genre.split(',').sort();
@@ -632,9 +746,9 @@ function handleLeftSideBarPath(
                     newArr = [itemIndex];
                 }
                 results = { ...listRequest, sort_by: 'new_chap_at', genre: newArr.toString() };
-            } else if (idType == 1) {
+            } else if (idType === 1) {
                 results = { ...listRequest, sort_by: 'new_chap_at', status: itemIndex.toString() };
-            } else if (idType == 2) {
+            } else if (idType === 2) {
                 results = { ...listRequest, sort_by: 'new_chap_at', prototypes: itemIndex.toString() };
             } else if (idType > 2) {
                 const tagIndex = listTag.indexOf(itemValue).toString();
@@ -652,7 +766,7 @@ function handleLeftSideBarPath(
             //     results = { ...listRequest, sort_by: 'new_chap_at', limit: 10, page: itemIndex + 1 };
             // }
         } else {
-            if (idType == 0) {
+            if (idType === 0) {
                 let newArr;
                 if (listRequest.genre) {
                     const spiltArr = listRequest.genre.split(',').sort();
@@ -662,9 +776,9 @@ function handleLeftSideBarPath(
                     newArr = [itemIndex];
                 }
                 results = { ...listRequest, genre: newArr.toString() };
-            } else if (idType == 1) {
+            } else if (idType === 1) {
                 results = { ...listRequest, status: itemIndex.toString() };
-            } else if (idType == 2) {
+            } else if (idType === 2) {
                 results = { ...listRequest, prototypes: itemIndex.toString() };
             } else if (idType > 2) {
                 const tagIndex = listTag.indexOf(itemValue).toString();
@@ -683,13 +797,17 @@ function handleLeftSideBarPath(
             // }
         }
 
-        const data = Object.entries(results).reduce((acc, item) => {
+        let data = Object.entries(results).reduce((acc, item) => {
             if (item[1]) {
                 return { ...acc, [item[0]]: item[1] };
             }
 
             return acc;
         }, {});
+
+        data = { ...data, ...keywords };
+
+        // console.log(data);
 
         setSearchParams(data);
     }
@@ -732,7 +850,7 @@ function handleTopSideBarSetPath(type, sortByValue, data, listRequest, location,
     onSetSearch(results);
 }
 
-function handleDeletePath(idItem, itemValue, data, listRequest, setSearchParams) {
+function handleDeletePath(idItem, itemValue, data, listRequest, setSearchParams, keyword) {
     // console.group('idItem: ', idItem);
     // console.log('itemValue:', itemValue);
     // console.log('data:', data);
@@ -748,7 +866,7 @@ function handleDeletePath(idItem, itemValue, data, listRequest, setSearchParams)
     const dataSplit = listRequest[selectedKey].split(',');
     dataSplit.splice(itemIndex, 1);
 
-    const result = Object.keys(listRequest).reduce((acc, key) => {
+    let result = Object.keys(listRequest).reduce((acc, key) => {
         if (Object.keys(acc).length) {
             if (listRequest[key]) {
                 if (key === selectedKey) {
@@ -777,6 +895,10 @@ function handleDeletePath(idItem, itemValue, data, listRequest, setSearchParams)
 
         return acc;
     }, {});
+
+    if (keyword) {
+        result = { ...result, keyword };
+    }
 
     setSearchParams(result);
 }
@@ -846,7 +968,41 @@ function checkPath(prevPath, curPath) {
     return isCheck;
 }
 
-function removeVietnameseTones(str = '') {
+function formartStrings(str = '') {
+    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a');
+    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, 'e');
+    str = str.replace(/ì|í|ị|ỉ|ĩ/g, 'i');
+    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, 'o');
+    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, 'u');
+    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, 'y');
+    str = str.replace(/đ/g, 'd');
+    str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, 'A');
+    str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, 'E');
+    str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, 'I');
+    str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, 'O');
+    str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, 'U');
+    str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, 'Y');
+    str = str.replace(/Đ/g, 'D');
+    // Some system encode vietnamese combining accent as individual utf-8 characters
+    // Một vài bộ encode coi các dấu mũ, dấu chữ như một kí tự riêng biệt nên thêm hai dòng này
+    str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ''); // ̀ ́ ̃ ̉ ̣  huyền, sắc, ngã, hỏi, nặng
+    str = str.replace(/\u02C6|\u0306|\u031B/g, ''); // ˆ ̆ ̛  Â, Ê, Ă, Ơ, Ư
+    // Remove extra spaces
+    // Bỏ các khoảng trắng liền nhau
+    str = str.replace(/ + /g, ' ');
+    str = str.trim();
+    // Remove punctuations
+    // Bỏ dấu câu, kí tự đặc biệt
+    str = str.replace(/!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g, '');
+    // Chuyển chữ hoa thành chữ thường
+    str = str.toLowerCase();
+    //Chuyển 2 khoảng trắng liên tiếp thành một
+    str = str.replace(/  /g, ' ');
+
+    return str;
+}
+
+function removeVietnameseTones(str = '', isLink = true) {
     str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a');
     str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, 'e');
     str = str.replace(/ì|í|ị|ỉ|ĩ/g, 'i');
@@ -1348,13 +1504,25 @@ function handlerGetListUserRead(id) {
 }
 
 function handlerSetUserLogin(data) {
+    const messages = { email: false, password: false };
     const { userEmail, userPassword } = data;
 
-    const isLogin = userData.some(
-        (user) => user.email.trim() === userEmail.trim() && user.password.trim() === userPassword.trim(),
-    );
+    const isLogin = userData.some((user) => {
+        const isEmail = user.email.trim() === userEmail.trim();
+        const isPassword = user.password.trim() === userPassword.trim();
 
-    return isLogin;
+        if (isEmail) {
+            messages.email = isEmail;
+        }
+
+        if (isPassword) {
+            messages.password = isPassword;
+        }
+
+        return isEmail && isPassword;
+    });
+
+    return { isLogin, messages };
 }
 
 function handlerGetUserDataLogin(data) {
@@ -1400,14 +1568,13 @@ function handlerChangeUserData(idUser, key, dataChange) {
     if (key === 'name') {
         isUserName = userData.some((user) => user.id !== idUser && user.name.trim() === dataChange);
         if (isUserName) {
-            alert(`${dataChange} đã tồn tại, vui lòng nhập tên khác`);
+            toastReact(3, 'Lỗi', `${dataChange} đã tồn tại, vui lòng nhập tên khác`);
             return (isName = true);
         }
     }
 
     if (Number.isInteger(userIndex) && !isUserName) {
         userData[userIndex][key] = dataChange;
-        // alert('Cập nhật thành công!');
         // console.log(userData[userIndex][key]);
     }
 }
@@ -1436,6 +1603,8 @@ function handlerGetBookReadData(type, idUser) {
                 };
             });
 
+            // console.log(data);
+
             return data;
         }
     } else if (type === 'mark') {
@@ -1457,6 +1626,57 @@ function handlerGetBookReadData(type, idUser) {
     }
 
     return data;
+}
+
+function handlerSetBookReadData(data) {
+    // console.log('data: ', data);
+
+    const users = listUserReadBook.find((user) => user.idUser === data.idUser);
+
+    if (users) {
+        const readDatas = users.read;
+        const books = readDatas.find((book) => book.idBook === data.idBook);
+
+        if (books) {
+            const bookChapters = books.chapter;
+            const isCheckChapter = bookChapters.some((chap) => chap.number === data.numberChapter);
+
+            // console.log('isCheckChapter: ', isCheckChapter);
+
+            if (isCheckChapter) {
+                return;
+            } else {
+                const dataSets = { number: data.numberChapter, time: +new Date(), feel: undefined };
+
+                bookChapters.push(dataSets);
+                bookChapters.sort((a, b) => a.number - b.number);
+                // console.log('bookChapters: ', bookChapters);
+            }
+        } else {
+            const bookDatas = {
+                idBook: data.idBook,
+                readTime: +new Date(),
+                chapter: [{ number: data.numberChapter, time: +new Date(), feel: undefined }],
+            };
+
+            readDatas.push(bookDatas);
+            // console.log('bookDatas: ', bookDatas);
+        }
+    } else {
+        const userSets = {
+            idUser: data.idUser,
+            read: [
+                {
+                    idBook: data.idBook,
+                    readTime: +new Date(),
+                    chapter: [{ number: data.numberChapter, time: +new Date(), feel: undefined }],
+                },
+            ],
+        };
+
+        // console.log('userSets: ', userSets);
+        listUserReadBook.push(userSets);
+    }
 }
 
 function handlerDeleteBookReadData(type, idBook, idUser) {
@@ -1612,7 +1832,7 @@ function handlerGetChapterData(bookName, chapter, userData) {
 }
 
 function handlerGetPostData(userName) {
-    const user = userData.find((item) => item.name === userName);
+    const user = userData?.find((item) => item.name === userName);
 
     if (user) {
         return user;
@@ -1672,24 +1892,90 @@ function handlerSetChangeSettings(prevValue, action, min, max, step) {
     }
 }
 
-function handlerSetIconNavChap(isLogin, bookData, prevIcon) {
+function handlerSetIconNavChap(isLogin, type, bookData, prevIcon) {
     if (isLogin) {
-        const user = listUserReadBook.find((item) => item.idUser === bookData.idUser);
-        const books = user.read.find((book) => book.idBook === bookData.idBook);
+        if (type === 'heart') {
+            const user = listUserReadBook.find((item) => item.idUser === bookData.idUser);
+            const books = user?.read?.find((book) => book.idBook === bookData.idBook);
 
-        if (books) {
-            const chapter = books.chapter.find((chap) => chap.number === bookData.numberChapter);
-            const icons = listIcons.find((item) => chapter.feel === item.idIcon);
-            return { idIcon: icons.idIcon, url: `url(${icons.icon})` };
+            if (books) {
+                const chapter = books.chapter.find((chap) => chap.number === bookData.numberChapter);
+
+                const icons = listIcons.find((item) => chapter?.feel === item.idIcon);
+                if (icons) {
+                    return { idIcon: icons.idIcon, url: `url(${icons.icon})` };
+                }
+            }
+        } else if (type === 'save') {
+            // console.log('bookData: ', bookData);
+            const user = listUserBookMarks.find((item) => item.idUser === bookData.idUser);
+
+            if (user) {
+                const books = user.read.find((book) => book.idBook === bookData.idBook);
+
+                if (books) {
+                    const isCheckMark = books.chapter.some((chap) => chap.number === bookData.numberChapter);
+                    if (isCheckMark) return { isCheckMark: true, icon: 'icon-check' };
+                }
+            }
+            return { isCheckMark: false, icon: prevIcon };
         }
 
         return prevIcon;
     }
 }
 
+function handlerSaveBookMark(type, data) {
+    const listAction = ['save', 'delete'];
+    const listIcons = ['icon-check', 'icon-save'];
+    // console.log(data);
+
+    const users = listUserBookMarks.find((item) => item.idUser === data.idUser);
+
+    if (users) {
+        const books = users.read.find((book) => book.idBook === data.idBook);
+
+        if (books) {
+            const chapterIndex = books.chapter.findIndex((chap) => chap.number === data.numberChapter);
+
+            if (chapterIndex >= 0) {
+                const bookIndex = users.read.findIndex((book) => book.idBook === data.idBook);
+                users.read.splice(bookIndex, 1);
+            } else {
+                const chapters = { number: data.numberChapter, time: +new Date() };
+                books.chapter.push(chapters);
+            }
+        } else {
+            const bookSets = {
+                idBook: data.idBook,
+                readTime: +new Date(),
+                chapter: [{ number: data.numberChapter, time: +new Date() }],
+            };
+            users.read.push(bookSets);
+        }
+    } else {
+        const userSets = {
+            idUser: data.idUser,
+            read: [
+                {
+                    idBook: data.idBook,
+                    readTime: +new Date(),
+                    chapter: [{ number: data.numberChapter, time: +new Date() }],
+                },
+            ],
+        };
+
+        listUserBookMarks.push(userSets);
+    }
+    return listIcons[type] || 'icon-save';
+}
+
 function handlerChangeIconData(idIcon, bookData) {
     const user = listUserReadBook.find((item) => item.idUser === bookData.idUser);
-    const books = user.read.find((book) => book.idBook === bookData.idBook);
+    const books = user?.read?.find((book) => book.idBook === bookData.idBook);
+
+    // console.log('idIcon: ', idIcon);
+    // console.log('bookData: ', bookData);
 
     if (books) {
         const chapter = books.chapter.find((chap) => chap.number === bookData.numberChapter);
@@ -2461,7 +2747,18 @@ function handlerInteractData(type, idBook, idUser, idUserLogin, action, repIndex
     }
 }
 
+function randomStrings(length) {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+
 export {
+    detectDeviceType,
     handleTime,
     handleGetRankWeekRead,
     handleGetRankWeekPrevailing,
@@ -2522,4 +2819,13 @@ export {
     handlerCheckLike,
     handlerGetlistUserInteracts,
     handlerGetCommentLength,
+    handlerSetBookReadData,
+    handlerSaveBookMark,
+    validateForm,
+    handlerRegister,
+    randomStrings,
+    handlerEnCodeURI,
+    handlerDecodeURI,
+    handlerSetDataWithKeyword,
+    formartStrings,
 };

@@ -20,11 +20,7 @@
         padding: 6px 68px 6px 24px;
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
-    }
 
-    &:focus-within { // khi thẻ input đc focus, thẻ cha chứa nó sẽ được ăn css 
-        box-shadow: 0 0 0 0.35rem rgb(183 138 40 / 25%);
-        border-color: var(--text-primary);
     }
 
     & .btn {
@@ -32,4 +28,44 @@
         background-color: #fff;
     }
     
+}
+
+.active {
+    box-shadow: 0 0 0 0.35rem rgb(183 138 40 / 25%)!important;
+    border-color: var(--text-primary);
+}
+
+@media (max-width: 1024px) {
+    .hide-on-mobile-tablet {
+        display: none;
+    }
+
+    .search {
+        max-width: none;
+        box-shadow: 1px 2px 5px 0 rgb(0 0 0 / 5%);
+
+        .input, .btn {
+            background-color: #f7f7f7;
+
+            span {
+                color: inherit;
+            }
+        }
+    }
+    
+
+}
+
+// Tablet
+@media (min-width: 740px ) and (max-width: 1024px) {
+    .hide-on-tablet {
+        display: none;
+    }
+}
+
+// Mobile
+@media (max-width: 739px) {
+    .hide-on-mobile {
+        display: none;
+    }
 }

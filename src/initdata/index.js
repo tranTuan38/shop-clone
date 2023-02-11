@@ -15,6 +15,7 @@ import listThemes from './listThemes';
 import listFontFamily from './listFontFamily';
 import listIcons from './listIcons';
 import listUserInteracts from './listUserInteracts';
+import listDataPathMobiles from './listDataPathMobile';
 
 export {
     listBookData,
@@ -34,4 +35,5 @@ export {
     listFontFamily,
     listIcons,
     listUserInteracts,
+    listDataPathMobiles,
 };

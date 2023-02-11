@@ -6,6 +6,7 @@ const avatarImg = {
     user5: require('~/assets/imgs/avatar/avatar-5.jpg'),
     user6: require('~/assets/imgs/avatar/avatar-6.jpg'),
     userNoIn: require('~/assets/imgs/avatar/avatar-profile.png'),
+    defaultAvatar: require('~/assets/imgs/avatar/regis-avatar.jpg'),
 };
 
 export default avatarImg;

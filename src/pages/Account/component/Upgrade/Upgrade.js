@@ -2,12 +2,13 @@ import classNames from 'classnames/bind';
 import { memo } from 'react';
 
 import styles from './Upgrade.module.scss';
+import toastReact from '~/components/ToastMessages';
 
 const cx = classNames.bind(styles);
 
 function Upgrade({ type }) {
     const handlerClick = (e) => {
-        alert('Chức năng chưa được hỗ trợ, vui lòng thông cảm!');
+        toastReact(3, 'Lỗi', 'Chức năng chưa được hỗ trợ, vui lòng thông cảm!');
     };
 
     return (

@@ -14,7 +14,17 @@ import toastReact from '~/components/ToastMessages';
 
 const cx = classNames.bind(styles);
 
-function InputBox({ isLogin, data, idBook, user, ratingInput, OnTextValue, setUpdateNum, onSetListReviewCmt }) {
+function InputBox({
+    isLogin,
+    data,
+    idBook,
+    user,
+    ratingInput,
+    OnTextValue,
+    setUpdateNum,
+    onSetListReviewCmt,
+    classBind,
+}) {
     const [btnCheck, setBtnCheck] = useState(false);
     const [questionForm, setQuestionForm] = useState(false);
     const [question, setQuestion] = useState(false);
@@ -127,7 +137,7 @@ function InputBox({ isLogin, data, idBook, user, ratingInput, OnTextValue, setUp
                 if (isSuccess) {
                     // console.log(123);
                     handlerPustData(0, idBook, user.id, datas);
-                    spanDom.innerText = handlerGetRatingLength(idBook);
+                    if (spanDom) spanDom.innerText = handlerGetRatingLength(idBook);
                     OnTextValue('');
                     setUpdateNum((prev) => prev + 1);
                 }
@@ -141,19 +151,26 @@ function InputBox({ isLogin, data, idBook, user, ratingInput, OnTextValue, setUp
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [btnCheck]);
 
+    const cb = (strs = '') => {
+        let classChange = cx;
+        if (classBind) classChange = classBind;
+
+        return classChange(strs);
+    };
+
     return (
         <>
-            <div className={cx('input-box')}>
+            <div className={cb('input-box')}>
                 <textarea
                     data-user-rate={isLogin}
-                    className={cx('textarea')}
+                    className={cb('textarea')}
                     placeholder="Đánh giá của bạn về truyện này"
                     value={data}
                     onChange={handlerSetCmtRating}
                     spellCheck={false}
                 ></textarea>
                 <button
-                    className={cx('btn')}
+                    className={cb('btn')}
                     onClick={handlerPushRating}
                     style={{ opacity: btnCheck ? '0.8' : 'initial' }}
                     ref={btnRef}

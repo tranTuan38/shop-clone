@@ -4,6 +4,7 @@ import styles from './ListRankLayout.module.scss';
 import Header from '../component/Header';
 import BackGrpImgs from '../component/BackGrpImgs';
 import Footer from '../component/Footer';
+import { memo } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -28,4 +29,4 @@ function ListRankLayout({ children }) {
     );
 }
 
-export default ListRankLayout;
+export default memo(ListRankLayout);

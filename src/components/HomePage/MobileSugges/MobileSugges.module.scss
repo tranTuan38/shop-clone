@@ -1,0 +1,41 @@
+.wrapper {
+    font-size: 1.4rem;
+    color: #333;
+    background-color: #fff;
+    margin-bottom: 12px;
+
+    .body {
+        
+
+        .media-title {
+    
+            .title {
+                font-size: 2rem;
+                font-weight: 600;
+                padding: 16px 12px 0;
+            }
+    
+        }
+
+        .content {
+            padding: 12px 12px 0;
+        }
+    }
+
+    .all {
+        display: flex;
+        font-size: inherit;
+        align-items: center;
+        padding-top: 12px;
+        padding-left: 12px;
+        padding-bottom: 12px;
+        border-top: 1px solid #eee;
+
+        &::after {
+            display: block;
+            font-size: inherit;
+            margin-left: 6px;
+            content: ">";
+        }
+    }
+}

@@ -1,4 +1,24 @@
 import { removeVietnameseTones, handlerGetlistUserInteracts } from '~/handler';
+import imgs from '~/assets/imgs';
+
+export const Users = function (data) {
+    this.id = data.id;
+    this.name = data.name;
+    this.birthday = '';
+    this.password = data.password;
+    this.asset = { candy: 0, freeCandy: 0, flower: 0 };
+    this.level = 0;
+    this.exp = 0;
+    this.totalNominate = 0;
+    this.totalKeeps = 0;
+    this.totalLike = 0;
+    this.totalCmt = 0;
+    this.avatar = imgs.avatarImg.defaultAvatar;
+    this.sex = '';
+    this.description = '';
+    this.email = data.email;
+    this.createTime = +new Date();
+};
 
 export const readingData = function (idChapter, numberChapter, book) {
     const timer = new Date().getTime();

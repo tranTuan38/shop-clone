@@ -10,6 +10,7 @@ import {
     handlerGetSetting,
     handlerLocalStorage,
     handlerSaveLocalData,
+    handlerSetBookReadData,
 } from '~/handler';
 import imgs from '~/assets/imgs';
 import { Comment } from '~/components/TapsBook/Taps';
@@ -19,6 +20,8 @@ import { NavBar, Navigation, ChapterInfo, UserAction } from './component';
 import { NavMenuChaps, NavMenuSetting, NavMenuFeel } from './navMenus';
 import NavPopup from '~/components/NavPopup';
 import { InfoMenu } from '~/components/Popper';
+import ReportForm from '~/components/Form/ReportForm';
+import FormSelect from './component/FormSelect';
 
 const cx = classNames.bind(styles);
 
@@ -57,6 +60,7 @@ const navigationBottom = [
 
 function Chapter() {
     const location = useLocation();
+    const [chapterRender, setChaterRender] = useState(0);
     const params = useParams();
     const localStorageAction = handlerLocalStorage();
     const { name, chapter } = params;
@@ -70,8 +74,14 @@ function Chapter() {
     const navBarTopRef = useRef();
     const navBarBottomRef = useRef();
     const commentRef = useRef();
+    const reportRef = useRef();
+    const formSelectRef = useRef();
 
-    // console.log(chapterData);
+    useEffect(() => {
+        if (state.login) {
+            setChaterRender(chapterRender + 1);
+        }
+    }, []);
 
     useEffect(() => {
         if (chapterData) {
@@ -223,6 +233,14 @@ function Chapter() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [name, chapter]);
 
+    useEffect(() => {
+        if (state.login) {
+            handlerSetBookReadData(chapterData);
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [state.login, name, chapter]);
+
     const handlerSetTitle = (numberChapter, nameChapter) => {
         let title;
         if (numberChapter) {
@@ -240,9 +258,6 @@ function Chapter() {
 
     return (
         <div className={cx('wrapper')}>
-            {/* <div className={cx('modal-container')}>
-                <div className={cx('modal-content')}></div>
-            </div> */}
             {chapterData && (
                 <>
                     <div
@@ -295,7 +310,7 @@ function Chapter() {
                         >
                             {chapterData.content}
                         </div>
-                        <UserAction isLogin={state.login} />
+                        <UserAction isLogin={state.login} onShowForm={formSelectRef.current?.onShow} />
                     </div>
 
                     <Navigation
@@ -307,6 +322,7 @@ function Chapter() {
                         chapterData={chapterData}
                         settings={settings}
                         style={{ backgroundColor: settings.contentColor, color: settings.textColor }}
+                        onOpenReportForm={reportRef.current?.openReport}
                     />
 
                     <div
@@ -332,6 +348,8 @@ function Chapter() {
                     </div>
                 </>
             )}
+            <ReportForm type="page-chap" ref={reportRef} />
+            <FormSelect type="page-chap" ref={formSelectRef} />
         </div>
     );
 }

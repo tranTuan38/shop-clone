@@ -20,7 +20,7 @@ const userData = [
         avatar: imgs.avatarImg.user1,
         sex: 'male',
         description: 'Yêu gia đình yêu cuộc sống',
-        email: 'tuine03082000',
+        email: 'tuine03082000@gmail.com',
         createTime: '2020-10-11T10:32:48',
     },
     {
@@ -42,7 +42,7 @@ const userData = [
         avatar: imgs.avatarImg.user2,
         sex: 'male',
         description: 'Yêu gia đình yêu cuộc sống',
-        email: 'tuine04082000',
+        email: 'tuine04082000@gmail.com',
         createTime: '2020-10-11T10:32:48',
     },
     {
@@ -64,7 +64,7 @@ const userData = [
         avatar: imgs.avatarImg.user3,
         sex: 'male',
         description: 'Yêu gia đình yêu cuộc sống',
-        email: 'tuine05082000',
+        email: 'tuine05082000@gmail.com',
         createTime: '2020-10-11T10:32:48',
     },
     {
@@ -86,7 +86,7 @@ const userData = [
         avatar: imgs.avatarImg.user4,
         sex: 'male',
         description: 'Yêu gia đình yêu cuộc sống',
-        email: 'tuine06082000',
+        email: 'tuine06082000@gmail.com',
         createTime: '2020-10-11T10:32:48',
     },
     {
@@ -108,7 +108,7 @@ const userData = [
         avatar: imgs.avatarImg.user5,
         sex: 'male',
         description: 'Yêu gia đình yêu cuộc sống',
-        email: 'tuine07082000',
+        email: 'tuine07082000@gmail.com',
         createTime: '2020-10-11T10:32:48',
     },
     {
@@ -130,7 +130,7 @@ const userData = [
         avatar: imgs.avatarImg.user6,
         sex: 'male',
         description: 'Yêu gia đình yêu cuộc sống',
-        email: 'tuine09082000',
+        email: 'tuine09082000@gmail.com',
         createTime: '2020-10-11T10:32:48',
     },
     {
@@ -152,7 +152,7 @@ const userData = [
         avatar: imgs.avatarImg.user5,
         sex: 'male',
         description: 'Yêu gia đình yêu cuộc sống',
-        email: 'tuine10082000',
+        email: 'tuine10082000@gmail.com',
         createTime: '2020-10-11T10:32:48',
     },
     {
@@ -174,7 +174,7 @@ const userData = [
         avatar: imgs.avatarImg.user6,
         sex: 'female',
         description: 'Yêu gia đình yêu cuộc sống',
-        email: 'tuine11082000',
+        email: 'tuine11082000@gmail.com',
         createTime: '2020-10-11T10:32:48',
     },
     {
@@ -196,7 +196,7 @@ const userData = [
         avatar: imgs.avatarImg.user5,
         sex: 'secret',
         description: 'Yêu gia đình yêu cuộc sống',
-        email: 'tuine12082000',
+        email: 'tuine12082000@gmail.com',
         createTime: '2020-10-11T10:32:48',
     },
     {
@@ -218,7 +218,7 @@ const userData = [
         avatar: imgs.avatarImg.user6,
         sex: 'male',
         description: 'Yêu gia đình yêu cuộc sống',
-        email: 'tuine13082000',
+        email: 'tuine13082000@gmail.com',
         createTime: '2020-10-11T10:32:48',
     },
     {
@@ -240,7 +240,7 @@ const userData = [
         avatar: imgs.avatarImg.user5,
         sex: 'male',
         description: 'Yêu gia đình yêu cuộc sống',
-        email: 'tuine15082000',
+        email: 'tuine15082000@gmail.com',
         createTime: '2020-10-11T10:32:48',
     },
     {
@@ -262,7 +262,7 @@ const userData = [
         avatar: imgs.avatarImg.user6,
         sex: 'male',
         description: 'Yêu gia đình yêu cuộc sống',
-        email: 'tuine16082000',
+        email: 'tuine16082000@gmail.com',
         createTime: '2020-10-11T10:32:48',
     },
 ];

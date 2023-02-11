@@ -1,18 +1,25 @@
 import classNames from 'classnames/bind';
 import styles from './Home.module.scss';
 
-import { ContentPage, UpdateBook, Ranking, Rating, Status } from '~/components/HomePage';
-import { useEffect, useState } from 'react';
+import {
+    ContentPage,
+    UpdateBook,
+    Ranking,
+    Rating,
+    Status,
+    MobileSugges,
+    MobileRating,
+    MobileQuestion,
+} from '~/components/HomePage';
+import { memo, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 function Home() {
-    const location = useLocation();
-
     useEffect(() => {
         document.title = 'Mê Truyện Chữ - Truyện Convert';
-    }, [document.title]);
+    }, []);
 
     return (
         <div className={cx('wrapper')}>
@@ -23,6 +30,9 @@ function Home() {
             <div className={cx('ranking')}>
                 <Ranking />
             </div>
+            <MobileSugges />
+            <MobileRating />
+            <MobileQuestion />
             <div className={cx('container-2')}>
                 <div className={cx('rating')}>
                     <Rating />
@@ -35,4 +45,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default memo(Home);

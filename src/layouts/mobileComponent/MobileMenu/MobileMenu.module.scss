@@ -1,0 +1,147 @@
+.wrapper {
+    position: relative;
+    transition: all .3s ease-in-out;
+
+    .overlay {
+        position: fixed;
+        background-color: #000;
+        opacity: .6;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 997;
+        transition: all .3s ease-in-out;
+        animation: fadeIn .3s ease-in-out;
+    }
+
+    .container {
+        position: fixed;
+        width: 250px;
+        bottom: 0;
+        right: 0;
+        background-color: #fff;
+        z-index: 998;
+        transition: all .3s ease-in-out;
+        animation: transitionIn .3s ease-in-out;
+        overflow-y: auto;
+
+        .list {
+            font-size: 1.6rem;
+
+            .item {
+                display: block;
+                overflow: hidden;
+                box-shadow: inset 0 -1px 0 0 #eee;
+
+                .list-link {
+                    display: block;
+                    overflow: hidden;
+                    height: 0;
+                    font-size: inherit;
+                    transition: all 0.35s ease;
+
+                    .link-item {
+                        display: block;
+                        padding: 8px 24px;
+                    }
+                }
+
+                .list-action {
+                    overflow: visible;
+                    padding-bottom: 16px;
+                }
+            }
+
+            .item .btn {
+                display: flex;
+                width: 100%;
+                align-items: center;
+                padding: 12px;
+                font-size: inherit;
+                font-weight: 600;
+                line-height: inherit;
+                -webkit-tap-highlight-color: transparent;
+                transition: all .3s ease-in-out;
+
+                &:hover {
+                    background-color: #f0f0f0;
+                }
+
+
+                i {
+                    margin-right: 12px;
+                    font-size: 2rem;
+                    color: var(--text-primary);
+                    transition: all .3s ease-in-out;
+                    
+                    &::before {
+                        transform: rotate(0);
+                        transition: all .3s ease-in-out;
+                    }
+                }
+
+                i ~ i {
+                    display: flex;
+                    flex: 1;
+                    justify-content: flex-end;
+                    color: inherit;
+                }
+                
+                .icon-rotate {
+                    &::before {
+                        transform: rotate(180deg);
+                    }
+                }
+            }
+
+            .btn.active {
+                background-color: #f0f0f0;
+            }
+
+        }
+    }
+
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: .6;
+    }
+}
+
+@keyframes transitionIn {
+    from {
+        right: -100%;
+        opacity: 0;
+    }
+
+    to {
+        right: 0;
+        opacity: 1;
+    }
+}
+
+@media (max-width: 1024px) {
+    .hide-on-mobile-tablet {
+        display: none;
+    }
+}
+
+// Tablet
+@media (min-width: 740px ) and (max-width: 1024px) {
+    .hide-on-tablet {
+        display: none;
+    }
+}
+
+// Mobile
+@media (max-width: 739px) {
+    .hide-on-mobile {
+        display: none;
+    }
+}

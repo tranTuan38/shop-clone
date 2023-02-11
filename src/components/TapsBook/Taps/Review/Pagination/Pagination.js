@@ -7,9 +7,22 @@ import ReactDOM from 'react-dom';
 import ReactPaginate from 'react-paginate';
 import { useRef } from 'react';
 
-const cx = classNames.bind(styles);
+let cx = classNames.bind(styles);
 
-function Pagination({ data, user, idBook, listNav, limit, isLogin, setUpdateNum = () => {}, onActionReports = {} }) {
+function Pagination({
+    data,
+    user,
+    idBook,
+    listNav,
+    limit,
+    isLogin,
+    setUpdateNum = () => {},
+    onActionReports = {},
+    styleChange,
+    containerProps = {},
+}) {
+    // if (styleChange) cx = classNames.bind(styleChange);
+
     const [listData, setListData] = useState(null);
     const [pageCur, setPageCur] = useState(1);
     const [pageCount, setPageCount] = useState(pageCur);
@@ -89,8 +102,9 @@ function Pagination({ data, user, idBook, listNav, limit, isLogin, setUpdateNum 
                 idBook={idBook}
                 setUpdateNum={setUpdateNum}
                 onActionReports={onActionReports}
+                styleChange={styleChange}
             />
-            <div className={cx('container')}>
+            <div className={cx('container')} {...containerProps}>
                 <ReactPaginate
                     breakLabel="..."
                     nextLabel=">"

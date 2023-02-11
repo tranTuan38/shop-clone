@@ -3,10 +3,13 @@ import { memo } from 'react';
 
 import styles from './CreateMedia.module.scss';
 import { handlerViewBookData } from '~/handler';
+import { useViewport } from '~/hooks';
 
 const cx = classNames.bind(styles);
 
 function MediaIcon({ type, data }) {
+    const viewPort = useViewport();
+
     return (
         <div className={cx('book-info')}>
             <div className={cx('info-item', { left: true })}>
@@ -30,10 +33,12 @@ function MediaIcon({ type, data }) {
                     <i className="nh-icon icon-eye-glasses"></i>
                     {handlerViewBookData(data.view)}
                 </span>
-                <span className={cx('icon')}>
-                    <i className="nh-icon icon-flower"></i>
-                    {data.rankWeekNomination}
-                </span>
+                {!viewPort && (
+                    <span className={cx('icon')}>
+                        <i className="nh-icon icon-flower"></i>
+                        {data.rankWeekNomination}
+                    </span>
+                )}
             </div>
         </div>
     );

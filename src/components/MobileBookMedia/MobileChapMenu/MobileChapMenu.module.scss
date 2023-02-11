@@ -1,0 +1,50 @@
+.wrapper {
+
+    .list-chapter {
+        margin-bottom: 16px;
+        padding: 16px 0;
+        background-color: #f7f7f7;
+        border-radius: 8px;
+
+        .chapter-item {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            
+            .chapter-link {
+                display: block;
+                flex: 1;
+                border-bottom: 1px dashed #eee;
+                padding: 8px 16px;
+                margin-bottom: 4px;
+                word-break: break-word;
+
+                p {
+                    display: -webkit-box;
+                    -webkit-line-clamp: 1;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    -o-text-overflow: ellipsis;
+                    text-overflow: ellipsis;
+                }
+
+                .chapter-time {
+                    font-size: 80%;
+                    color: #6c757d
+                }
+
+                &:hover {
+                    background-color: #dfdede;
+                }
+            }
+        }
+
+        .chapter-item:first-child {
+            margin-top: 8px;
+        }
+
+        .chapter-item:last-child {
+            margin-bottom: 16px;
+        }
+    }
+}

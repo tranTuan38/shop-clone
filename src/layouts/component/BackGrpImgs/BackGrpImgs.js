@@ -5,16 +5,20 @@ import classNames from 'classnames/bind';
 
 import styles from './BackGrpImgs.module.scss';
 import { memo } from 'react';
+import { useViewport } from '~/hooks';
 
 const cx = classNames.bind(styles);
 
 function BackGrpImgs() {
+    const viewPort = useViewport();
     const [firstRender, setFirstRender] = useState(0);
     const [state, setState] = useGetBrgImg();
     const [listImgs, setListImg] = useState([]);
     const [index, setIndex] = useState(Math.floor(Math.random() * state.length));
     const location = useLocation();
     const { pathname } = location;
+
+    // console.log(viewPort);
 
     function getIndexImg() {
         const numRandom = Math.floor(Math.random() * state.length);
@@ -70,9 +74,11 @@ function BackGrpImgs() {
     }, [pathname]);
 
     return (
-        <div className={cx('content')}>
-            <img className={cx('img')} src={state[index]} alt="ảnh nền" />
-        </div>
+        !viewPort && (
+            <div className={cx('content')}>
+                <img className={cx('img')} src={state[index]} alt="ảnh nền" />
+            </div>
+        )
     );
 }
 

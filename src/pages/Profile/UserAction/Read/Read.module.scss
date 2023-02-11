@@ -158,3 +158,148 @@
 
     
 }
+
+.mobile-wrapper {
+    padding: 12px;
+
+    .mobile-list {
+    
+    }
+
+    .mobile-list .mobile-item {
+        display: flex;
+        align-items: flex-start;
+        padding: 8px 0;
+        margin-bottom: 4px;
+
+        .mobile-img {
+            width: 72px;
+            display: inline-block;
+            overflow: hidden;
+            position: relative;
+            margin-right: 16px;
+            box-shadow: 3px 4px 3px 0 rgba(0,0,0,.15);
+
+            &:hover {
+                opacity: .9;
+            }
+
+            &::before {
+                padding-top: 133.333333%;
+                content: "";
+                display: block;
+            }
+
+            img {
+                width: 100%;
+                height: auto;
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                margin: auto;
+                max-width: 100%;
+                min-height: 100%;
+            }
+        }
+
+        .mobile-body {
+            flex: 1;
+            word-break: break-word;
+            font-size: 1.4rem;
+
+            h2 {
+                display: -webkit-box;
+                -webkit-line-clamp: 1;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                -o-text-overflow: ellipsis;
+                text-overflow: ellipsis;
+                font-size: inherit;
+                font-weight: 600;
+                line-height: 1.5;
+                margin-bottom: 8px;
+            }
+
+            .mobile-name {
+                display: block;
+
+                &:hover {
+                    color: var(--text-primary);
+                }
+            }
+
+            .mobile-description {
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                -o-text-overflow: ellipsis;
+                text-overflow: ellipsis;
+                -webkit-line-clamp: 2;
+                color: #666;
+            }
+
+            .mobile-icons {
+
+                .mobile-icon-item {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    margin-top: 8px;
+                    font-size: 1.3rem;
+                    color: #666;
+                    flex-wrap: wrap;
+
+                    .mobile-icon {
+                        line-height: 1.5;
+                        font-family: Source Sans Pro, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif;
+
+                        i {
+                            font-size: 1.3rem;
+                            margin-right: 8px;
+                        }
+                    }
+                }
+
+            }
+        }
+    }
+
+}
+
+@media (max-width: 1024px) {
+    .hide-on-mobile-tablet {
+        display: none;
+    }
+
+    .wrapper{
+        background-color: #fff;
+        margin-bottom: 12px;
+
+        .container {
+            .h2 {
+                padding: 0 12px;
+                padding-top: 16px;
+                margin-bottom: 0;
+            }
+        }
+    }
+}
+
+// Tablet
+@media (min-width: 740px ) and (max-width: 1024px) {
+    .hide-on-tablet {
+        display: none;
+    }
+}
+
+// Mobile
+@media (max-width: 739px) {
+    .hide-on-mobile {
+        display: none;
+    }
+}
+
+
+

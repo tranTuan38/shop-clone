@@ -4,6 +4,7 @@ import Header from '../component/Header';
 import styles from './ChapterLayout.module.scss';
 import { useStore } from '~/hooks';
 import { handlerGetSetting } from '~/handler';
+import { memo } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -26,4 +27,4 @@ function ChapterLayout({ children }) {
     );
 }
 
-export default ChapterLayout;
+export default memo(ChapterLayout);

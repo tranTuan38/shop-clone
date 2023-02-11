@@ -1,0 +1,36 @@
+.new-chap {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .chap-name {
+        flex: 1;
+
+        .chap-link {
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            -o-text-overflow: ellipsis;
+            text-overflow: ellipsis;
+            padding-right: 8px;
+        }
+    }
+
+    .nav {
+        color: #fff;
+        font-size: 1.3rem;
+        background-color: #bf2c24;
+        padding: 4px 7.8px;
+        white-space: nowrap;
+        border-radius: 24px;
+        line-height: 1;
+        font-weight: 600;
+    }
+
+}
+
+.nav-wrapper {
+    padding: 16px 12px;
+}

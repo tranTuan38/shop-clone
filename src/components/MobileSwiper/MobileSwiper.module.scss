@@ -1,0 +1,93 @@
+.wrapper {
+    font-size: inherit;
+
+    .container {
+
+        .list {
+            display: flex;
+            align-items: center;
+
+            .swiper-slide {
+                width: 16rem;
+                opacity: 1;
+            }
+
+            .item {
+                height: 100%;
+                padding: 16px 8px;
+                position: relative;
+            }
+
+            .item .item-img {
+                text-align: center;
+
+                .item-link {
+                    width: 120px;
+                    position: relative;
+                    display: inline-block;
+                    overflow: hidden;
+                    user-select: none;
+                    box-shadow: 3px 4px 3px 0 rgba(0,0,0,.15)!important;
+
+                    &::before {
+                        padding-top: 133.333333%;
+                        content: "";
+                        display: block;
+                    }
+
+                    &:hover {
+                        opacity: .9;
+                    }
+                }
+
+                .img {
+                    display: block;
+                    width: 100%;
+                    height: auto;
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                    margin: auto;
+                    max-width: 100%;
+                    min-height: 100%;
+                }
+            }
+
+            .item .item-info {
+                
+                .item-name {
+                    font-size: 1.4rem;
+                    font-weight: 600;
+                    margin: 16px 0 4px;
+                    line-height: 1.5;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 1;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    -o-text-overflow: ellipsis;
+                    text-overflow: ellipsis;
+
+                    .name-link {
+                        color: inherit;
+                    }
+
+                    &:hover {
+                        color: var(--text-primary);
+                    }
+                }
+
+                .item-category {
+                    color: #666;
+
+                    &:hover {
+                        color: #000000;
+                    }
+                }
+            }
+        }
+    }
+}
+
+

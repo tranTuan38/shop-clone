@@ -11,7 +11,7 @@ const cx = classNames.bind(styles);
 function Img({ name, href, src, alt = 'ảnh sách', className, loading, onClick = () => {} }) {
     return (
         <Link to={href} className={cx(className)} onClick={(e) => onClick(e, name)}>
-            <img src={src} alt={alt} loading={loading} />
+            <img className={cx('img')} src={src} alt={alt} loading={loading} />
         </Link>
     );
 }

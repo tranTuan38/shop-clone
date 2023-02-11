@@ -1,4 +1,5 @@
 import classNames from 'classnames/bind';
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Taga.module.scss';
 
@@ -12,4 +13,4 @@ function Taga({ href, className, title, onClick = () => {} }) {
     );
 }
 
-export default Taga;
+export default memo(Taga);

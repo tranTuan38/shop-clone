@@ -166,3 +166,37 @@
         }
     }
 }
+
+@media (max-width: 1024px) {
+    .hide-on-mobile-tablet {
+        display: none;
+    }
+
+    .wrapper{
+        background-color: #fff;
+        margin-bottom: 12px;
+        padding: 12px;
+
+        .media {
+            margin: 0;
+            margin: 16px 0;
+
+            .media-avatar {
+            }
+        }
+    }
+}
+
+// Tablet
+@media (min-width: 740px ) and (max-width: 1024px) {
+    .hide-on-tablet {
+        display: none;
+    }
+}
+
+// Mobile
+@media (max-width: 739px) {
+    .hide-on-mobile {
+        display: none;
+    }
+}

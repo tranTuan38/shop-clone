@@ -1,0 +1,29 @@
+.wrapper {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #fff;
+
+    .content {
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        padding: 4px 0;
+        background-color: var(--text-primary);
+
+        a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 0;
+            line-height: 1.5;
+            color: inherit;
+
+            i {
+                font-size: inherit;
+                line-height: inherit;
+                margin-right: 8px;
+            }
+        }
+    }
+}

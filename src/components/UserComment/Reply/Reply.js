@@ -15,6 +15,7 @@ import {
 } from '~/handler';
 import { requestData } from '~/services';
 import toastReact from '~/components/ToastMessages';
+import { useViewport } from '~/hooks';
 
 const cx = classNames.bind(styles);
 
@@ -40,6 +41,7 @@ function Reply({
     const [notIn, setNotIn] = useState(false);
     const InputReplyRef = useRef();
     const params = useParams();
+    const viewPort = useViewport();
 
     // console.log(params);
 
@@ -63,6 +65,7 @@ function Reply({
 
     const handlerHideListRep = () => {
         setNotIn(false);
+        if (viewPort) setFirstAll(false);
         setListReply([]);
         setCheckRep({});
     };
@@ -71,8 +74,18 @@ function Reply({
         setCheckRep((prev) => ({ ...prev, [id]: !prev.id }));
     };
 
+    // console.log(firstAll);
+
     const handlerBtn = () => {
         setFirstAll(true);
+        if (viewPort) {
+            setNotIn(true);
+            const dataChange = getListDataCmt(scopeItem);
+
+            if (dataChange?.length) {
+                InputReplyRef.current?.focus();
+            }
+        }
     };
 
     // console.log('pageCur :', listDataCmt);
@@ -201,46 +214,53 @@ function Reply({
     return (
         <div className={cx('wrapper', { classActive, ['page-comment']: params.chapter })}>
             <div className={cx('action')}>
-                <div className={cx('all-reply')} onClick={handlerViewAll}>
-                    {!!data.userReply.length && !notIn && `Xem ${data.userReply.length} trả lời`}
-                </div>
-                <div className={cx('action-btn')} style={{ display: 'flex' }}>
-                    <ActionLogin
-                        isLogin={isLogin}
-                        onOpen={() => handlerCmtReplyOpen('like')}
-                        onClose={() => handlerCmtReplyClose('like')}
-                    >
-                        <button
-                            ref={btnLikkeRef}
-                            data-cmt-reply={`like-${data?.idCmt}`}
-                            className={cx('btn', {
-                                active: isLogin
-                                    ? handlerCheckLike(1, idBook, data.idUser, user?.id, data.idCmt)
-                                    : false,
-                            })}
-                            onClick={() => handlerAction(0)}
+                {!viewPort && (
+                    <div className={cx('all-reply')} onClick={handlerViewAll}>
+                        {!!data.userReply.length && !notIn && `Xem ${data.userReply.length} trả lời`}
+                    </div>
+                )}
+                <div
+                    className={cx('action-btn')}
+                    style={{ display: 'flex', justifyContent: viewPort && 'space-between', flex: viewPort && '1' }}
+                >
+                    <div>
+                        <ActionLogin
+                            isLogin={isLogin}
+                            onOpen={() => handlerCmtReplyOpen('like')}
+                            onClose={() => handlerCmtReplyClose('like')}
                         >
-                            <i className="nh-icon icon-like"></i>
-                            {data.cmtLike(idBook)}
-                        </button>
-                    </ActionLogin>
-                    <ActionLogin
-                        isLogin={isLogin}
-                        onOpen={() => handlerCmtReplyOpen('reply')}
-                        onClose={() => handlerCmtReplyClose('reply')}
-                    >
-                        <button
-                            data-cmt-reply={`reply-${data?.idCmt}`}
-                            className={cx('btn', {
-                                active: notIn || firstAll,
-                                [`btn-classActive`]: (notIn || firstAll) && classActive,
-                            })}
-                            onClick={handlerBtn}
+                            <button
+                                ref={btnLikkeRef}
+                                data-cmt-reply={`like-${data?.idCmt}`}
+                                className={cx('btn', {
+                                    active: isLogin
+                                        ? handlerCheckLike(1, idBook, data.idUser, user?.id, data.idCmt)
+                                        : false,
+                                })}
+                                onClick={() => handlerAction(0)}
+                            >
+                                <i className="nh-icon icon-like"></i>
+                                {data.cmtLike(idBook)}
+                            </button>
+                        </ActionLogin>
+                        <ActionLogin
+                            isLogin={isLogin}
+                            onOpen={() => handlerCmtReplyOpen('reply')}
+                            onClose={() => handlerCmtReplyClose('reply')}
                         >
-                            <i className="nh-icon icon-reply"></i>
-                            Trả lời
-                        </button>
-                    </ActionLogin>
+                            <button
+                                data-cmt-reply={`reply-${data?.idCmt}`}
+                                className={cx('btn', {
+                                    active: notIn || firstAll,
+                                    [`btn-classActive`]: (notIn || firstAll) && classActive,
+                                })}
+                                onClick={handlerBtn}
+                            >
+                                <i className="nh-icon icon-reply"></i>
+                                {viewPort ? data.userReply.length : 'Trả lời'}
+                            </button>
+                        </ActionLogin>
+                    </div>
                     <ActionLogin
                         isLogin={isLogin}
                         onOpen={() => handlerCmtReplyOpen('flag')}
@@ -257,8 +277,11 @@ function Reply({
                                     }
                                 }}
                             >
-                                <i className="nh-icon icon-trash"></i>
-                                Xóa
+                                <i
+                                    className="nh-icon icon-trash"
+                                    style={{ marginRight: viewPort && '0', fontSize: viewPort && '1.4rem' }}
+                                ></i>
+                                {!viewPort && 'Xóa'}
                             </button>
                         ) : (
                             <button
@@ -266,8 +289,11 @@ function Reply({
                                 className={cx('btn', { active: false })}
                                 onClick={() => handlerReport(user?.id, data?.idUser)}
                             >
-                                <i className="nh-icon icon-flag"></i>
-                                Báo xấu
+                                <i
+                                    className="nh-icon icon-flag"
+                                    style={{ marginRight: viewPort && '0', fontSize: viewPort && '1.4rem' }}
+                                ></i>
+                                {!viewPort && 'Báo xấu'}
                             </button>
                         )}
                     </ActionLogin>
@@ -276,11 +302,24 @@ function Reply({
             <div className={cx('list')}>
                 {notIn && (
                     <>
-                        <div className={cx('media')}>
+                        <div
+                            className={cx('media')}
+                            style={{
+                                backgroundColor: viewPort && '#f7f7f7',
+                                borderRadius: viewPort && '8px',
+                                overflow: viewPort && 'hidden',
+                            }}
+                        >
                             {!!listReply.length &&
                                 listReply.map((item, index) => {
+                                    const isCheckView = !index && viewPort;
+
                                     return (
-                                        <div key={item.idUserIndex} className={cx('media-item')}>
+                                        <div
+                                            key={item.idUserIndex}
+                                            className={cx('media-item')}
+                                            style={{ borderTopColor: isCheckView && 'transparent' }}
+                                        >
                                             <div className={cx('avatar')}>
                                                 <img src={item.avatar} alt={item.name} />
                                                 <span className={cx('level')}>{`Cấp ${item.level}`}</span>
@@ -344,9 +383,15 @@ function Reply({
                                     );
                                 })}
                         </div>
-                        <button className={cx('hide-rep')} onClick={handlerHideListRep}>
-                            Ẩn trả lời
-                        </button>
+                        {!!listReply.length && (
+                            <button
+                                className={cx('hide-rep')}
+                                onClick={handlerHideListRep}
+                                style={{ marginTop: viewPort && '8px' }}
+                            >
+                                Ẩn trả lời
+                            </button>
+                        )}
                     </>
                 )}
                 {firstAll && (

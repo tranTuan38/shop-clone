@@ -5,6 +5,7 @@ import styles from './Setting.module.scss';
 import FormGroup from '~/components/FormGroup';
 import { useStore } from '~/hooks';
 import { actions } from '~/components/store';
+import toastReact from '~/components/ToastMessages';
 
 const cx = classNames.bind(styles);
 
@@ -78,7 +79,7 @@ function UserConFig() {
             }, {});
 
             dispatch(actions.setUserDatabase({ config: { ...state.config, ...changeValue } }));
-            alert('Cập nhật thành công!');
+            toastReact(1, 'Thành công', 'Cập nhật thành công!');
         }
 
         // console.log('listInputsId: ', listInputsId);

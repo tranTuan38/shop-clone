@@ -8,11 +8,13 @@ import Reply from './Reply';
 import imgs from '~/assets/imgs';
 import { handleTime, handlerGetPostData } from '~/handler';
 import { listBookData, listRating, userData } from '~/initdata';
+import { useViewport } from '~/hooks';
 
 const cx = classNames.bind(styles);
 
 function UserComment({ data, idBook, classActive, isLogin, ActionLogin, user, src, onActionReports, setDeleteData }) {
     const [listUserData, setListUserData] = useState([]);
+    const viewPort = useViewport();
 
     // console.log(data);
 
@@ -53,31 +55,44 @@ function UserComment({ data, idBook, classActive, isLogin, ActionLogin, user, sr
                 listUserData.map((item, index) => {
                     return (
                         <div className={cx('media')} key={item.idCmt}>
-                            <div className={cx('avatar')}>
-                                <img src={item.avatar} alt={item.name} />
-                                <span className={cx('level')}>{`Cấp ${item.level}`}</span>
-                            </div>
-                            <div className={cx('body')}>
-                                <Link
-                                    to={`/profile/${handlerGetPostData(item.name).id}`}
-                                    className={cx('name', {
-                                        ['item-hover']: !classActive,
-                                        ['white-color']: classActive,
-                                    })}
-                                >
-                                    {item.name}
-                                </Link>
-                                <div className={cx('nav-info')}>
-                                    <span className={cx('info')}>
-                                        <i className="nh-icon icon-clock"></i>
-                                        {`${handleTime(new Date(), new Date(item.time))}`}
-                                    </span>
-                                    <span className={cx('info')}>
-                                        <i className="nh-icon icon-eye-glasses"></i>
-                                        {!item.cmtOutChap && `chương ${item.cmtInChap}`}
-                                    </span>
+                            {!viewPort && (
+                                <div className={cx('avatar')}>
+                                    <img src={item.avatar} alt={item.name} />
+                                    <span className={cx('level')}>{`Cấp ${item.level}`}</span>
                                 </div>
-                                <div className={cx('comment')}>
+                            )}
+
+                            <div className={cx('body')}>
+                                <div style={{ display: viewPort && 'flex', alignItems: viewPort && 'flex-start' }}>
+                                    {viewPort && (
+                                        <div className={cx('avatar')}>
+                                            <img src={item.avatar} alt={item.name} />
+                                            <span className={cx('level')}>{`Cấp ${item.level}`}</span>
+                                        </div>
+                                    )}
+                                    <div>
+                                        <Link
+                                            to={`/profile/${handlerGetPostData(item.name).id}`}
+                                            className={cx('name', {
+                                                ['item-hover']: !classActive,
+                                                ['white-color']: classActive,
+                                            })}
+                                        >
+                                            {item.name}
+                                        </Link>
+                                        <div className={cx('nav-info')}>
+                                            <span className={cx('info')}>
+                                                <i className="nh-icon icon-clock"></i>
+                                                {`${handleTime(new Date(), new Date(item.time))}`}
+                                            </span>
+                                            <span className={cx('info')}>
+                                                <i className="nh-icon icon-eye-glasses"></i>
+                                                {!item.cmtOutChap && `chương ${item.cmtInChap}`}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={cx('comment')} style={{ marginTop: viewPort && '8px' }}>
                                     <Comment data={item.comment} limitStrings={303} classActive={classActive} />
                                 </div>
                                 <Reply

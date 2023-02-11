@@ -21,6 +21,11 @@
             }
         }
 
+        & .search-active {
+            border-color: #bf2c24!important;
+            background-color: #bf2c24!important;
+        }
+
         &:last-child {
             border-bottom: none;
         }

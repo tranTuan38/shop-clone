@@ -15,6 +15,23 @@ import {
 } from '~/handler';
 import { StoreContext } from '~/components/store';
 
+export const useViewport = () => {
+    const [isViewport, setIsViewport] = useState(window.innerWidth <= 1024);
+
+    useEffect(() => {
+        const handleWindowResize = () => {
+            // const isCheck = window.innerWidth <= 1024
+            // const scrollBarWidth =  document.documentElement.offsetHeight - document.documentElement.clientWidth
+            setIsViewport(window.innerWidth <= 1024);
+            // || document.documentElement.clientWidth <= 1024
+        };
+        window.addEventListener('resize', handleWindowResize);
+        return () => window.removeEventListener('resize', handleWindowResize);
+    }, []);
+
+    return isViewport;
+};
+
 export const useGetCategory = () => {
     const [state, setState] = useState(() => {
         const category = listBookData.map((item, index) => {

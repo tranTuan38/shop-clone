@@ -6,7 +6,17 @@ import ReactPaginate from 'react-paginate';
 
 const cx = classNames.bind(styles);
 
-function PaginationPage({ type, data, limit, nameSearch, PageItem, pageItemProps = {}, scrollType = 'smooth' }) {
+function PaginationPage({
+    type,
+    data = [],
+    limit,
+    nameSearch,
+    PageItem = () => {},
+    pageItemProps = {},
+    scrollType = 'smooth',
+    isScroll = true,
+    containerProps = {},
+}) {
     const [prevSearch, setPrevSearch] = useState(nameSearch);
     const [listData, setListData] = useState([]);
     const [pageCur, setPageCur] = useState(1);
@@ -41,7 +51,7 @@ function PaginationPage({ type, data, limit, nameSearch, PageItem, pageItemProps
         setPageOffset(newOffset);
         setPageCur(event.selected + 1);
         setValue(event.selected + 1);
-        window.scrollTo({ top: wrapperRefOffSetHeight + 290, behavior: scrollType });
+        if (isScroll) window.scrollTo({ top: wrapperRefOffSetHeight + 290, behavior: scrollType });
     };
 
     const handlerOnChange = (e) => {
@@ -66,7 +76,7 @@ function PaginationPage({ type, data, limit, nameSearch, PageItem, pageItemProps
             const wrapperRefOffSetHeight = wrapperRef.current.offsetTop;
             setPageOffset(newOffset);
             setPageCur(pageNumber);
-            window.scrollTo({ top: wrapperRefOffSetHeight + 290, behavior: scrollType });
+            if (isScroll) window.scrollTo({ top: wrapperRefOffSetHeight + 290, behavior: scrollType });
         }
     };
 
@@ -77,7 +87,7 @@ function PaginationPage({ type, data, limit, nameSearch, PageItem, pageItemProps
             ) : (
                 <PageItem data={data} type={type} {...pageItemProps} />
             )}
-            <div className={cx('container')}>
+            <div className={cx('container')} {...containerProps}>
                 {!!listData.length && data.length >= limit && (
                     <ReactPaginate
                         breakLabel="..."

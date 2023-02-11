@@ -8,8 +8,9 @@ import { requestData } from '~/services';
 import styles from '../Review.module.scss';
 import Pagination from '~/components/TapsBook/Taps/Review/Pagination';
 import { handlerGetPostData, handlerDeleteData } from '~/handler';
+import { useViewport } from '~/hooks';
 
-const cx = classNames.bind(styles);
+let cx = classNames.bind(styles);
 
 function ListReviewCmt({
     data,
@@ -23,14 +24,17 @@ function ListReviewCmt({
     checkTapsIndex,
     setUpdateNum,
     onActionReports,
+    styleChange,
 }) {
     const [listData, setListData] = useState([]);
     const [checkBtn, setCheckBtn] = useState({});
     const [checkSpoliBtn, setCheckSpoliBtn] = useState({});
     const [loading, setLoading] = useState(false);
+    const viewPort = useViewport();
 
     // console.log(isLogin);
     // console.log(user);
+    if (styleChange) cx = classNames.bind(styleChange);
 
     useEffect(() => {
         const checkSpoli = data.reduce((acc, item, index) => {
@@ -76,24 +80,81 @@ function ListReviewCmt({
                 !loading &&
                 listData.map((item, index) => {
                     return (
-                        <div key={item.idUser} className={cx('review-cmt-item')}>
-                            <div className={cx('review-avata')}>
-                                <img src={item.avatar} alt={item.name} />
-                                <span className={cx('review-level')}>{`Cấp ${item.level}`}</span>
-                            </div>
+                        <div
+                            key={item.idUser}
+                            className={cx('review-cmt-item')}
+                            style={{ padding: viewPort ? '16px 0' : '' }}
+                        >
+                            {!viewPort && (
+                                <div className={cx('review-avata')}>
+                                    <img src={item.avatar} alt={item.name} />
+                                    <span className={cx('review-level')}>{`Cấp ${item.level}`}</span>
+                                </div>
+                            )}
+
                             <div className={cx('review-body')}>
-                                <Link to={`/profile/${handlerGetPostData(item.name).id}`} className={cx('review-name')}>
-                                    {item.name}
-                                </Link>
-                                <div className={cx('review-rate')}>
-                                    <div className={cx('info')}>
-                                        <Rating
-                                            percent={setPerson(item.totalRate)}
-                                            totalRate={item.totalRate}
-                                            read={item.totalViewChapter}
-                                            time={item.time}
-                                            setTime={setTime}
-                                        />
+                                <div
+                                    style={{
+                                        display: viewPort ? 'flex' : '',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between',
+                                    }}
+                                >
+                                    {viewPort && (
+                                        <div className={cx('review-avata')}>
+                                            <img src={item.avatar} alt={item.name} />
+                                            <span className={cx('review-level')}>{`Cấp ${item.level}`}</span>
+                                        </div>
+                                    )}
+                                    <div
+                                        style={{
+                                            flex: '1',
+                                            display: viewPort ? 'flex' : '',
+                                            alignItems: 'center',
+                                            justifyContent: 'space-between',
+                                        }}
+                                    >
+                                        <div
+                                            style={{
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                            }}
+                                        >
+                                            <Link
+                                                to={`/profile/${handlerGetPostData(item.name).id}`}
+                                                className={cx('review-name')}
+                                            >
+                                                {item.name}
+                                            </Link>
+                                            {viewPort && (
+                                                <p
+                                                    style={{
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        fontSize: '1.3rem',
+                                                        color: '#999',
+                                                    }}
+                                                >
+                                                    <i className="nh-icon icon-eye-glasses mr-8"></i>
+                                                    {` Đã đọc: ${item.totalViewChapter} chương`}
+                                                </p>
+                                            )}
+                                        </div>
+                                        <div
+                                            className={cx('review-rate')}
+                                            style={{ alignSelf: viewPort ? 'flex-start' : '' }}
+                                        >
+                                            <div className={cx('info')}>
+                                                <Rating
+                                                    percent={setPerson(item.totalRate)}
+                                                    totalRate={item.totalRate}
+                                                    read={item.totalViewChapter}
+                                                    time={item.time}
+                                                    setTime={setTime}
+                                                    styleChange={styleChange}
+                                                />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className={cx('review-cmt')}>
@@ -143,6 +204,7 @@ function ListReviewCmt({
                                     idBook={idBook}
                                     setUpdateNum={setUpdateNum}
                                     navActiveData={{ setRepData, setTime, setCmtUser }}
+                                    styleChange={styleChange}
                                 />
                             </div>
                         </div>
@@ -158,6 +220,8 @@ function ListReviewCmt({
                     user={user}
                     setUpdateNum={setUpdateNum}
                     limit={10}
+                    styleChange={styleChange}
+                    containerProps={{ style: { justifyContent: 'center' } }}
                     listNav={{
                         checkBtn,
                         checkSpoliBtn,

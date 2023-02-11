@@ -1,8 +1,6 @@
 .wrapper{
-    top: 24px;
     padding-top: 250px;
     padding-bottom: 24px;
-    
 }
 
 .container {
@@ -18,9 +16,45 @@
 .content {
     position: relative;
     width: 100%;
-    // padding: 20px;
     border-radius: 8px;
     background-color: #fff;
 }
 
+// Mobile & tablet
+@media (max-width: 1024px) {
+    .hide-on-mobile-tablet {
+        display: none;
+    }
+
+    .wrapper{
+        padding-top: 0;
+        padding-bottom: 24px;
+
+        .container {
+            width: 100%;
+            max-width: none;
+            padding: 0;
+            background-color: #ebecf0;
+            margin: 0;
+
+            .content {
+                background-color: inherit;
+            }
+        }
+    }
+}
+
+// Tablet
+@media (min-width: 740px ) and (max-width: 1024px) {
+    .hide-on-tablet {
+        display: none;
+    }
+}
+
+// Mobile
+@media (max-width: 739px) {
+    .hide-on-mobile {
+        display: none;
+    }
+}
 

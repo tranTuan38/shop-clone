@@ -1,0 +1,68 @@
+.wrapper {
+
+    .container {
+        font-size: inherit;
+        
+        .taps-content {
+            
+            .list-title {
+                background-color: #fff;
+            }
+
+            .taps-list {
+                display: flex;
+                align-items: center;
+                justify-content: space-evenly;
+                flex-wrap: wrap;
+                margin: 0 16px;
+
+
+                .taps-title {
+                    display: block;
+                    white-space: nowrap;
+                    text-align: center;
+                    user-select: none;
+                    flex: 1;
+                    font-size: 1.6rem;
+                    font-weight: 600;
+                    padding: 12px 16px;
+                    cursor: pointer;
+                    outline: none;
+                }
+
+                .taps-active {
+                    position: relative;
+
+                    &::before {
+                        content: "";
+                        height: 2.5px;
+                        width: 100%;
+                        position: absolute;
+                        bottom: -1px;
+                        left: 0;
+                        right: 0;
+                        background-color: #b78a28;
+                    }
+                }
+            }
+
+            .taps-panel {
+              
+            }
+
+            .panel-active {
+                animation: fadeIn .35s linear;
+            }
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

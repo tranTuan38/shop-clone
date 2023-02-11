@@ -4,6 +4,7 @@ import styles from './NotFoundLayout.module.scss';
 import Header from '../component/Header';
 import BackGrpImgs from '../component/BackGrpImgs';
 import Footer from '../component/Footer';
+import { memo } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -21,4 +22,4 @@ function NotFoundLayout({ children }) {
     );
 }
 
-export default NotFoundLayout;
+export default memo(NotFoundLayout);

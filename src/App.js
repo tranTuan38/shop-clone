@@ -1,20 +1,28 @@
 import { Fragment } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { publishRoute, privateRoute } from '~/routes';
-import DefaultLayout from '~/layouts';
+import DefaultLayout, { MobileLayout } from '~/layouts';
 import PrivateRoute from '~/components/PrivateRoute';
 import { useStore } from '~/hooks';
 import ScrollToTop from './components/ScrollToTop';
+import MobileScrollTop from './components/MobileScrollTop';
 import { ToastContainer } from 'react-toastify';
+import { useViewport } from '~/hooks';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
     const [state, dispatch] = useStore();
+    // const viewPort = useViewport();
     const isLogin = state.login;
 
+    // console.log(viewPort);
+    // console.log(456);
+
+    // const isMobile = viewPort.width <= 1024;
+
     return (
-        <Router>
-            <div className="App">
+        <div className="App">
+            <Router>
                 <ScrollToTop />
                 <Routes>
                     {publishRoute.map((route, index) => {
@@ -27,6 +35,7 @@ function App() {
                         } else if (route.layout === null) {
                             Layout = Fragment;
                         }
+                        // if (viewPort) Layout = MobileLayout;
 
                         return (
                             <Route
@@ -78,9 +87,16 @@ function App() {
                         }
                     ></Route>
                 </Routes>
-                <ToastContainer hideProgressBar={true} className="toast-react-container" limit={5} />
-            </div>
-        </Router>
+                <MobileScrollTop />
+            </Router>
+            <ToastContainer
+                hideProgressBar={true}
+                className="toast-react-container"
+                limit={5}
+                autoClose={3000}
+                pauseOnFocusLoss={false}
+            />
+        </div>
     );
 }
 

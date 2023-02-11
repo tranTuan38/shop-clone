@@ -28,7 +28,7 @@ function TapsBook({ data, isLogin, user, listBookData, nameSearch, rating, userD
         userData,
     );
 
-    // console.log(user);
+    // console.log('Taps');
 
     const handlerSetSubItem = (type) => {
         if (type === 1) {

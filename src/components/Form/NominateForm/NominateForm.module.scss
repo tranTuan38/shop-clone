@@ -1,0 +1,180 @@
+.wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 9999;
+    animation: fadeInOver .15s linear;
+    transition: opacity .15s linear;
+
+    .container {
+        width: 500px;
+        position: relative;
+        max-width: 500px;
+        max-height: 330px;
+        margin: 28px auto;
+        animation: transformY .3s ease-out;
+        transition: transform .3s ease-out,-webkit-transform .3s ease-out,-moz-transform .3s ease-out,-o-transform .3s ease-out;
+        border: 1px solid rgba(0,0,0,.2);
+        border-radius: 8px;
+        
+        
+        .content {
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            pointer-events: auto;
+            background-color: #fff;
+            border-radius: 8px;
+            max-height: calc(100vh - 56px);
+
+            .heading {
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                position: relative;
+                
+                .close {
+                    display: block;
+                    top: -1px;
+                    right: -1px;
+                    position: absolute;
+                    padding: 16px;
+                    font-size: 2.4rem;
+                    font-weight: 700;
+                    opacity: .5;
+                    line-height: 27px;
+                    color: #000;
+                    text-shadow: 0 1px 0 #fff;
+                    border: 0;
+                    border-radius: 4px;
+
+
+                    &:hover {
+                        opacity: 1;
+                    }
+
+                    &:focus {
+                        opacity: .75;
+                        outline: 5px auto -webkit-focus-ring-color;
+                    }
+                }
+            }
+
+            .h5,.body {
+                padding: 16px;
+            }
+
+            .h5 {
+                font-size: 1.8rem;
+                color: #333;
+                font-weight: 600;
+            }
+
+            .body {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                overflow-y: auto;
+                overflow-x: hidden;
+                max-height: 330px;
+
+                .body-content {
+                    padding: 8px 0;
+                    text-align: center;
+
+                    .title, .input {
+                        padding: 0 48px;
+                    }
+
+                    .title {
+                        color: #666;
+                        font-size: 1.5rem;
+                        margin-bottom: 24px;
+                        font-weight: 600;
+                    }
+                }
+
+                i {
+                    font-size: 3rem;
+                }
+
+                .rank {
+                    font-size: 1.6rem;
+                    font-weight: 600;
+                    margin-bottom: 8px;
+                }
+
+                .btn-submit {
+                    margin-top: 24px;
+                    display: flex;
+                    justify-content: center;
+                    
+                    .btn {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        flex-direction: column;
+                        line-height: 1.5;
+                        background-color: var(--text-primary);
+                        padding: 4px 48px;
+                        color: #fff;
+                        font-size: 1.6rem;
+                        font-weight: 600;
+                        border-radius: 16px;
+                        border: 1px solid var(--text-primary);
+                        transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out,-webkit-box-shadow .15s ease-in-out,-moz-box-shadow .15s ease-in-out;
+
+                        span + span {
+                        font-size: 80%;
+                        font-weight: 400; 
+                        }
+
+                        &:hover {
+                            background-color: #987221;
+                            border-color: #8d6a1f;
+                        }
+                
+                        &:focus {
+                            box-shadow: 0 0 0 3.2px rgb(194 156 72 / 50%);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.fadeOut {
+    opacity: 0;
+    animation: opacity .15s linear;
+
+    .containerFadeOut {
+        transform: translateY(-50px);
+    }
+}
+
+@keyframes fadeInOver {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes transformY {
+    0% {
+        transform: translateY(-50px);
+    }
+
+    100% {
+        transform: none;
+    }
+}

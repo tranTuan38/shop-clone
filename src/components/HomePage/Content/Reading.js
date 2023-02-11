@@ -7,14 +7,14 @@ import Guide from './Guide';
 
 const cx = classNames.bind(styles);
 
-function Reading({ data, type }) {
+function Reading({ data, type, viewPort = false }) {
     const [listReading, listGuide] = data;
     return (
-        <div className="col c-4">
+        <>
             <div className={cx('reading')}>
                 <div className={cx('media-title', { ['reading-title']: type })}>
                     <h2 className={cx('title')}>Đang đọc</h2>
-                    <Taga href="/account/#books" className={cx('all')} title="Xem tất cả" />
+                    {!viewPort && <Taga href="/account/#books" className={cx('all')} title="Xem tất cả" />}
                 </div>
                 <div className={cx('content')}>
                     {listReading.map((item, index) => (
@@ -25,8 +25,12 @@ function Reading({ data, type }) {
                 </div>
             </div>
             <hr className={cx('hr')} />
-            <Guide data={listGuide} />
-        </div>
+            {viewPort ? (
+                <Taga href="/account/#books" className={cx('all')} title="Xem tất cả" />
+            ) : (
+                <Guide data={listGuide} />
+            )}
+        </>
     );
 }
 

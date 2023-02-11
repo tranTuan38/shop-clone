@@ -109,3 +109,121 @@
 
     }
 }
+
+.mobile-item {
+    display: flex;
+    padding: 8px 12px;
+    align-items: center;
+    justify-content: space-between;
+    
+    .mobile-info {
+        color: #333;
+        font-size: 1.4rem;
+
+        .mobile-name {
+            font-size: inherit;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .mobile-content {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            font-size: 1.3rem;
+
+            .mobile-nav {
+                display: flex;
+                align-items: center;
+
+                i {
+                    margin-right: 8px;
+                    font-size: inherit;
+                }
+            }
+            
+            .mobile-nav:first-child {
+                margin-right: 16px;
+            }
+        }
+
+    }
+
+    .mobile-chapter {
+        display: block;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-left: 8px;
+        align-self: flex-start;
+
+        &:hover {
+            color: #785b1a;
+        }
+    }
+}
+
+.mobile-item.backgrdColorIndex {
+    background-color: #fafafa
+}
+
+@media (max-width: 1024px) {
+    .hide-on-mobile-tablet {
+        display: none;
+    }
+
+    .wrapper{
+        font-size: 1.4rem;
+        padding: 0;
+        margin-bottom: 12px;
+        background-color: #fff;
+
+        .list-update {
+            border: none;
+        }
+
+        &:hover .title-link{
+            display: flex!important;
+        }
+
+        .content {
+            font-size: inherit;
+        }
+        
+        .title {
+            padding: 16px 12px 0;
+            margin-bottom: 12px;
+        }
+
+        .title-link {
+            display: flex;
+            font-size: inherit;
+            align-items: center;
+            padding-top: 12px;
+            padding-left: 12px;
+            padding-bottom: 12px;
+            border-top: 1px solid #eee;
+
+            &::after {
+                display: block;
+                font-size: inherit;
+                margin-left: 6px;
+                content: "\003E";
+            }
+
+        }
+    }
+}
+
+// Tablet
+@media (min-width: 740px ) and (max-width: 1024px) {
+    .hide-on-tablet {
+        display: none;
+    }
+}
+
+// Mobile
+@media (max-width: 739px) {
+    .hide-on-mobile {
+        display: none;
+    }
+}

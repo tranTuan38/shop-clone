@@ -43,6 +43,8 @@ function Account() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    // console.log(location);
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('container')}>

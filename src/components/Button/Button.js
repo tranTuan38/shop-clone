@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 
 import styles from './Button.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { memo } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -19,4 +20,4 @@ function Button({ className, title, icon = undefined, onClick }) {
     );
 }
 
-export default Button;
+export default memo(Button);

@@ -28,8 +28,10 @@ function ListBook() {
     const prototypes = searchParams.get('prototypes');
     const tag = searchParams.get('tag');
     const page = searchParams.get('page');
-    const limit = searchParams.get('limit');
+    // const limit = searchParams.get('limit');
     const keyword = searchParams.get('keyword');
+
+    // console.log(keyword);
 
     const listRequest = {
         sort_by,
@@ -42,7 +44,7 @@ function ListBook() {
     const tagsRef = useRef(
         !sort_by && (genre || status || tag || prototypes) && `${genre},${status},${tag},${prototypes}`,
     );
-    const sortByCur = useRef();
+    // const sortByCur = useRef();
 
     // if (!sort_by && (genre || status || tag)) {
     //     tagsRef.current = genre || status || tag;
@@ -66,17 +68,17 @@ function ListBook() {
                         if (renderCom === 0) {
                             setRenderCom(renderCom + 1);
                             tagsRef.current = `${genre},${status},${tag},${prototypes}`;
-                            requestData({ setLoading, setListData }, listRequest, location, listSelecter);
+                            requestData({ setLoading, setListData }, listRequest, location, listSelecter, keyword);
                         }
                         return;
                     }
-                    requestData({ setLoading, setListData }, listRequest, location, listSelecter);
+                    requestData({ setLoading, setListData }, listRequest, location, listSelecter, keyword);
                     tagsRef.current = `${genre},${status},${tag},${prototypes}`;
                     window.scrollTo({
                         top: 200,
                     });
                 } else {
-                    requestData({ setLoading, setListData }, listRequest, location, listSelecter);
+                    requestData({ setLoading, setListData }, listRequest, location, listSelecter, keyword);
                     tagsRef.current = `${genre},${status},${tag},${prototypes}`;
                     window.scrollTo({
                         top: 200,
@@ -85,14 +87,14 @@ function ListBook() {
             } else {
                 if (renderCom > 0) {
                     if (`${genre},${status},${tag},${prototypes}` !== tagsRef.current) {
-                        requestData({ setLoading, setListData }, listRequest, location, listSelecter);
+                        requestData({ setLoading, setListData }, listRequest, location, listSelecter, keyword);
                         tagsRef.current = `${genre},${status},${tag},${prototypes}`;
                         return;
                     } else {
                         return;
                     }
                 }
-                requestData({ setLoading, setListData }, listRequest, location, listSelecter);
+                requestData({ setLoading, setListData }, listRequest, location, listSelecter, keyword);
                 setRenderCom(renderCom + 1);
                 window.scrollTo({
                     top: 200,
@@ -106,7 +108,16 @@ function ListBook() {
                 top: 200,
             });
         }
-    }, [sort_by, tag, genre, status, prototypes]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [sort_by, tag, genre, status, prototypes, keyword]);
+
+    useEffect(() => {
+        if (renderCom && keyword) {
+            requestData({ setLoading, setListData }, listRequest, location, listSelecter, keyword);
+            tagsRef.current = `${genre},${status},${tag},${prototypes}`;
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [keyword]);
 
     return (
         <>
@@ -116,6 +127,11 @@ function ListBook() {
                 <div className={cx('wrapper')}>
                     <div className={cx('container')}>
                         <div className={cx('content')}>
+                            {!loading && keyword && (
+                                <p className={cx('search-title')}>
+                                    Kết quả cho: <span className={cx('keyword')}>{keyword}</span>
+                                </p>
+                            )}
                             <Pagination
                                 data={listData}
                                 limitPage={limitPage}

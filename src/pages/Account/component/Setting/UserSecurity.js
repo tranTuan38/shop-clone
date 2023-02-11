@@ -6,6 +6,7 @@ import FormGroup from '~/components/FormGroup';
 import { useStore } from '~/hooks';
 import { handlerChangeUserData } from '~/handler';
 import { actions } from '~/components/store';
+import toastReact from '~/components/ToastMessages';
 
 const cx = classNames.bind(styles);
 
@@ -38,7 +39,7 @@ function UserSecurity({ data }) {
                     if (listInputsData[i] === data.password) {
                         continue;
                     } else {
-                        alert('Mật khẩu hiện tại không đúng, vui lòng kiểm tra lại!');
+                        toastReact(3, 'Lỗi', 'Mật khẩu hiện tại không đúng, vui lòng kiểm tra lại!');
                         break;
                     }
                 } else {
@@ -48,10 +49,10 @@ function UserSecurity({ data }) {
                         listInputs[i].value = '';
                         listInputs[i + 1].value = '';
                         dispatch(actions.setUserDatabase({ userPassword: listInputsData[i] }));
-                        alert('Cập nhật thành công!');
+                        toastReact(1, 'Thành công', 'Cập nhật thành công!');
                         break;
                     } else {
-                        alert('Mật khẩu nhập lại không đúng, vui lòng nhập lại!');
+                        toastReact(3, 'Lỗi', 'Mật khẩu nhập lại không đúng, vui lòng nhập lại!');
                         break;
                     }
                 }

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 // import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -8,8 +8,11 @@ import TapsBook from '~/components/TapsBook';
 import { listBookData, listRating, userData, listComment } from '~/initdata';
 import styles from './Book.module.scss';
 import BookMedia from '~/components/BookMedia';
+import MobileChapter from '~/components/MobileBookMedia/MobileChapter';
+import MobileBookMedia from '~/components/MobileBookMedia';
+import MobileTapsBook from '~/components/MobileTapsBook';
 import { removeVietnameseTones } from '~/handler';
-import { useStore } from '~/hooks';
+import { useStore, useViewport } from '~/hooks';
 
 // import { getState, saveState } from '~/components/StateSaver';
 
@@ -19,6 +22,9 @@ function Book() {
     const { name } = useParams();
     const [data, setData] = useState({});
     const [state] = useStore();
+    const viewPort = useViewport();
+
+    // console.log(123);
 
     useEffect(() => {
         const bookData = (bookName) => {
@@ -39,14 +45,18 @@ function Book() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [name]);
 
+    // console.log(data);
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('container')}>
                 <div className={cx('book-content')}>
-                    {data.name && <BookMedia data={{ book: data, rating: listRating }} />}
+                    {!viewPort && data.name && <BookMedia data={{ book: data, rating: listRating }} />}
+                    {viewPort && data.name && <MobileBookMedia data={{ book: data, rating: listRating }} />}
                 </div>
+                {viewPort && <MobileChapter data={data} />}
                 <div className={cx('book-content')}>
-                    {data.name && (
+                    {!viewPort && data.name ? (
                         <TapsBook
                             data={data}
                             nameSearch={name}
@@ -57,6 +67,8 @@ function Book() {
                             isLogin={state.login}
                             user={state.userData()}
                         />
+                    ) : (
+                        <MobileTapsBook data={data} loginData={state} />
                     )}
                 </div>
             </div>
@@ -64,4 +76,4 @@ function Book() {
     );
 }
 
-export default Book;
+export default memo(Book);

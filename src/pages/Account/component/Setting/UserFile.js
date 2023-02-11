@@ -13,6 +13,7 @@ import { useStore } from '~/hooks';
 import { userData } from '~/initdata';
 import { actions } from '~/components/store';
 import { handlerChangePosterName, handlerChangeUserData } from '~/handler';
+import toastReact from '~/components/ToastMessages';
 
 const cx = classNames.bind(styles);
 
@@ -52,7 +53,11 @@ function UserFile({ data }) {
         const size = file.size;
 
         if (size > 1024 * 1024) {
-            alert('Please select the image again because the image you selected is exceed the specified size');
+            toastReact(
+                3,
+                'Lỗi',
+                'Please select the image again because the image you selected is exceed the specified size',
+            );
         } else {
             file.src = URL.createObjectURL(file);
             setUrl(file);
@@ -128,13 +133,13 @@ function UserFile({ data }) {
 
             if (isEmailChange && !isNameCheck) {
                 dispatch(actions.setUserDatabase({ userEmail: emailValue }));
-                alert('Cập nhật thành công!');
+                toastReact(1, 'Thành công', 'Cập nhật thành công!');
                 return;
             }
 
             if (!isNameCheck) {
                 dispatch(actions.setUserDatabase({}));
-                alert('Cập nhật thành công!');
+                toastReact(1, 'Thành công', 'Cập nhật thành công!');
             }
         }
     };

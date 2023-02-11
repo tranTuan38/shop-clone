@@ -25,6 +25,8 @@ function InputReply(
         idUser,
         isLogin,
         scopeItem,
+        placeholder = 'Nội dung trả lời',
+        textareaProps = {},
     },
     ref,
 ) {
@@ -125,10 +127,11 @@ function InputReply(
             <div className={cx('form-body')}>
                 <textarea
                     ref={textAreaRef}
-                    placeholder="Nội dung trả lời"
+                    placeholder={placeholder}
                     className={cx('form-control')}
                     value={value}
                     onChange={handlerOnChange}
+                    {...textareaProps}
                 ></textarea>
                 <button
                     className={cx('btn')}

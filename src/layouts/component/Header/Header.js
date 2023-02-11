@@ -38,6 +38,8 @@ function Header({ headerProps = {}, headerClass }) {
         genreId = undefined;
     }
 
+    // console.log(123);
+
     const { logo, noImg } = imgs;
 
     const handlerOnShowMenu = (instance) => {
@@ -102,7 +104,7 @@ function Header({ headerProps = {}, headerClass }) {
                                 isArrow={true}
                             >
                                 <div className={cx('nav-item', { ['nav-left']: true })}>
-                                    <Link to="/bxh">
+                                    <Link to="/bxh" onClick={(e) => e.preventDefault()}>
                                         <span>Bảng xếp hạng</span>
                                     </Link>
                                 </div>

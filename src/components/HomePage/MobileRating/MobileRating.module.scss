@@ -1,0 +1,170 @@
+.wrapper {
+    font-size: 1.4rem;
+    color: #333;
+    background-color: #fff;
+    margin-bottom: 12px;
+
+    .body {
+        
+
+        .media-title {
+    
+            .title {
+                font-size: 2rem;
+                font-weight: 600;
+                padding: 16px 12px 0;
+            }
+        }
+
+        .content {
+            padding: 12px 12px 0;
+
+            .item {
+                display: flex;
+                align-items: flex-start;
+                padding: 8px 0;
+                margin-bottom: 4px;
+
+                .book-img {
+                    width: 72px;
+                    margin-right: 16px;
+
+                    .book-link {
+                        display: block;
+                        width: 100%;
+                        overflow: hidden;
+                        position: relative;
+                        margin-right: 16px;
+                        box-shadow: 3px 4px 3px 0 rgba(0,0,0,.15)!important;
+
+                        &:hover {
+                            opacity: .9;
+                        }
+
+                        &::before {
+                            padding-top: 133.333333%;
+                            content: "";
+                            display: block;
+                        }
+
+                        .img {
+                            width: 100%;
+                            height: auto;
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            bottom: 0;
+                            left: 0;
+                            margin: auto;
+                            max-width: 100%;
+                            min-height: 100%;
+                        }
+
+                    }
+                }
+
+                .book-body {
+                    flex: 1;
+                    word-break: break-word;
+
+                    .book-title {
+                        font-size: 1.4rem;
+                        font-weight: 600;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 1;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                        -o-text-overflow: ellipsis;
+                        text-overflow: ellipsis;
+                        margin-bottom: 8px;
+
+                        a {
+                            display: block;
+                        }
+                    }
+
+                    .book-rate {
+                        display: flex;
+                        align-items: center;
+                        margin-bottom: 8px;
+
+                        .rate {
+                            display: inline-block;
+                            border-radius: 1.6rem;
+                            color: #fff;
+                            padding: 0 8px;
+                            margin-right: 16px;
+                            background-color: #bf2c24;
+                            font-size: 1.6rem;
+                            font-weight: 600;
+                        }
+
+                        .rate-total {
+                            color: #088860;
+                        }
+                    }
+
+                    .book-description {
+                        display: -webkit-box;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                        -o-text-overflow: ellipsis;
+                        text-overflow: ellipsis;
+                        -webkit-line-clamp: 2;
+                        color: #666;
+                    }
+
+                    .book-author {
+                        padding: 4px 0;
+                        margin-top: 8px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+
+                        .author {
+                            color: #666;
+                            max-width: 140px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+
+                            i {
+                                font-size: inherit;
+                                margin-right: 4px;
+                            }
+                        }
+
+                        .category {
+                            display: inline-block;
+                            font-size: 80%;
+                            color: var(--text-primary);
+                            max-width: 140px;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            border: 1px solid #b78a28;
+                            padding: 0 8px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .all {
+        display: flex;
+        font-size: inherit;
+        align-items: center;
+        padding-top: 12px;
+        padding-left: 12px;
+        padding-bottom: 12px;
+        border-top: 1px solid #eee;
+
+        &::after {
+            display: block;
+            font-size: inherit;
+            margin-left: 6px;
+            content: ">";
+        }
+    }
+}

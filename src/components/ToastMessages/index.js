@@ -1,9 +1,10 @@
 import { toast } from 'react-toastify';
-import ToastMessages from './ToastMessages';
 
 import classNames from 'classnames/bind';
 
 import styles from './ToastMessages.module.scss';
+import { useViewport } from '~/hooks';
+import ToastMessages from './ToastMessages';
 
 const cx = classNames.bind(styles);
 
@@ -22,6 +23,7 @@ const toastReact = (type, title, messages) => {
     toast[toastType[type]](<ToastMessages {...toastProps} />, {
         className: cx('container'),
         theme: 'colored',
+        draggable: window.innerWidth <= 1024 ? false : true,
     });
 
     return isSuccess;

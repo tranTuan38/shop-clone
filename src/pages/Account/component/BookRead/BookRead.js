@@ -41,7 +41,8 @@ function BookRead({ type }) {
         <div className={cx('wrapper')}>
             <div className={cx('content')}>
                 {bookData.map((book, index) => {
-                    const navNumber = book.chapter.length ? book.chapter[0].number : '';
+                    // console.log(book);
+                    const navNumber = book.chapter.length ? book.chapter[book.chapter.length - 1].number : '';
                     const linkName = `/list-book/${removeVietnameseTones(book.bookName)}`;
                     const link = navNumber ? `${linkName}/chuong-${navNumber}` : linkName;
 

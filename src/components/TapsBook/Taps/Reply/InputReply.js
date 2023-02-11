@@ -8,15 +8,26 @@ import { handleTime, handlerPustData } from '~/handler';
 import { requestData } from '~/services';
 import imgs from '~/assets/imgs';
 import toastReact from '~/components/ToastMessages';
+import { useViewport } from '~/hooks';
 
-const cx = classNames.bind(styles);
+let cx = classNames.bind(styles);
 
-function InputReply({ src = imgs.avatarImg.userNoIn, user, listUser, isLogin, ActionLogin, onSetUserReply }) {
+function InputReply({
+    src = imgs.avatarImg.userNoIn,
+    user,
+    listUser,
+    isLogin,
+    ActionLogin,
+    onSetUserReply,
+    styleChange,
+}) {
+    const viewPort = useViewport();
     const [value, setValue] = useState('');
     const [isGrow, setGrow] = useState(false);
 
     // console.log(user);
     // console.log(listUser);
+    // if (styleChange) cx = classNames.bind(styleChange);
 
     const textAreaRef = useRef();
 
@@ -61,15 +72,19 @@ function InputReply({ src = imgs.avatarImg.userNoIn, user, listUser, isLogin, Ac
             if (userDatas) {
                 setTimeout(() => {
                     onSetUserReply((prev) => {
+                        const newUser = {
+                            ...userDatas,
+                            name: user.name,
+                            avatar: user.avatar,
+                            level: user.level,
+                        };
                         if (prev.length) {
-                            const newUser = {
-                                ...userDatas,
-                                name: user.name,
-                                avatar: user.avatar,
-                                level: user.level,
-                            };
                             const newData = [...prev, newUser];
                             return newData;
+                        }
+
+                        if (viewPort) {
+                            return [newUser];
                         }
 
                         return [...prev];
