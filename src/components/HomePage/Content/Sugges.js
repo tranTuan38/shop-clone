@@ -18,7 +18,7 @@ function Sugges({ data, type }) {
     };
 
     return (
-        <div className="col c-8">
+        <div className="col l-8 m-8 c-8">
             <div className={cx('sugges')}>
                 <div className={cx('media-title', { ['sugges-title']: type })}>
                     <h2 className={cx('title')}>Biên tập viên đề cử</h2>

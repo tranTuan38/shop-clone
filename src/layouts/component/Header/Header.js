@@ -61,7 +61,7 @@ function Header({ headerProps = {}, headerClass }) {
     return (
         <div className={cx('wrapper', { [headerClass]: headerClass })}>
             <header className={cx('header')} {...headerProps}>
-                <div className="grid wide height-100">
+                <div className="grid wide height-100 w-1024-100">
                     <div className={cx('container')}>
                         <Img href="/" src={logo} alt={noImg} className={'logo'} />
 

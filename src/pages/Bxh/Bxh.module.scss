@@ -197,3 +197,153 @@
         }
     }
 }
+
+@media (max-width: 1024px) {
+    .hide-on-mobile-tablet {
+        display: none;
+    }
+
+    .wrapper {
+        padding: 0;
+        background-color: #fff;
+
+        .container {
+            position: relative;
+            padding-top: 45px;
+            padding-bottom: 16px;
+
+            .content .selected {
+                position: absolute;
+                display: flex;
+                align-items: center;
+                margin-bottom: 0;
+                height: 45px;
+                top: 0;
+                left: 0;
+                right: 0;
+                box-shadow: inset 0 -1px 0 0 #eee;
+
+                .btn {
+                    display: flex;
+                    align-items: center;
+                    padding: 12px 8px;
+                    white-space: nowrap;
+                    font-size: 1.4rem;
+                    line-height: 1.5;
+                }
+
+                [data-tippy-root] {
+                    transform: none!important;
+                    inset: auto!important;
+                    width: 100%;
+
+                    & > div {
+                        width: 100%;
+                        margin: 0;
+                        border-radius: 0;
+                        max-width: 100%;
+                        border-bottom: 1px solid #e5e5e5;
+
+                        &::before {
+                            display: none;
+                        }
+
+                        &::after {
+                            display: none;
+                        }
+                    }
+                }
+            }
+
+            .content .media-wrapper {
+                margin-bottom: 0;
+                padding: 12px;
+                padding-top: 4px;
+
+                .media-wrapper {
+                    padding: 0;
+                }
+            }
+    
+            .content .media {
+                padding: 8px 0;
+                margin-bottom: 4px;
+                border-bottom: 1px solid #eee;
+                display: flex;
+    
+    
+                .img {
+                    width: 72px;
+                    box-shadow: 3px 4px 3px 0 rgba(0,0,0,.15);
+                }
+    
+                .media-body {
+                    display: flex;
+                    flex-direction: column;
+
+                    .book-name {
+                        font-size: 1.4rem;
+                    }
+    
+                    .book-description {
+                        display: none;
+                    }
+    
+                    .book-nav {
+                        flex-direction: column;
+                        margin-top: 0;
+                        font-size: 1.3rem;
+                        color: #666;
+                        display: flex;
+    
+                        span {
+                            display: flex;
+                            align-items: center;
+                        }
+                        
+                    }
+                    
+                    .book-author, .book-selected {
+                        margin-right: 0;
+                        margin-bottom: 8px;
+    
+                        i {
+                            margin-right: 8px;
+                            font-size: 1.3rem;
+                        }
+                    }
+
+                    a {
+                        display: flex;
+                    }
+    
+    
+                    .book-category {
+                        padding: 0 8px;
+                        font-size: 80%;
+                        border: 1px solid #eee;
+                        border-color: #b78a28;
+                        display: block;
+                        color: #b78a28;
+                        cursor: pointer;
+                    }
+    
+                }
+            }
+        }
+    }
+}
+
+// Tablet
+@media (min-width: 740px ) and (max-width: 1024px) {
+    .hide-on-tablet {
+        display: none;
+    }
+}
+
+// Mobile
+@media (max-width: 739px) {
+    .hide-on-mobile {
+        display: none;
+    }
+}

@@ -7,7 +7,7 @@ import { handlerSetLink, handleTime } from '~/handler';
 
 const cx = classNames.bind(styles);
 
-function NavMenuChapter({ data = [] }) {
+function NavMenuChapter({ data = [], bookName = '', onChange = () => {} }) {
     // console.log(data);
 
     const handlerSetTime = (chapter) => {
@@ -17,15 +17,27 @@ function NavMenuChapter({ data = [] }) {
         return handleTime(timeCur, chapTime);
     };
 
+    const { formatLink } = handlerSetLink();
+
+    const handlerOnClick = () => {
+        onChange();
+    };
+
+    // console.log(bookName);
+
     return (
         <div className={cx('list-chapter')}>
             {data.map((item) => {
+                const nameFormat = formatLink(bookName);
+                const chapNumber = item.numberChapter;
+                const linkChange = `${nameFormat}/chuong-${chapNumber}`;
+
                 return (
                     <div className={cx('chapter-item')} key={item.idChapter}>
-                        <Link className={cx('chapter-link')}>
+                        <Link to={linkChange} className={cx('chapter-link')} onClick={handlerOnClick}>
                             <p>
-                                {item.numberChapter < 10 ? 'Chương 0' : 'Chương'}
-                                {item.numberChapter}: {item.nameChapter}.{' '}
+                                {chapNumber < 10 ? 'Chương 0' : 'Chương'}
+                                {chapNumber}: {item.nameChapter}.{' '}
                                 <span className={cx('chapter-time')}>({handlerSetTime(item)})</span>
                             </p>
                         </Link>

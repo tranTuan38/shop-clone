@@ -76,3 +76,38 @@
 
     
 }
+
+@media (max-width: 1024px) {
+    .hide-on-mobile-tablet {
+        display: none;
+    }
+
+    .wrapper .add-media {
+        
+        .add-button {
+            padding: 4px 24px;
+            font-size: 1.4rem;
+            margin-bottom: 16px;
+
+            &:hover {
+                background-color: inherit;
+            }
+        }
+
+    }
+    
+}
+
+// Tablet
+@media (min-width: 740px ) and (max-width: 1024px) {
+    .hide-on-tablet {
+        display: none;
+    }
+}
+
+// Mobile
+@media (max-width: 739px) {
+    .hide-on-mobile {
+        display: none;
+    }
+}

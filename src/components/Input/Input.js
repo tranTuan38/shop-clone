@@ -16,6 +16,8 @@ function Input({
     onChange = () => {},
     onFocus = () => {},
     onBlur = () => {},
+    onKeyDown = () => {},
+    onKeyUp = () => {},
 }) {
     return (
         <input
@@ -29,6 +31,8 @@ function Input({
             onChange={onChange}
             onFocus={onFocus}
             onBlur={onBlur}
+            onKeyDown={onKeyDown}
+            onKeyUp={onKeyUp}
         />
     );
 }

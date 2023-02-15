@@ -8,7 +8,7 @@ import { handlerChangeIconData } from '~/handler';
 
 const cx = classNames.bind(styles);
 
-function NavMenuFeel({ idIcon, data, onIconChange }, ref) {
+function NavMenuFeel({ idIcon, data, onIconChange = () => {} }, ref) {
     const navFeelRef = useRef();
 
     // console.log(idIcon);
@@ -22,6 +22,13 @@ function NavMenuFeel({ idIcon, data, onIconChange }, ref) {
         },
         remove() {
             navFeelRef.current.classList.remove(cx('feel-active'));
+        },
+        setPosition(position = '', positionSize) {
+            // const { top, right, bottom, left } = positions;
+            const listPosition = ['top', 'right', 'bottom', 'left'];
+            const isCheck = listPosition.includes(position);
+
+            if (isCheck) navFeelRef.current.style[position] = positionSize - 1 + 'px';
         },
     }));
 

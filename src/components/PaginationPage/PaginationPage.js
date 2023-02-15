@@ -15,6 +15,7 @@ function PaginationPage({
     pageItemProps = {},
     scrollType = 'smooth',
     isScroll = true,
+    isScrollTop = false,
     containerProps = {},
 }) {
     const [prevSearch, setPrevSearch] = useState(nameSearch);
@@ -52,6 +53,7 @@ function PaginationPage({
         setPageCur(event.selected + 1);
         setValue(event.selected + 1);
         if (isScroll) window.scrollTo({ top: wrapperRefOffSetHeight + 290, behavior: scrollType });
+        if (isScrollTop) window.scrollTo(0, 0);
     };
 
     const handlerOnChange = (e) => {
@@ -77,6 +79,7 @@ function PaginationPage({
             setPageOffset(newOffset);
             setPageCur(pageNumber);
             if (isScroll) window.scrollTo({ top: wrapperRefOffSetHeight + 290, behavior: scrollType });
+            if (isScrollTop) window.scrollTo(0, 0);
         }
     };
 
@@ -92,7 +95,7 @@ function PaginationPage({
                     <ReactPaginate
                         breakLabel="..."
                         nextLabel=">"
-                        pageRangeDisplayed={3}
+                        pageRangeDisplayed={2}
                         marginPagesDisplayed={2}
                         onPageChange={handlePageClick}
                         pageCount={pageCount}

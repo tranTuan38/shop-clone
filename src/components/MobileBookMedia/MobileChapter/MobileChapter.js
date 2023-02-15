@@ -12,6 +12,7 @@ const cx = classNames.bind(styles);
 
 function MobileChapter({ data = {} }) {
     const [show, setShow] = useState(false);
+    const [showNavCom, setShowNavCom] = useState(false);
     const navgate = useNavigate();
     const listChapters = data.listChapter ?? [];
     const lastChapter = listChapters[listChapters?.length - 1] ?? {};
@@ -66,7 +67,7 @@ function MobileChapter({ data = {} }) {
                     containerProps={{ padding: '16px 12px' }}
                     close={handlerCloseListChap}
                 >
-                    <MobileChapMenu data={listChapters} />
+                    <MobileChapMenu data={listChapters} bookName={data.name} onChange={handlerCloseListChap} />
                 </MobileFormConstructor>
             )}
         </MobileWrapper>

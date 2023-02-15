@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { useParams, useSearchParams, useLocation } from 'react-router-dom';
 import { useGetCategory, useDebounce, useGetListSelecter } from '~/hooks';
@@ -10,10 +10,12 @@ import Loading from '~/components/Loading';
 import { getListBookServices, requestData } from '~/services';
 import { listBookData } from '~/initdata';
 import Pagination from '~/components/Pagination';
+import { useViewport } from '~/hooks';
 
 const cx = classNames.bind(styles);
 
 function ListBook() {
+    const viewPort = useViewport();
     const listSelecter = useGetListSelecter();
     const [listData, setListData] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -56,6 +58,11 @@ function ListBook() {
 
     // console.log(listData);
     // console.log('renderCom: ', renderCom);
+
+    const handlerScrollMobile = useCallback((ele) => {
+        // ele?.scrollIntoView();
+        window.scrollTo(0, 0);
+    }, []);
 
     useEffect(() => {
         // console.log('Search: ', location);
@@ -122,7 +129,7 @@ function ListBook() {
     return (
         <>
             {loading ? (
-                <Loading />
+                <Loading wrapperStyle={{ margin: viewPort && '20px 0' }} />
             ) : (
                 <div className={cx('wrapper')}>
                     <div className={cx('container')}>
@@ -137,6 +144,8 @@ function ListBook() {
                                 limitPage={limitPage}
                                 listRequest={listRequest}
                                 firstRender={renderCom}
+                                containerProps={viewPort ? { justifyContent: 'center' } : {}}
+                                mobileScroll={viewPort ? handlerScrollMobile : () => true}
                             />
                         </div>
                     </div>
@@ -146,4 +155,4 @@ function ListBook() {
     );
 }
 
-export default ListBook;
+export default memo(ListBook);

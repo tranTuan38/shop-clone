@@ -5,13 +5,17 @@ import Header from '../component/Header';
 import BackGrpImgs from '../component/BackGrpImgs';
 import Footer from '../component/Footer';
 import { memo } from 'react';
+import { useViewport } from '~/hooks';
+import MobileSearch from '../mobileComponent/MobileSearch';
 
 const cx = classNames.bind(styles);
 
 function NotFoundLayout({ children }) {
+    const viewPort = useViewport();
+
     return (
         <div className={cx('wrapper')}>
-            <Header />
+            {viewPort ? <MobileSearch /> : <Header />}
             <BackGrpImgs />
             <div className={cx('container')}>
                 <div className={cx('content')}>{children}</div>

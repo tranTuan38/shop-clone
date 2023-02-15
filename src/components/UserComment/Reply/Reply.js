@@ -223,7 +223,7 @@ function Reply({
                     className={cx('action-btn')}
                     style={{ display: 'flex', justifyContent: viewPort && 'space-between', flex: viewPort && '1' }}
                 >
-                    <div>
+                    <div style={{ display: 'flex', justifyContent: viewPort && 'space-between' }}>
                         <ActionLogin
                             isLogin={isLogin}
                             onOpen={() => handlerCmtReplyOpen('like')}

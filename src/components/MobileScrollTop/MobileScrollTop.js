@@ -18,7 +18,8 @@ function MobileScrollTop() {
     const prevHeight = useRef(window.scrollY);
 
     const handlerScrollTop = () => {
-        window.scrollTo(0, 0);
+        const isChecked = wrapperDom.current?.classList?.contains(cx('show'));
+        if (isChecked) window.scrollTo(0, 0);
     };
 
     useEffect(() => {

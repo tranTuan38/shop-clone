@@ -61,6 +61,7 @@
 
             .title {
                 margin-bottom: 8px;
+                line-height: 1.5;
 
                 &:hover {
                     color: var(--text-primary);
@@ -74,6 +75,8 @@
             }
 
             .btn {
+                display: flex;
+                align-items: center;
                 color: #6c757d;
 
                 button {
@@ -104,5 +107,31 @@
             margin-bottom: 0!important;
             transition: all .3s linear;
         }
+    }
+}
+
+@media (max-width: 1024px) {
+    .hide-on-mobile-tablet {
+        display: none;
+    }
+
+    .title {
+        &:hover {
+            color: inherit!important;
+        }
+    }
+}
+
+// Tablet
+@media (min-width: 740px ) and (max-width: 1024px) {
+    .hide-on-tablet {
+        display: none;
+    }
+}
+
+// Mobile
+@media (max-width: 739px) {
+    .hide-on-mobile {
+        display: none;
     }
 }

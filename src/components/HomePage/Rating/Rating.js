@@ -24,7 +24,7 @@ function Rating() {
         !viewPort && (
             <div className={cx('wrapper')}>
                 <div className="row">
-                    <div className="col c-8">
+                    <div className="col l-8 m-8 c-8">
                         <div className={cx('content')}>
                             <div className={cx('appreciate')}>
                                 <h2 className={cx('h2')}>Đánh giá cao</h2>
@@ -39,7 +39,7 @@ function Rating() {
                             </div>
                         </div>
                     </div>
-                    <div className="col c-4">
+                    <div className="col l-4 m-4 c-4">
                         <div className={cx('content')}>
                             <div className={cx('judge')}>
                                 <h2 className={cx('h2')}>Mới đánh giá</h2>

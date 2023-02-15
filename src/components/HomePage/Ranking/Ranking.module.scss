@@ -226,13 +226,24 @@
 }
 
 
-@media (max-width: 1024px) {
+@media (min-width: 1025px) and (max-width: 1180px) {
     .hide-on-mobile-tablet {
         display: none;
     }
 
     .wrapper {
         padding: 0!important;
+
+        .information {
+            & > span[class=author-name] {
+                display: block;
+                max-width: 100%;
+                width: 120px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
     }
     
 }

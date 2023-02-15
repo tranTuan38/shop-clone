@@ -171,7 +171,7 @@ function Review({
     return (
         <div className={cx('wrapper', { [className]: !!className })}>
             <div className="row">
-                <div className="col l-8 m-12">
+                <div className="col l-8 m-8 c-8">
                     <div className={cx('container')}>
                         <div className={cx('content')}>
                             <Reviewer
@@ -214,7 +214,7 @@ function Review({
                         )}
                     </div>
                 </div>
-                <div className="col l-4 m-0">
+                <div className="col l-4 m-4 c-4">
                     <div className={cx('note-content')}>
                         <div className={cx('c4', { ['rated']: true })}>
                             <div className={cx('info')}>

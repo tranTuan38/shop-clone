@@ -15,8 +15,16 @@ import {
 import imgs from '~/assets/imgs';
 import { Comment } from '~/components/TapsBook/Taps';
 import { userData, listComment, listIcons } from '~/initdata';
-import { useStore } from '~/hooks';
-import { NavBar, Navigation, ChapterInfo, UserAction } from './component';
+import { useStore, useViewport } from '~/hooks';
+import {
+    NavBar,
+    Navigation,
+    ChapterInfo,
+    UserAction,
+    MobileNavMenu,
+    MobileListChap,
+    MobileChapSetting,
+} from './component';
 import { NavMenuChaps, NavMenuSetting, NavMenuFeel } from './navMenus';
 import NavPopup from '~/components/NavPopup';
 import { InfoMenu } from '~/components/Popper';
@@ -47,6 +55,14 @@ const navBarData = [
     },
 ];
 
+const navBarMobileData = [
+    { type: 'menu', indexItem: 0, icon: 'icon-menu', action: true, navMenu: MobileListChap },
+    { type: 'setting', indexItem: 1, icon: 'icon-setting', action: true, navMenu: NavMenuSetting },
+    { type: 'heart', indexItem: 2, icon: 'icon-heart', navMenu: NavMenuFeel, login: true },
+    { type: 'save', indexItem: 3, icon: 'icon-save', login: true },
+    { type: 'comments', indexItem: 4, icon: 'icon-comments' },
+];
+
 const navigationTop = [
     { id: 0, type: 'firstChapter', action: -1, icon: 'icon-prev-2', title: 'Chương trước' },
     { id: 1, type: 'lastChapter', action: 1, icon: 'icon-next-2', title: 'Chương sau' },
@@ -67,6 +83,7 @@ function Chapter() {
     const [state] = useStore();
     const settings = handlerGetSetting(state.defaults);
     const navigate = useNavigate();
+    const viewPort = useViewport();
 
     const chapterData = handlerGetChapterData(name, chapter, state.userData());
     const { getCommentById } = handlerGetBookMediaData([], listComment, userData);
@@ -116,17 +133,17 @@ function Chapter() {
     }, [name, chapter]);
 
     useEffect(() => {
-        if (chapterData) {
+        if (chapterData && !viewPort) {
             const navBarTopPosition = containerRef.current.getBoundingClientRect();
             let attrsTop;
             let attrsBottom;
 
             if (window.innerWidth < 1215) {
                 attrsBottom = { left: '1115px' };
-                navBarBottomRef.current.change(attrsBottom);
+                navBarBottomRef.current?.change(attrsBottom);
             } else {
                 attrsBottom = { left: `${window.innerWidth - navBarTopPosition.left - 2}px` };
-                navBarBottomRef.current.change(attrsBottom);
+                navBarBottomRef.current?.change(attrsBottom);
             }
 
             const handlerScroll = (e) => {
@@ -160,16 +177,16 @@ function Chapter() {
                     } else {
                         attrsBottom = {
                             ...attrsBottom,
-                            top: '548px',
+                            top: '542px',
                             bottom: 'auto',
                         };
                     }
 
-                    navBarTopRef.current.change(attrsTop);
-                    navBarBottomRef.current.change(attrsBottom);
+                    navBarTopRef.current?.change(attrsTop);
+                    navBarBottomRef.current?.change(attrsBottom);
                 } else {
                     attrsTop = { position: 'absolute', top: '0', bottom: 'auto', left: 'auto' };
-                    navBarTopRef.current.change(attrsTop);
+                    navBarTopRef.current?.change(attrsTop);
                 }
             };
 
@@ -197,7 +214,7 @@ function Chapter() {
                         } else {
                             attrsBottom = {
                                 ...attrsBottom,
-                                top: '548px',
+                                top: '542px',
                                 bottom: 'auto',
                             };
                         }
@@ -206,8 +223,8 @@ function Chapter() {
                         attrsBottom = { left: navBarLeft };
                     }
 
-                    navBarTopRef.current.change(attrsTop);
-                    navBarBottomRef.current.change(attrsBottom);
+                    navBarTopRef.current?.change(attrsTop);
+                    navBarBottomRef.current?.change(attrsBottom);
                 } else {
                     attrsTop = { position: 'absolute', top: '0', bottom: 'auto', left: 'auto' };
 
@@ -217,8 +234,8 @@ function Chapter() {
                         attrsBottom = { left: navBarLeft };
                     }
 
-                    navBarTopRef.current.change(attrsTop);
-                    navBarBottomRef.current.change(attrsBottom);
+                    navBarTopRef.current?.change(attrsTop);
+                    navBarBottomRef.current?.change(attrsBottom);
                 }
             };
 
@@ -231,7 +248,7 @@ function Chapter() {
             };
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [name, chapter]);
+    }, [name, chapter, viewPort]);
 
     useEffect(() => {
         if (state.login) {
@@ -256,6 +273,8 @@ function Chapter() {
         return nameChapter;
     };
 
+    // console.log(chapterData);
+
     return (
         <div className={cx('wrapper')}>
             {chapterData && (
@@ -265,25 +284,34 @@ function Chapter() {
                         ref={containerRef}
                         style={{ backgroundColor: settings.contentColor, color: settings.textColor }}
                     >
-                        {navBarData.map((navBar) => {
-                            let ref;
+                        {!viewPort ? (
+                            navBarData.map((navBar) => {
+                                let ref;
 
-                            if (navBar.position === 'top') {
-                                ref = navBarTopRef;
-                            } else if (navBar.position === 'bottom') {
-                                ref = navBarBottomRef;
-                            }
-                            return (
-                                <NavBar
-                                    isLogin={state.login}
-                                    key={navBar.id}
-                                    data={navBar}
-                                    dataChaps={chapterData}
-                                    ref={ref}
-                                    settings={settings}
-                                />
-                            );
-                        })}
+                                if (navBar.position === 'top') {
+                                    ref = navBarTopRef;
+                                } else if (navBar.position === 'bottom') {
+                                    ref = navBarBottomRef;
+                                }
+                                return (
+                                    <NavBar
+                                        isLogin={state.login}
+                                        key={navBar.id}
+                                        data={navBar}
+                                        dataChaps={chapterData}
+                                        ref={ref}
+                                        settings={settings}
+                                    />
+                                );
+                            })
+                        ) : (
+                            <MobileNavMenu
+                                data={navBarMobileData}
+                                isLogin={state.login}
+                                dataChaps={chapterData}
+                                settings={settings}
+                            />
+                        )}
 
                         <Navigation
                             data={navigationTop}
@@ -294,21 +322,23 @@ function Chapter() {
                             settings={settings}
                             style={{ color: settings.textColor }}
                         />
-                        <div className={cx('chap-title')}>
-                            {handlerSetTitle(chapterData.numberChapter, chapterData.nameChapter)}
-                        </div>
-                        <ChapterInfo chapterData={chapterData} />
+                        <div className={cx('body')}>
+                            <div className={cx('chap-title')}>
+                                {handlerSetTitle(chapterData.numberChapter, chapterData.nameChapter)}
+                            </div>
+                            <ChapterInfo chapterData={chapterData} />
 
-                        <div
-                            className={cx('content')}
-                            style={{
-                                fontFamily: settings.fontFamily,
-                                color: settings.textColor,
-                                fontSize: settings.fontSize,
-                                lineHeight: settings.paddingWord,
-                            }}
-                        >
-                            {chapterData.content}
+                            <div
+                                className={cx('content')}
+                                style={{
+                                    fontFamily: settings.fontFamily,
+                                    color: settings.textColor,
+                                    fontSize: settings.fontSize,
+                                    lineHeight: settings.paddingWord,
+                                }}
+                            >
+                                {chapterData.content}
+                            </div>
                         </div>
                         <UserAction isLogin={state.login} onShowForm={formSelectRef.current?.onShow} />
                     </div>

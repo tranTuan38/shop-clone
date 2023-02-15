@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import classNames from 'classnames/bind';
 import { useSearchParams, useLocation, useNavigate } from 'react-router-dom';
@@ -10,7 +10,7 @@ import { memo } from 'react';
 
 const cx = classNames.bind(styles);
 
-function PaginatedItems({ limitPage, data, listRequest, firstRender }) {
+function PaginatedItems({ limitPage, data, listRequest, firstRender, containerProps = {}, mobileScroll = () => true }) {
     const [pageCur, setPageCur] = useState(1);
     const [listData, setListData] = useState([]);
     const [pageCount, setPageCount] = useState(pageCur);
@@ -18,6 +18,8 @@ function PaginatedItems({ limitPage, data, listRequest, firstRender }) {
     const [value, setValue] = useState(pageCur);
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
+
+    const itemRef = useRef();
 
     const page = searchParams.get('page');
     const limit = searchParams.get('limit');
@@ -52,6 +54,7 @@ function PaginatedItems({ limitPage, data, listRequest, firstRender }) {
             setListData(data.slice(noPage, endOffset));
             setPageCount(Math.ceil(data.length / limitPage));
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pageOffset, limitPage, page]);
 
     const handlerPageChange = (event) => {
@@ -65,10 +68,15 @@ function PaginatedItems({ limitPage, data, listRequest, firstRender }) {
             location,
             setSearchParams,
         );
-        window.scrollTo({
-            top: 200,
-            behavior: 'smooth',
-        });
+
+        const isScroll = mobileScroll(itemRef.current);
+
+        if (isScroll) {
+            window.scrollTo({
+                top: 200,
+                behavior: 'smooth',
+            });
+        }
     };
 
     const handlerOnChange = (e) => {
@@ -92,10 +100,14 @@ function PaginatedItems({ limitPage, data, listRequest, firstRender }) {
             // const newOffset = ((pageNumber - 1) * limitPage) % data.length;
             // setPageOffset(newOffset);
             // setPageCur(pageNumber);
-            window.scrollTo({
-                top: 200,
-                behavior: 'smooth',
-            });
+            const isScroll = mobileScroll(itemRef.current);
+
+            if (isScroll) {
+                window.scrollTo({
+                    top: 200,
+                    behavior: 'smooth',
+                });
+            }
             handlerSetpathWitPagination(
                 { limit: limitPage, page: pageNumber },
                 { ...listRequest, limit: limit, page: page },
@@ -107,10 +119,10 @@ function PaginatedItems({ limitPage, data, listRequest, firstRender }) {
 
     return (
         <>
-            <div className="row">
+            <div className="row no-gutters" ref={itemRef}>
                 <Item data={listData} />
             </div>
-            <div className={cx('container')}>
+            <div className={cx('container')} style={containerProps}>
                 <ReactPaginate
                     breakLabel="..."
                     nextLabel=">"

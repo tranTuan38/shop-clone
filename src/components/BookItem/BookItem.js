@@ -36,7 +36,7 @@ function BookItem({ data, type }) {
                         <div className="row">
                             {item.map((item, index) => {
                                 return (
-                                    <div key={index} className="col c-6">
+                                    <div key={index} className="col l-6 m-6 c-6">
                                         {type === 'rating' ? (
                                             <RatingItem
                                                 data={item}

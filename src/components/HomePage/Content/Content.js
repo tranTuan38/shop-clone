@@ -24,7 +24,9 @@ function Content() {
                 ) : (
                     <div className="row">
                         {data && <Sugges data={data} type={'sugges'} />}
-                        <div className="col c-4">{read && <Reading data={[read, listGuide]} type={'reading'} />}</div>
+                        <div className="col l-4 m-4 c-4">
+                            {read && <Reading data={[read, listGuide]} type={'reading'} />}
+                        </div>
                     </div>
                 )}
             </div>

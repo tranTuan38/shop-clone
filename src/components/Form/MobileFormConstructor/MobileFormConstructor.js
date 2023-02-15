@@ -19,7 +19,7 @@ function MobileFormConstructor({
     const [state, dispatch] = useStore();
 
     return (
-        <div className={cx('wrapper')}>
+        <div className={cx('wrapper')} style={wrapperProps}>
             <div className={cx('header')}>
                 <h6 className={cx('header-title')}>{title}</h6>
                 <button className={cx('close')} onClick={close}>

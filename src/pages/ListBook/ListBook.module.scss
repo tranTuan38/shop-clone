@@ -1,9 +1,42 @@
 .search-title {
+    display: block;
     font-size: 1.5rem;
     color: #333;
     margin-left: 8px;
 
     .keyword {
         font-weight: 600;
+    }
+}
+
+@media (max-width: 1024px) {
+    .hide-on-mobile-tablet {
+        display: none;
+    }
+
+    .content {
+        padding: 12px;
+    }
+
+    .search-title {
+        display: block;
+        margin-bottom: 16px;
+        font-size: 1.4rem;
+        color: #333;
+        margin-left: 0;
+    }
+}
+
+// Tablet
+@media (min-width: 740px ) and (max-width: 1024px) {
+    .hide-on-tablet {
+        display: none;
+    }
+}
+
+// Mobile
+@media (max-width: 739px) {
+    .hide-on-mobile {
+        display: none;
     }
 }

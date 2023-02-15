@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { useEffect, useRef, useState, forwardRef, useImperativeHandle } from 'react';
+import { useEffect, useRef, useState, forwardRef, useImperativeHandle, useLayoutEffect } from 'react';
 import { memo } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 
@@ -61,6 +61,7 @@ const SETTING = 'setting';
 
 function NavMenuSetting({ type, data, onClick }, ref) {
     const [state, dispatch] = useStore();
+    const [settingData, setSettingData] = useState(listSetting);
 
     // const [setting, setSetting] = useState(() => {
     //     const prevSetting = JSON.parse(localStorage.getItem(SETTING));
@@ -74,11 +75,22 @@ function NavMenuSetting({ type, data, onClick }, ref) {
 
     // console.log(setting);
 
+    useLayoutEffect(() => {
+        if (Array.isArray(data)) setSettingData(data);
+    }, []);
+
     const navMenuRef = useRef();
 
     useImperativeHandle(ref, () => ({
         remove(element, navClass) {
             element.classList.remove(navClass);
+        },
+        setPosition(position = '', positionSize) {
+            // const { top, right, bottom, left } = positions;
+            const listPosition = ['top', 'right', 'bottom', 'left'];
+            const isCheck = listPosition.includes(position);
+
+            if (isCheck) navMenuRef.current.style[position] = positionSize - 1 + 'px';
         },
     }));
     // console.log(type);
@@ -107,7 +119,7 @@ function NavMenuSetting({ type, data, onClick }, ref) {
 
                 <div className={cx('menu-content')} style={{ marginBottom: '16px', marginRight: '0' }}>
                     <div className={cx('list-setting')}>
-                        {listSetting.map((item) => {
+                        {settingData.map((item) => {
                             let ComParent = 'div';
                             let ComChildren = 'div';
                             const settingType = item.type;

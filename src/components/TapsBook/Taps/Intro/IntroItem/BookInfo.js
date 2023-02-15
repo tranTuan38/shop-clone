@@ -34,7 +34,7 @@ function BookInfo({ data }) {
 
     return (
         <>
-            <div className="col c-8">
+            <div className="col l-8 m-8 c-8">
                 <div className={cx('content')}>
                     <p>{data.description}</p>
                 </div>

@@ -45,7 +45,7 @@ function UserPost({ data, authorName, nameSearch, setDescription, userData, list
 
     return (
         <>
-            <div className="col c-4">
+            <div className="col l-4 c-4 m-4">
                 <div className={cx('poster')}>
                     <div className={cx('avatar')}>
                         <Link

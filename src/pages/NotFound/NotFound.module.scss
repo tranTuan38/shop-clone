@@ -43,3 +43,33 @@
 
     }
 }
+
+// Mobile & tablet
+@media (max-width: 1024px) {
+    .hide-on-mobile-tablet {
+        display: none;
+    }
+
+    .wrapper{
+        padding-top: 0;
+        padding-bottom: 0;
+
+        .container {
+            font-size: 1.4rem;
+        }
+    }
+}
+
+// Tablet
+@media (min-width: 740px ) and (max-width: 1024px) {
+    .hide-on-tablet {
+        display: none;
+    }
+}
+
+// Mobile
+@media (max-width: 739px) {
+    .hide-on-mobile {
+        display: none;
+    }
+}

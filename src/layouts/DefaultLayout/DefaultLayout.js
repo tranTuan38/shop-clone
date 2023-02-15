@@ -16,8 +16,6 @@ function DefaultLayout({ children }) {
     const location = useLocation();
     const viewPort = useViewport();
 
-    // console.log(location);
-
     return (
         <div>
             {viewPort ? <MobileSearch /> : <Header />}

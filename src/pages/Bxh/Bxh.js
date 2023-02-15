@@ -7,6 +7,7 @@ import NavBarLeft from '~/components/NavBarLeft';
 import BxhContent from './BxhContent';
 import { listRank } from '~/initdata';
 import { handlerGetDataBxh } from '~/handler';
+import { useViewport } from '~/hooks';
 
 const cx = classNames.bind(styles);
 
@@ -22,6 +23,7 @@ function Bxh() {
     const [mediaData, setMediaData] = useState([]);
     const [icon, setIcon] = useState('');
     const [pathType, setPathType] = useState('');
+    const viewPort = useViewport();
 
     useEffect(() => {
         window.scrollTo({ top: 0 });
@@ -61,12 +63,36 @@ function Bxh() {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('container')}>
-                <div className="row">
-                    <div className="col c-3">
+                <div className="row no-gutters" style={!viewPort ? {} : { paddingLeft: '80px' }}>
+                    <div
+                        className="col l-3 m-3 c-0"
+                        style={
+                            !viewPort
+                                ? {}
+                                : {
+                                      display: 'block',
+                                      position: 'absolute',
+                                      left: '0',
+                                      width: '80px',
+                                      top: '45px',
+                                      bottom: '0',
+                                      backgroundColor: '#f5f5f5',
+                                  }
+                        }
+                    >
                         <NavBarLeft data={[navBarData]} page="bxh" />
                     </div>
-                    <div className="col c-9">
-                        <BxhContent bxhData={bxhTopNavData} mediaData={mediaData} icon={icon} type={pathType} />
+                    <div
+                        className="col l-9 m-9 c-12"
+                        style={!viewPort ? {} : { padding: '4px 12px', minHeight: '500px' }}
+                    >
+                        <BxhContent
+                            bxhData={bxhTopNavData}
+                            mediaData={mediaData}
+                            icon={icon}
+                            type={pathType}
+                            viewPort={viewPort}
+                        />
                     </div>
                 </div>
             </div>

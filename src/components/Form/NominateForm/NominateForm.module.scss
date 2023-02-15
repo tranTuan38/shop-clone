@@ -15,11 +15,10 @@
         width: 500px;
         position: relative;
         max-width: 500px;
-        max-height: 330px;
         margin: 28px auto;
         animation: transformY .3s ease-out;
         transition: transform .3s ease-out,-webkit-transform .3s ease-out,-moz-transform .3s ease-out,-o-transform .3s ease-out;
-        border: 1px solid rgba(0,0,0,.2);
+        border: 1px solid transparent;
         border-radius: 8px;
         
         
@@ -176,5 +175,37 @@
 
     100% {
         transform: none;
+    }
+}
+
+@media (max-width: 1024px) {
+    .hide-on-mobile-tablet {
+        display: none;
+    }
+
+    .wrapper{
+       
+        .container {
+            margin: 0;
+            border-radius: 0;
+
+            .content {
+                border-radius: 0;
+            }
+        }
+    }
+}
+
+// Tablet
+@media (min-width: 740px ) and (max-width: 1024px) {
+    .hide-on-tablet {
+        display: none;
+    }
+}
+
+// Mobile
+@media (max-width: 739px) {
+    .hide-on-mobile {
+        display: none;
     }
 }

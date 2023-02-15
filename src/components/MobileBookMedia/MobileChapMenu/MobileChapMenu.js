@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
 
-function MobileChapMenu({ data = [] }) {
+function MobileChapMenu({ data = [], bookName, onChange = () => {} }) {
     const [listData, setListData] = useState([]);
 
     useEffect(() => {
@@ -17,7 +17,13 @@ function MobileChapMenu({ data = [] }) {
 
     return (
         <div className={cx('wrapper')}>
-            <PaginationPage isScroll={false} data={listData} limit={2} PageItem={NavMenuChapter} />
+            <PaginationPage
+                isScroll={false}
+                data={listData}
+                pageItemProps={{ bookName: bookName, onChange }}
+                limit={10}
+                PageItem={NavMenuChapter}
+            />
         </div>
     );
 }

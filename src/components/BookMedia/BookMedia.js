@@ -19,7 +19,7 @@ function BookMedia({ data }) {
     return (
         <>
             <div className="row no-gutters">
-                <div className="col c-12">
+                <div className="col l-12 m-12 c-12">
                     <div className={cx('media')}>
                         <div className={cx('img')}>
                             <img alt={book.name} src={book.bookImg} />

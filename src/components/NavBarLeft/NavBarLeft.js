@@ -52,7 +52,7 @@ function NavBarLeft({ data, page }) {
                                     }}
                                 >
                                     <i className={`nh-icon ${item.icon}`}></i>
-                                    {item.key || item.title}
+                                    <span>{item.key || item.title}</span>
                                 </button>
                             </div>
                         );

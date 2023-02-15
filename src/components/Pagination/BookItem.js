@@ -12,7 +12,7 @@ function Item({ data }) {
         <>
             {!!data?.length &&
                 data.map((item) => (
-                    <div className="col c-6" key={item.idBook}>
+                    <div className="col l-6 m-12 c-12" key={item.idBook}>
                         <MediaItem data={item} type="listBook" />
                     </div>
                 ))}

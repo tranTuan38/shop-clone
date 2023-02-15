@@ -49,10 +49,10 @@ function Account() {
         <div className={cx('wrapper')}>
             <div className={cx('container')}>
                 <div className="row">
-                    <div className="col c-3">
+                    <div className="col l-3 m-0 c-0">
                         <NavBarLeft data={[navBarData, userData]} page="account" />
                     </div>
-                    <div className="col c-9">
+                    <div className="col l-9 m-12 c-12">
                         {tapsData.hash === location.hash && (
                             <ReactTaps data={tapsData} isLoading={true} forceRenderTabPanel={true} />
                         )}

@@ -5,3 +5,31 @@
         padding: 8px;
     }
 }
+
+@media (max-width: 1024px) {
+    .hide-on-mobile-tablet {
+        display: none;
+    }
+
+    .wrapper{
+        padding: 16px 12px;
+        background-color: #fff;
+        .container {
+           padding: 0;
+        }
+    }
+}
+
+// Tablet
+@media (min-width: 740px ) and (max-width: 1024px) {
+    .hide-on-tablet {
+        display: none;
+    }
+}
+
+// Mobile
+@media (max-width: 739px) {
+    .hide-on-mobile {
+        display: none;
+    }
+}

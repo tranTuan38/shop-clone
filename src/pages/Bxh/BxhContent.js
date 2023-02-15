@@ -10,7 +10,7 @@ import { requestData } from '~/services';
 
 const cx = classNames.bind(styles);
 
-function BxhContent({ bxhData, mediaData, icon, type }) {
+function BxhContent({ bxhData, mediaData, icon, type, viewPort }) {
     const [timeBxh, setTimeBxh] = useState('');
     const [loading, setLoading] = useState(false);
     const [listData, setListData] = useState([]);
@@ -46,6 +46,9 @@ function BxhContent({ bxhData, mediaData, icon, type }) {
                     PageItem={BxhMedia}
                     pageItemProps={{ icon, type }}
                     nameSearch={type}
+                    containerProps={{ style: { justifyContent: 'center' } }}
+                    isScroll={!viewPort}
+                    isScrollTop={viewPort}
                 />
             )}
         </div>

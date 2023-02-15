@@ -13,7 +13,7 @@ const cx = classNames.bind(styles);
 
 function RankItem({ data, type, formatLink }) {
     return (
-        <div className="col c-4">
+        <div className="col l-4 m-4 c-4">
             <div className={cx('content')}>
                 <div className={cx('title')}>
                     <h2 className={cx('h2')}>

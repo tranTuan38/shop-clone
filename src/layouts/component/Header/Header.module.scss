@@ -231,4 +231,28 @@
     }
 }
 
+@media (max-width: 1038px) {
+    .hide-on-mobile-tablet {
+        display: none;
+    }
+
+    .notice {
+        margin-left: 0!important;
+    }
+}
+
+// Tablet
+@media (min-width: 740px ) and (max-width: 1024px) {
+    .hide-on-tablet {
+        display: none;
+    }
+}
+
+// Mobile
+@media (max-width: 739px) {
+    .hide-on-mobile {
+        display: none;
+    }
+}
+
 

@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { useState } from 'react';
+import { memo, useState } from 'react';
 
 import { useGetListSelecter } from '~/hooks';
 import { handlerSetDataLeftBar, handlerSetDataWithPath, handleLeftSideBarPath, handleDeletePath } from '~/handler';
@@ -28,7 +28,7 @@ const listTitle = [
     'Thị giác',
 ];
 
-function LeftSideBar() {
+function LeftSideBar({ viewPort }, ref) {
     const datas = useGetListSelecter();
     const dataKeys = Object.keys(datas);
 
@@ -172,4 +172,4 @@ function LeftSideBar() {
     );
 }
 
-export default LeftSideBar;
+export default memo(LeftSideBar);
